@@ -208,9 +208,18 @@ void main(){
       {
 	cutNHitsREF1=kTRUE;
       }//cout<<"REF1 true"<<endl;}
-    Bool_t cutNHitsEta1=kFALSE; if(NHitsEta1->at(i)>0) {cutNHitsEta1=kTRUE;}
-    Bool_t cutNHitsEta2=kFALSE; if(NHitsEta2->at(i)>0) {cutNHitsEta2=kTRUE;}
-    Bool_t cutNHitsEta3=kFALSE; if(NHitsEta3->at(i)>0) {cutNHitsEta3=kTRUE;}
+    Bool_t cutNHitsEta1=kFALSE; if(NHitsEta1->at(i)>0) 
+				  {
+				    cutNHitsEta1=kTRUE;
+				  }
+    Bool_t cutNHitsEta2=kFALSE; if(NHitsEta2->at(i)>0) 
+				  {
+				    cutNHitsEta2=kTRUE;
+				  }
+    Bool_t cutNHitsEta3=kFALSE; if(NHitsEta3->at(i)>0) 
+				  {
+				    cutNHitsEta3=kTRUE;
+				  }
     // Bool_t cutNHitsEta4=kFALSE; if(NHitsEta4[i]>0) {cutNHitsEta4=kTRUE;}//cout<<pEta4[i]<<endl;}
     // Bool_t cutNHitsEta5=kFALSE; if(NHitsEta5[i]>0) {cutNHitsEta5=kTRUE;}//cout<<pEta5[i]<<endl;}
     // Bool_t cutNHitsEta6=kFALSE; if(NHitsEta6[i]>0) cutNHitsEta6=kTRUE;
@@ -222,17 +231,35 @@ void main(){
     // Bool_t cutpREF2X=kFALSE; if(pREF2X[i]>=0.0 && pREF2X[i]<=10.0) cutpREF2X=kTRUE;
     // Bool_t cutpZZ1=kFALSE;   if(pZZ1[i]>=0.0) cutpZZ1=kTRUE;
     // Bool_t cutpZZ2=kFALSE;   if(pZZ2[i]>=0.0) cutpZZ2=kTRUE;
-    Bool_t cutpREF2X=kFALSE; if(pREF2X->at(i)>=7.5 && pREF2X->at(i)<=7.9) {cutpREF2X=kTRUE;}
-    Bool_t cutpREF1X=kFALSE; if(pREF1X->at(i)>=-44 && pREF1X->at(i)<=-42) {cutpREF1X=kTRUE;}
-    Bool_t cutpREF3X=kFALSE; if(pREF3X->at(i)>=54 && pREF3X->at(i)<=56) {cutpREF3X=kTRUE;}
+    Bool_t cutpREF2X=kFALSE; if(pREF2X->at(i)>=7.5 && pREF2X->at(i)<=7.9) 
+			       {
+				 cutpREF2X=kTRUE;
+			       }
+    Bool_t cutpREF1X=kFALSE; if(pREF1X->at(i)>=-44 && pREF1X->at(i)<=-42) 
+			       {
+				 cutpREF1X=kTRUE;
+			       }
+    Bool_t cutpREF3X=kFALSE; if(pREF3X->at(i)>=54 && pREF3X->at(i)<=56) 
+			       {
+				 cutpREF3X=kTRUE;
+			       }
     // Bool_t cutpUVA3X=kFALSE; if(pUVA3X[i]>=50 && pUVA3X[i]<=52) cutpUVA3X=kTRUE;
-    Bool_t cutpREF2Y=kFALSE; if(pREF2Y->at(i)>=-10 && pREF2Y->at(i)<=-5) {cutpREF2Y=kTRUE;}
-    Bool_t cutpREF1Y=kFALSE; if(pREF1Y->at(i)>=-4 && pREF1Y->at(i)<=8) {cutpREF1Y=kTRUE;}
+    Bool_t cutpREF2Y=kFALSE; if(pREF2Y->at(i)>=-10 && pREF2Y->at(i)<=-5) 
+			       {
+				 cutpREF2Y=kTRUE;
+			       }
+    Bool_t cutpREF1Y=kFALSE; if(pREF1Y->at(i)>=-4 && pREF1Y->at(i)<=8)
+			       {
+				 cutpREF1Y=kTRUE;
+			       }
     // Bool_t cutpZZ1=kFALSE; if(pZZ1[i]>=0 && pZZ1[i]<=2) cutpZZ1=kTRUE;
     // Bool_t cutpEta5=kFALSE; if(pEta5[i]>=28.7 && pEta5[i]<=29.5) cutpEta5=kTRUE;
     
     //then combine the cut conditions & fill histograms
-    Bool_t trigger=kFALSE; if(cutNHitsREF2==kTRUE && cutNHitsREF3==KTRUE && cutNHitsREF1==kTRUE ) {trigger=kTRUE;}
+    Bool_t trigger=kFALSE; if(cutNHitsREF2==kTRUE && cutNHitsREF3==KTRUE && cutNHitsREF1==kTRUE ) 
+			     {
+			       trigger=kTRUE;
+			     }
     if(trigger ){
         totalEvents++;
         fout<<pREF2X->at(i)<<"\t"<<pREF2Y->at(i)<<"\t"<<pREF3X->at(i)<<"\t"<<pREF3Y->at(i)<<"\t"<<pREF1X[i]<<"\t"<<pREF1Y[i]<<endl;
