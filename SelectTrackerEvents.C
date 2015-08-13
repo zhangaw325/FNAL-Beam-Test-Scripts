@@ -1,7 +1,12 @@
-//this v0 is only used to output histograms with number of strips > 1
+ //this v0 is only used to output histograms with number of strips > 1
 #include <TString.h>
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <TTree.h>
+#include <TH1.h>
+#include <TH2.h>
+#include <TFile.h>
 void SelectTrackerEvents()
 {
     fstream fin("Hit_Position_Info.txt",ios::in);
@@ -77,7 +82,7 @@ void SelectTrackerEvents()
 	    fin>>count;
 	    evtNb++;
 	    if (verbose)
-		cout<<"evnt nb = "<<evtNb<< "\tfirstString = "<< firstString << "\t count = "<< count <<endl;	    
+		cout<<"evnt nb = "<<evtNb<< "\t firstString = "<< firstString << "\t count = "<< count <<endl;	    
 	    if(evtNb%5000==0) 
 		cout<<"event number "<<evtNb<<endl;
 	    continue;
@@ -153,7 +158,6 @@ void SelectTrackerEvents()
                 Strp_g3ycl.push_back(strip);
               }
 
-
 	    if (verbose)
 	    {
 		cout<< aSingleStrip << "\t" << aSingleCharge << "\t";
@@ -162,4 +166,103 @@ void SelectTrackerEvents()
 	}
 	cout<<endl;
     }
+
+    
+    TString outputfile = Form("Position.txt");
+    TString rootfile = Form("CoarseAligned.root");
+    fstream fout(outputfile.Data(),ios::out);
+    TFile* f = new TFile(rootfile.Data(),"recreate");
+
+    TH1F* h_Pos_g2xcl=new TH1F("h_Pos_g2xcl","",500,-50,50);h_Pos_g2xcl->SetXTitle("Cluster position [mm]");h_Pos_g2xcl->SetYTitle("Frequency");h_Pos_g2xcl->SetTitleSize(0.04,"XY");h_Pos_g2xcl->SetLabelSize(0.04,"XY");									
+    TH1F* h_Pos_g2ycl=new TH1F("h_Pos_g2ycl","",500,-50,50);h_Pos_g2ycl->SetXTitle("Cluster position [mm]");h_Pos_g2ycl->SetYTitle("Frequency");h_Pos_g2ycl->SetTitleSize(0.04,"XY");h_Pos_g2ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g3xcl=new TH1F("h_Pos_g3xcl","",500,-50,50);h_Pos_g3xcl->SetXTitle("Cluster position [mm]");h_Pos_g3xcl->SetYTitle("Frequency");h_Pos_g3xcl->SetTitleSize(0.04,"XY");h_Pos_g3xcl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g3ycl=new TH1F("h_Pos_g3ycl","",500,-50,50);h_Pos_g3ycl->SetXTitle("Cluster position [mm]");h_Pos_g3ycl->SetYTitle("Frequency");h_Pos_g3ycl->SetTitleSize(0.04,"XY");h_Pos_g3ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g1xcl=new TH1F("h_Pos_g1xcl","",500,-50,50);h_Pos_g1xcl->SetXTitle("Cluster position [mm]");h_Pos_g1xcl->SetYTitle("Frequency");h_Pos_g1xcl->SetTitleSize(0.04,"XY");h_Pos_g1xcl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g1ycl=new TH1F("h_Pos_g1ycl","",500,-50,50);h_Pos_g1ycl->SetXTitle("Cluster position [mm]");h_Pos_g1ycl->SetYTitle("Frequency");h_Pos_g1ycl->SetTitleSize(0.04,"XY");h_Pos_g1ycl->SetLabelSize(0.04,"XY");
+    //    cout << " ####################" <<endl;
+
+	int totalEvents = 0;
+	for(int i=0; i<nbHits; i++){
+	//set number of hits cut conditions                                                                                                     
+	Bool_t cutNHits_g2 = false;
+	if(NHits_g2xcl.at(i)>0 && NHits_g2ycl.at(i)>0)
+	  {	
+	    cutNHits_g2 = true;
+	  }
+	Bool_t cutNHits_g3 = false;
+        if(NHits_g3xcl.at(i)>0 && NHits_g3ycl.at(i)>0)
+          {
+            cutNHits_g3 = true;
+          }
+	Bool_t cutNHits_g1 = false;
+        if(NHits_g1xcl.at(i)>0 && NHits_g1ycl.at(i)>0)
+          {
+            cutNHits_g1 = true;
+          }
+	Bool_t cutNHits_LC1 = false;
+	if(NHits_sCMSNS2LC1.at(i) > 0) cutNHits_LC1 = true;
+
+	Bool_t cutNHits_LC2 = false;
+        if(NHits_sCMSNS2LC2.at(i) > 0) cutNHits_LC2 = true;
+
+	Bool_t cutNHits_LC3 = false;
+        if(NHits_sCMSNS2LC3.at(i) > 0) cutNHits_LC3 = true;
+
+	//set position cut consitions
+	Bool_t cutPos_g2X = false;
+        if(Pos_g2xcl.at(i)>=7.5 && Pos_g2xcl.at(i)<=7.9)
+          {
+            cutPos_g2X = true;
+          }
+	Bool_t cutPos_g2Y = false;
+        if(Pos_g2ycl.at(i)>=-10 && Pos_g2ycl.at(i)<=-5)
+          {
+            cutPos_g2Y = true;
+          }
+	Bool_t cutPos_g3X = false;
+	if(Pos_g3xcl.at(i)>=54 && Pos_g3xcl.at(i)<=56)
+          {
+            cutPos_g3X = true;
+          }
+	Bool_t cutPos_g1X = false;
+	if(Pos_g1xcl.at(i)>=-44 && Pos_g1xcl.at(i)<=-42)
+          {
+            cutPos_g1X = true;
+          }
+	Bool_t cutPos_g1Y = false;
+        if(Pos_g1ycl.at(i)>=-4 && Pos_g1ycl.at(i)<=8)
+          {
+            cutPos_g1Y = true;
+          }
+	//	cout << "######################"<<endl;
+	
+	//then combine the cut conditions & fill histograms
+	Bool_t trigger=false;
+	if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true)
+	  {
+	    trigger = true;
+	  }
+	if(trigger){
+	  totalEvents++;
+	  fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<<endl;
+	  h_Pos_g2xcl->Fill(Pos_g2xcl.at(i));
+	  h_Pos_g2ycl->Fill(Pos_g2ycl.at(i));
+	  h_Pos_g3xcl->Fill(Pos_g3xcl.at(i));
+	  h_Pos_g3ycl->Fill(Pos_g3ycl.at(i));
+	  h_Pos_g1xcl->Fill(Pos_g1xcl.at(i));
+	  h_Pos_g1ycl->Fill(Pos_g1ycl.at(i));
+	}
+	}
+       	fout.close();
+	f->Write();
+	f->Close();
 }
+   															       																				  
+																	       							      																	
+
+						 
+
+
+
+
+
