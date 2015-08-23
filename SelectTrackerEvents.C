@@ -11,7 +11,7 @@ void SelectTrackerEvents()
 {
     fstream fin("Hit_Position_Info.txt",ios::in);
 
-    bool verbose = 1;
+    bool verbose = 0;
     
     //number of hits
     vector <int> NHits_g2xcl, NHits_g2ycl, NHits_g3xcl, NHits_g3ycl, NHits_g1xcl, NHits_g1ycl;
@@ -26,8 +26,8 @@ void SelectTrackerEvents()
     vector <double> Chrg_sCMSNS2LC1, Chrg_sCMSNS2LC2, Chrg_sCMSNS2LC3;
    
     //strips in detectors
-    vector <double> Strp_g2xcl, Strp_g2ycl, Strp_g3xcl, Strp_g3ycl, Strp_g1xcl, Strp_g1ycl;
-    vector <double> Strp_sCMSNS2LC1, Strp_sCMSNS2LC2, Strp_sCMSNS2LC3;
+    vector <double> Strip_g2xcl, Strip_g2ycl, Strip_g3xcl, Strip_g3ycl, Strip_g1xcl, Strip_g1ycl;
+    vector <double> Strip_sCMSNS2LC1, Strip_sCMSNS2LC2, Strip_sCMSNS2LC3;
 
     //initialize all the variables
     NHits_g2xcl.clear();
@@ -57,15 +57,15 @@ void SelectTrackerEvents()
     Chrg_sCMSNS2LC1.clear();
     Chrg_sCMSNS2LC2.clear();
     Chrg_sCMSNS2LC3.clear();
-    Strp_g2xcl.clear();
-    Strp_g2ycl.clear();
-    Strp_g3xcl.clear();
-    Strp_g3ycl.clear();
-    Strp_g1xcl.clear();
-    Strp_g1ycl.clear();
-    Strp_sCMSNS2LC1.clear();
-    Strp_sCMSNS2LC2.clear();
-    Strp_sCMSNS2LC3.clear();
+    Strip_g2xcl.clear();
+    Strip_g2ycl.clear();
+    Strip_g3xcl.clear();
+    Strip_g3ycl.clear();
+    Strip_g1xcl.clear();
+    Strip_g1ycl.clear();
+    Strip_sCMSNS2LC1.clear();
+    Strip_sCMSNS2LC2.clear();
+    Strip_sCMSNS2LC3.clear();
     //read the file, write values to array
     
     int evtNb=0;
@@ -91,71 +91,73 @@ void SelectTrackerEvents()
 	fin>>nbHits>>charge>>position>>strip;
 	if (verbose)
 	    cout<<"nbHits = "<<nbHits << "\t charge = "<< charge << "\t position = "<< position << "\t strip = "<<strip<<endl;
+	    //cout<<"det name = "<<firstString<<"\tnbHits = "<<nbHits << "\t charge = "<< charge << "\t position = "<< position << "\t strip = "<<strip<<endl;
 	for(int i=0;i<nbHits;i++)
 	{
 	    fin>>aSingleStrip>>aSingleCharge;
+	}
 	    if(firstString.EqualTo("sCMSNS2LC1"))
 	      {
 		NHits_sCMSNS2LC1.push_back(nbHits);
-		Pos_sCMSNS2LC1.push_back(charge);
-		Chrg_sCMSNS2LC1.push_back(position);
-		Strp_sCMSNS2LC1.push_back(strip);
+		Pos_sCMSNS2LC1.push_back(position);
+		Chrg_sCMSNS2LC1.push_back(charge);
+		Strip_sCMSNS2LC1.push_back(strip);
 	      }
 	    if(firstString.EqualTo("sCMSNS2LC2"))
               {
                 NHits_sCMSNS2LC2.push_back(nbHits);
-                Pos_sCMSNS2LC2.push_back(charge);
-                Chrg_sCMSNS2LC2.push_back(position);
-                Strp_sCMSNS2LC2.push_back(strip);
+                Pos_sCMSNS2LC2.push_back(position);
+                Chrg_sCMSNS2LC2.push_back(charge);
+                Strip_sCMSNS2LC2.push_back(strip);
               }
 	    if(firstString.EqualTo("sCMSNS2LC3"))
               {
                 NHits_sCMSNS2LC3.push_back(nbHits);
-                Pos_sCMSNS2LC3.push_back(charge);
-                Chrg_sCMSNS2LC3.push_back(position);
-                Strp_sCMSNS2LC3.push_back(strip);
+                Pos_sCMSNS2LC3.push_back(position);
+                Chrg_sCMSNS2LC3.push_back(charge);
+                Strip_sCMSNS2LC3.push_back(strip);
               }
 	    if(firstString.EqualTo("g1xcl"))
 	      {
 		NHits_g1xcl.push_back(nbHits);
-		Pos_g1xcl.push_back(charge);
-		Chrg_g1xcl.push_back(position);
-		Strp_g1xcl.push_back(strip);
+		Pos_g1xcl.push_back(position);
+		Chrg_g1xcl.push_back(charge);
+		Strip_g1xcl.push_back(strip);
 	      }
 	    if(firstString.EqualTo("g1ycl"))
 	      {
 		NHits_g1ycl.push_back(nbHits);
-		Pos_g1ycl.push_back(charge);
-		Chrg_g1ycl.push_back(position);
-		Strp_g1ycl.push_back(strip);
+		Pos_g1ycl.push_back(position);
+		Chrg_g1ycl.push_back(charge);
+		Strip_g1ycl.push_back(strip);
 	      }
 	    if(firstString.EqualTo("g2xcl"))
               {
                 NHits_g2xcl.push_back(nbHits);
-                Pos_g2xcl.push_back(charge);
-                Chrg_g2xcl.push_back(position);
-                Strp_g2xcl.push_back(strip);
+                Pos_g2xcl.push_back(position);
+                Chrg_g2xcl.push_back(charge);
+                Strip_g2xcl.push_back(strip);
               }
             if(firstString.EqualTo("g2ycl"))
               {
                 NHits_g2ycl.push_back(nbHits);
-                Pos_g2ycl.push_back(charge);
-                Chrg_g2ycl.push_back(position);
-                Strp_g2ycl.push_back(strip);
+                Pos_g2ycl.push_back(position);
+                Chrg_g2ycl.push_back(charge);
+                Strip_g2ycl.push_back(strip);
               }
 	    if(firstString.EqualTo("g3xcl"))
               {
                 NHits_g3xcl.push_back(nbHits);
-                Pos_g3xcl.push_back(charge);
-                Chrg_g3xcl.push_back(position);
-                Strp_g3xcl.push_back(strip);
+                Pos_g3xcl.push_back(position);
+                Chrg_g3xcl.push_back(charge);
+                Strip_g3xcl.push_back(strip);
               }
             if(firstString.EqualTo("g3ycl"))
               {
                 NHits_g3ycl.push_back(nbHits);
-                Pos_g3ycl.push_back(charge);
-                Chrg_g3ycl.push_back(position);
-                Strp_g3ycl.push_back(strip);
+                Pos_g3ycl.push_back(position);
+                Chrg_g3ycl.push_back(charge);
+                Strip_g3ycl.push_back(strip);
               }
 
 	    if (verbose)
@@ -163,7 +165,8 @@ void SelectTrackerEvents()
 		cout<< aSingleStrip << "\t" << aSingleCharge << "\t";
 		//cout<<"aSingleStrip = " << aSingleStrip << "\taSingleCharge = "<< aSingleCharge ;
 	    }
-	}
+	//}
+	    if (verbose)
 	cout<<endl;
     }
 
@@ -173,16 +176,16 @@ void SelectTrackerEvents()
     fstream fout(outputfile.Data(),ios::out);
     TFile* f = new TFile(rootfile.Data(),"recreate");
 
-    TH1F* h_Pos_g2xcl=new TH1F("h_Pos_g2xcl","",500,-50,50);h_Pos_g2xcl->SetXTitle("Cluster position [mm]");h_Pos_g2xcl->SetYTitle("Frequency");h_Pos_g2xcl->SetTitleSize(0.04,"XY");h_Pos_g2xcl->SetLabelSize(0.04,"XY");									
-    TH1F* h_Pos_g2ycl=new TH1F("h_Pos_g2ycl","",500,-50,50);h_Pos_g2ycl->SetXTitle("Cluster position [mm]");h_Pos_g2ycl->SetYTitle("Frequency");h_Pos_g2ycl->SetTitleSize(0.04,"XY");h_Pos_g2ycl->SetLabelSize(0.04,"XY");
-    TH1F* h_Pos_g3xcl=new TH1F("h_Pos_g3xcl","",500,-50,50);h_Pos_g3xcl->SetXTitle("Cluster position [mm]");h_Pos_g3xcl->SetYTitle("Frequency");h_Pos_g3xcl->SetTitleSize(0.04,"XY");h_Pos_g3xcl->SetLabelSize(0.04,"XY");
-    TH1F* h_Pos_g3ycl=new TH1F("h_Pos_g3ycl","",500,-50,50);h_Pos_g3ycl->SetXTitle("Cluster position [mm]");h_Pos_g3ycl->SetYTitle("Frequency");h_Pos_g3ycl->SetTitleSize(0.04,"XY");h_Pos_g3ycl->SetLabelSize(0.04,"XY");
-    TH1F* h_Pos_g1xcl=new TH1F("h_Pos_g1xcl","",500,-50,50);h_Pos_g1xcl->SetXTitle("Cluster position [mm]");h_Pos_g1xcl->SetYTitle("Frequency");h_Pos_g1xcl->SetTitleSize(0.04,"XY");h_Pos_g1xcl->SetLabelSize(0.04,"XY");
-    TH1F* h_Pos_g1ycl=new TH1F("h_Pos_g1ycl","",500,-50,50);h_Pos_g1ycl->SetXTitle("Cluster position [mm]");h_Pos_g1ycl->SetYTitle("Frequency");h_Pos_g1ycl->SetTitleSize(0.04,"XY");h_Pos_g1ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g2xcl=new TH1F("h_Pos_g2xcl","",100, -10, 110);h_Pos_g2xcl->SetXTitle("Cluster position [mm]");h_Pos_g2xcl->SetYTitle("Frequency");h_Pos_g2xcl->SetTitleSize(0.04,"XY");h_Pos_g2xcl->SetLabelSize(0.04,"XY");									
+    TH1F* h_Pos_g2ycl=new TH1F("h_Pos_g2ycl","",100, -10, 110);h_Pos_g2ycl->SetXTitle("Cluster position [mm]");h_Pos_g2ycl->SetYTitle("Frequency");h_Pos_g2ycl->SetTitleSize(0.04,"XY");h_Pos_g2ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g3xcl=new TH1F("h_Pos_g3xcl","",100, -10, 110);h_Pos_g3xcl->SetXTitle("Cluster position [mm]");h_Pos_g3xcl->SetYTitle("Frequency");h_Pos_g3xcl->SetTitleSize(0.04,"XY");h_Pos_g3xcl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g3ycl=new TH1F("h_Pos_g3ycl","",100, -10, 110);h_Pos_g3ycl->SetXTitle("Cluster position [mm]");h_Pos_g3ycl->SetYTitle("Frequency");h_Pos_g3ycl->SetTitleSize(0.04,"XY");h_Pos_g3ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g1xcl=new TH1F("h_Pos_g1xcl","",100, -10, 110);h_Pos_g1xcl->SetXTitle("Cluster position [mm]");h_Pos_g1xcl->SetYTitle("Frequency");h_Pos_g1xcl->SetTitleSize(0.04,"XY");h_Pos_g1xcl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_g1ycl=new TH1F("h_Pos_g1ycl","",100, -10, 110);h_Pos_g1ycl->SetXTitle("Cluster position [mm]");h_Pos_g1ycl->SetYTitle("Frequency");h_Pos_g1ycl->SetTitleSize(0.04,"XY");h_Pos_g1ycl->SetLabelSize(0.04,"XY");
     //    cout << " ####################" <<endl;
 
 	int totalEvents = 0;
-	for(int i=0; i<nbHits; i++){
+	for(int i=0; i<evtNb; i++){
 	//set number of hits cut conditions                                                                                                     
 	Bool_t cutNHits_g2 = false;
 	if(NHits_g2xcl.at(i)>0 && NHits_g2ycl.at(i)>0)
@@ -210,27 +213,27 @@ void SelectTrackerEvents()
 
 	//set position cut consitions
 	Bool_t cutPos_g2X = false;
-        if(Pos_g2xcl.at(i)>=7.5 && Pos_g2xcl.at(i)<=7.9)
+        if(Pos_g2xcl.at(i)>=0. && Pos_g2xcl.at(i)<=120.)
           {
             cutPos_g2X = true;
           }
 	Bool_t cutPos_g2Y = false;
-        if(Pos_g2ycl.at(i)>=-10 && Pos_g2ycl.at(i)<=-5)
+        if(Pos_g2ycl.at(i)>=0 && Pos_g2ycl.at(i)<=120)
           {
             cutPos_g2Y = true;
           }
 	Bool_t cutPos_g3X = false;
-	if(Pos_g3xcl.at(i)>=54 && Pos_g3xcl.at(i)<=56)
+	if(Pos_g3xcl.at(i)>=0 && Pos_g3xcl.at(i)<=120)
           {
             cutPos_g3X = true;
           }
 	Bool_t cutPos_g1X = false;
-	if(Pos_g1xcl.at(i)>=-44 && Pos_g1xcl.at(i)<=-42)
+	if(Pos_g1xcl.at(i)>=0 && Pos_g1xcl.at(i)<=120)
           {
             cutPos_g1X = true;
           }
 	Bool_t cutPos_g1Y = false;
-        if(Pos_g1ycl.at(i)>=-4 && Pos_g1ycl.at(i)<=8)
+        if(Pos_g1ycl.at(i)>=0 && Pos_g1ycl.at(i)<=120)
           {
             cutPos_g1Y = true;
           }
@@ -251,18 +254,10 @@ void SelectTrackerEvents()
 	  h_Pos_g3ycl->Fill(Pos_g3ycl.at(i));
 	  h_Pos_g1xcl->Fill(Pos_g1xcl.at(i));
 	  h_Pos_g1ycl->Fill(Pos_g1ycl.at(i));
+	  cout<<"totalEvents = "<<totalEvents<<endl;
 	}
 	}
        	fout.close();
 	f->Write();
 	f->Close();
 }
-   															       																				  
-																	       							      																	
-
-						 
-
-
-
-
-
