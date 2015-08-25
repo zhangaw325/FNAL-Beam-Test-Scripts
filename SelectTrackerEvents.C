@@ -1,4 +1,4 @@
- //this v0 is only used to output histograms with number of strips > 1
+ //this v-1 is only used to output histograms with number of strips > 1
 #include <TString.h>
 #include <iostream>
 #include <vector>
@@ -182,12 +182,15 @@ void SelectTrackerEvents()
     TH1F* h_Pos_g3ycl=new TH1F("h_Pos_g3ycl","",100, -10, 110);h_Pos_g3ycl->SetXTitle("Cluster position [mm]");h_Pos_g3ycl->SetYTitle("Frequency");h_Pos_g3ycl->SetTitleSize(0.04,"XY");h_Pos_g3ycl->SetLabelSize(0.04,"XY");
     TH1F* h_Pos_g1xcl=new TH1F("h_Pos_g1xcl","",100, -10, 110);h_Pos_g1xcl->SetXTitle("Cluster position [mm]");h_Pos_g1xcl->SetYTitle("Frequency");h_Pos_g1xcl->SetTitleSize(0.04,"XY");h_Pos_g1xcl->SetLabelSize(0.04,"XY");
     TH1F* h_Pos_g1ycl=new TH1F("h_Pos_g1ycl","",100, -10, 110);h_Pos_g1ycl->SetXTitle("Cluster position [mm]");h_Pos_g1ycl->SetYTitle("Frequency");h_Pos_g1ycl->SetTitleSize(0.04,"XY");h_Pos_g1ycl->SetLabelSize(0.04,"XY");
-    TH1F* h_Strip_g2xcl=new TH1F("h_Strip_g2xcl","",100, 0, 128);h_Strip_g2xcl->SetXTitle("Cluster position in terms of strip");h_Strip_g2xcl->SetYTitle("Frequency");h_Strip_g2xcl->SetTitleSize(0.04,"XY");h_Strip_g2xcl->SetLabelSize(0.04,"XY");
-    TH1F* h_Strip_g2ycl=new TH1F("h_Strip_g2ycl","",100, 0, 128);h_Strip_g2ycl->SetXTitle("Cluster position in terms of strip");h_Strip_g2ycl->SetYTitle("Frequency");h_Strip_g2ycl->SetTitleSize(0.04,"XY");h_Strip_g2ycl->SetLabelSize(0.04,"XY");
-    TH1F* h_Strip_g3xcl=new TH1F("h_Strip_g3xcl","",100, 0, 128);h_Strip_g3xcl->SetXTitle("Cluster position in terms of strip");h_Strip_g3xcl->SetYTitle("Frequency");h_Strip_g3xcl->SetTitleSize(0.04,"XY");h_Strip_g3xcl->SetLabelSize(0.04,"XY");
-    TH1F* h_Strip_g3ycl=new TH1F("h_Strip_g3ycl","",100, 0, 128);h_Strip_g3ycl->SetXTitle("Cluster position in terms of strip");h_Strip_g3ycl->SetYTitle("Frequency");h_Strip_g3ycl->SetTitleSize(0.04,"XY");h_Strip_g3ycl->SetLabelSize(0.04,"XY");
-    TH1F* h_Strip_g1xcl=new TH1F("h_Strip_g1xcl","",100, 0, 128);h_Strip_g1xcl->SetXTitle("Cluster position in terms of strip");h_Strip_g1xcl->SetYTitle("Frequency");h_Strip_g1xcl->SetTitleSize(0.04,"XY");h_Strip_g1xcl->SetLabelSize(0.04,"XY");
-    TH1F* h_Strip_g1ycl=new TH1F("h_Strip_g1ycl","",100, 0, 128);h_Strip_g1ycl->SetXTitle("Cluster position in terms of strip");h_Strip_g1ycl->SetYTitle("Frequency");h_Strip_g1ycl->SetTitleSize(0.04,"XY");h_Strip_g1ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_sCMSNS2LC1=new TH1F("h_Pos_sCMSNS2LC1","",100, -10, 110);h_Pos_sCMSNS2LC1->SetXTitle("Cluster position [mm]");h_Pos_sCMSNS2LC1->SetYTitle("Frequency");h_Pos_sCMSNS2LC1->SetTitleSize(0.04,"XY");h_Pos_sCMSNS2LC1->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_sCMSNS2LC2=new TH1F("h_Pos_sCMSNS2LC2","",100, -10, 110);h_Pos_sCMSNS2LC2->SetXTitle("Cluster position [mm]");h_Pos_sCMSNS2LC2->SetYTitle("Frequency");h_Pos_sCMSNS2LC2->SetTitleSize(0.04,"XY");h_Pos_sCMSNS2LC2->SetLabelSize(0.04,"XY");
+    TH1F* h_Pos_sCMSNS2LC3=new TH1F("h_Pos_sCMSNS2LC3","",100, -10, 110);h_Pos_sCMSNS2LC3->SetXTitle("Cluster position [mm]");h_Pos_sCMSNS2LC3->SetYTitle("Frequency");h_Pos_sCMSNS2LC3->SetTitleSize(0.04,"XY");h_Pos_sCMSNS2LC3->SetLabelSize(0.04,"XY");
+    TH1F* h_Strip_g2xcl=new TH1F("h_Strip_g2xcl","",100, 0, 300);h_Strip_g2xcl->SetXTitle("Cluster position in terms of strip");h_Strip_g2xcl->SetYTitle("Frequency");h_Strip_g2xcl->SetTitleSize(0.04,"XY");h_Strip_g2xcl->SetLabelSize(0.04,"XY");
+    TH1F* h_Strip_g2ycl=new TH1F("h_Strip_g2ycl","",100, 0,300);h_Strip_g2ycl->SetXTitle("Cluster position in terms of strip");h_Strip_g2ycl->SetYTitle("Frequency");h_Strip_g2ycl->SetTitleSize(0.04,"XY");h_Strip_g2ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Strip_g3xcl=new TH1F("h_Strip_g3xcl","",100, 0, 300);h_Strip_g3xcl->SetXTitle("Cluster position in terms of strip");h_Strip_g3xcl->SetYTitle("Frequency");h_Strip_g3xcl->SetTitleSize(0.04,"XY");h_Strip_g3xcl->SetLabelSize(0.04,"XY");
+    TH1F* h_Strip_g3ycl=new TH1F("h_Strip_g3ycl","",100, 0, 300);h_Strip_g3ycl->SetXTitle("Cluster position in terms of strip");h_Strip_g3ycl->SetYTitle("Frequency");h_Strip_g3ycl->SetTitleSize(0.04,"XY");h_Strip_g3ycl->SetLabelSize(0.04,"XY");
+    TH1F* h_Strip_g1xcl=new TH1F("h_Strip_g1xcl","",100, 0, 300);h_Strip_g1xcl->SetXTitle("Cluster position in terms of strip");h_Strip_g1xcl->SetYTitle("Frequency");h_Strip_g1xcl->SetTitleSize(0.04,"XY");h_Strip_g1xcl->SetLabelSize(0.04,"XY");
+    TH1F* h_Strip_g1ycl=new TH1F("h_Strip_g1ycl","",100, 0, 300);h_Strip_g1ycl->SetXTitle("Cluster position in terms of strip");h_Strip_g1ycl->SetYTitle("Frequency");h_Strip_g1ycl->SetTitleSize(0.04,"XY");h_Strip_g1ycl->SetLabelSize(0.04,"XY");
     TH1F* h_NHits_g1xcl=new TH1F("h_NHits_g1xcl","",500, -10, 10);h_NHits_g1xcl->SetXTitle("Number of Hits");h_NHits_g1xcl->SetYTitle("Frequency");h_NHits_g1xcl->SetTitleSize(0.04,"XY");h_NHits_g1xcl->SetLabelSize(0.04,"XY");
     TH1F* h_NHits_g1ycl=new TH1F("h_NHits_g1ycl","",500, -10, 10);h_NHits_g1ycl->SetXTitle("Number of Hits");h_NHits_g1ycl->SetYTitle("Frequency");h_NHits_g1ycl->SetTitleSize(0.04,"XY");h_NHits_g1ycl->SetLabelSize(0.04,"XY");
     TH1F* h_NHits_g2xcl=new TH1F("h_NHits_g2xcl","",500, -10, 10);h_NHits_g2xcl->SetXTitle("Number of Hits");h_NHits_g2xcl->SetYTitle("Frequency");h_NHits_g2xcl->SetTitleSize(0.04,"XY");h_NHits_g2xcl->SetLabelSize(0.04,"XY");
@@ -269,6 +272,9 @@ void SelectTrackerEvents()
 	  h_Pos_g3ycl->Fill(Pos_g3ycl.at(i));
 	  h_Pos_g1xcl->Fill(Pos_g1xcl.at(i));
 	  h_Pos_g1ycl->Fill(Pos_g1ycl.at(i));
+	  h_Pos_sCMSNS2LC1->Fill(Pos_sCMSNS2LC1.at(i));
+	  h_Pos_sCMSNS2LC2->Fill(Pos_sCMSNS2LC2.at(i));
+	  h_Pos_sCMSNS2LC3->Fill(Pos_sCMSNS2LC3.at(i));
 	  h_Strip_g2xcl->Fill(Strip_g2xcl.at(i));
 	  h_Strip_g2ycl->Fill(Strip_g2ycl.at(i));
 	  h_Strip_g3xcl->Fill(Strip_g3xcl.at(i));
