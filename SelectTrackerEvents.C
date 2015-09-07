@@ -262,7 +262,7 @@ void SelectTrackerEvents()
 	
 	//then combine the cut conditions & fill histograms
 	Bool_t trigger=false;
-	if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true)
+	if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true )// && cutNHits_LC1==true && cutNHits_LC2==true && cutNHits_LC3==true) 
 	  {
 	    trigger = true;
 	  }
@@ -275,18 +275,24 @@ void SelectTrackerEvents()
 	  h_Pos_g3ycl->Fill(Pos_g3ycl.at(i));
 	  h_Pos_g1xcl->Fill(Pos_g1xcl.at(i));
 	  h_Pos_g1ycl->Fill(Pos_g1ycl.at(i));
-	  h_Pos_sCMSNS2LC1->Fill(Pos_sCMSNS2LC1.at(i));
-	  h_Pos_sCMSNS2LC2->Fill(Pos_sCMSNS2LC2.at(i));
-	  h_Pos_sCMSNS2LC3->Fill(Pos_sCMSNS2LC3.at(i));
+	  if(NHits_sCMSNS2LC1.at(i) > 0){
+	    h_Pos_sCMSNS2LC1->Fill(Pos_sCMSNS2LC1.at(i));}
+	  if(NHits_sCMSNS2LC2.at(i) > 0){
+	    h_Pos_sCMSNS2LC2->Fill(Pos_sCMSNS2LC2.at(i));}
+	  if(NHits_sCMSNS2LC3.at(i) > 0){
+	    h_Pos_sCMSNS2LC3->Fill(Pos_sCMSNS2LC3.at(i));}
 	  h_Strip_g2xcl->Fill(Strip_g2xcl.at(i));
 	  h_Strip_g2ycl->Fill(Strip_g2ycl.at(i));
 	  h_Strip_g3xcl->Fill(Strip_g3xcl.at(i));
 	  h_Strip_g3ycl->Fill(Strip_g3ycl.at(i));
 	  h_Strip_g1xcl->Fill(Strip_g1xcl.at(i));
 	  h_Strip_g1ycl->Fill(Strip_g1ycl.at(i));
-	  h_Strip_sCMSNS2LC1->Fill(Strip_sCMSNS2LC1.at(i));
-	  h_Strip_sCMSNS2LC2->Fill(Strip_sCMSNS2LC2.at(i));
-	  h_Strip_sCMSNS2LC3->Fill(Strip_sCMSNS2LC3.at(i));
+	  if(NHits_sCMSNS2LC1.at(i) > 0){
+	    h_Strip_sCMSNS2LC1->Fill(Strip_sCMSNS2LC1.at(i));}
+	  if(Nhits_sCMSNS2LC2.at(i) > 0){
+	    h_Strip_sCMSNS2LC2->Fill(Strip_sCMSNS2LC2.at(i));}
+	  if(NHits_sCMSNS2LC3.at(i) > 0){
+	    h_Strip_sCMSNS2LC3->Fill(Strip_sCMSNS2LC3.at(i));}
 	  h_NHits_g2xcl->Fill(NHits_g2xcl.at(i));
 	  h_NHits_g2ycl->Fill(NHits_g2ycl.at(i));
 	  h_NHits_g3xcl->Fill(NHits_g3xcl.at(i));
