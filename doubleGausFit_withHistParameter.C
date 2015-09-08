@@ -5,7 +5,6 @@
 #include <vector>
 #include <iostream>
 #include <string>
-using namespace std;
 #include "TROOT.h"
 #include "TFitResult.h"
 #include "TCanvas.h"
@@ -32,9 +31,15 @@ using namespace std;
 #include "TSystem.h"
 #include "TKey.h"
 #include <cmath>
+#include "TCanvas.h"
+#include "TMath.h"
+#include "TH1.h"
+#include "TF1.h"
+#include "TRandom.h"
 #include "TSpectrum.h"
-//#include <stdio.h>
-//#include <math.h>
+#include "TVirtualFitter.h"
+
+using namespace std;
 
 struct I2GFvalues
 {
@@ -58,11 +63,12 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
   myI2GFvalues.sigma = -100;
   myI2GFvalues.sigma_err = -100;
 
+  Int_t NPeaks ;
+  TSpectrum *s;// = new TSpectrum(1,1); //TSpectrum(1,1)->Argument: (Number of peaks to find, Distance to neighboring peak: "1"-->3sigma)
+ 
 
-  TSpectrum *s = new TSpectrum(); //TSpectrum(1,1)->Argument: (Number of peaks to find, Distance to neighboring peak: "1"-->3sigma)
-  Int_t NPeaks;
-  Float_t *Peak;                     //TSpectrum *s = new TSpectrum(); --> No warning message 
-  Float_t *PeakAmp;                    
+  Double_t *Peak;                     //TSpectrum *s = new TSpectrum(); --> No warning message 
+  Double_t *PeakAmp;                    
   float peak_pos = 0;
   float peak_pos_amp = 0;  //Initial value, assuming positive going peaks
   int peak_pos_bin = 0;
@@ -88,20 +94,20 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
   int NDF = 1;
    
 
-  float f_RChi2 = 1; 
-  float f_const = 1;
-  float f_mean = 1;
-  float f_mean_err = 1;
-  float f_sigma = 1;
-  float f_sigma_err = 1;
+  float f_RChi2 = 1.0; 
+  float f_const = 1.0;
+  float f_mean = 1.0;
+  float f_mean_err = 1.0;
+  float f_sigma = 1.0;
+  float f_sigma_err = 1.0;
   
-  float peak = 1;  
+  float peak = 1.0;  
 
-  float f_const2 = 1;
-  float f_mean2 = 1;
-  float f_mean_err2 = 1;
-  float f_sigma2 = 1;
-  float f_sigma_err2 = 1;
+  float f_const2 = 1.0;
+  float f_mean2 = 1.0;
+  float f_mean_err2 = 1.0;
+  float f_sigma2 = 1.0;
+  float f_sigma_err2 = 1.0;
 
   //---------Basic Histo Peak Finding Parameters----------
   binMaxCnt = htemp->GetMaximumBin();  //Finds bin w/ max counts (can be dubious, so use TSpectrum)
@@ -109,12 +115,12 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
   binMaxCnt_counts = (Int_t) htemp->GetBinContent(binMaxCnt); //Finds counts within particular bin
 
   //---------TSpectrum Peak Finding Parameters--------
-  if (ShowFit) NPeaks = s->Search(htemp, 2, "goff", 0.5); //opens a canvas (one time in a loop), even with:  s->Search(htemp, 2, "nodraw", 0.9);
-  //else  NPeaks = s->Search(htemp, 2, "", 0.5);  //s->Search(htemp, 2, "nodraw", 0.9);
+  if(ShowFit) NPeaks = s->Search(htemp, 2,"",0.5); 
+  /*opens a canvas (one time in a loop), even with:  s->Search(htemp, 2, "nodraw", 0.9);  else  NPeaks = s->Search(htemp, 2, "", 0.5);  //s->Search(htemp, 2, "nodraw", 0.9);
 
-  //Npeaks = s->GetNPeaks(); //If using this, need pointer in declaration above: Int_t *NPeaks
-  //N_peaks =  Npeaks[0];
-
+  Npeaks = s->GetNPeaks(); //If using this, need pointer in declaration above: Int_t *NPeaks
+  N_peaks =  Npeaks[0];
+*/
   Peak = s->GetPositionX();
   PeakAmp = s->GetPositionY();
 
