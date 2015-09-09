@@ -9,7 +9,7 @@
 #include <TAxis.h>
 #include "doubleGausFit_withHistParameter.C"
 //int  main(){
-void  AlignTrackers_Shift(){
+  void  AlignTrackers_Shift(){
   string thestring = "Position";
   string txtfilename = thestring + ".txt";
   string shiftHead = "shiftParameters_";
@@ -19,8 +19,8 @@ void  AlignTrackers_Shift(){
   string fout1name = residualHead+thestring+"_alignTrackers.txt";
   fstream fin(txtfilename.c_str(),ios::in);
   if(!fin){cout<<"file not read"<<endl; }
-  fstream fout(foutname.c_str(),ios::app);
-  fstream fout1(fout1name.c_str(),ios::app);
+  fstream fout(foutname.c_str(),ios::out);
+  fstream fout1(fout1name.c_str(),ios::out);
   double Pos_g2xcl=0.0, Pos_g2ycl=0.0;
   double Pos_g3xcl=0.0, Pos_g3ycl=0.0;
   double Pos_g1xcl=0.0, Pos_g1ycl=0.0;
@@ -117,7 +117,7 @@ void  AlignTrackers_Shift(){
       g2->SetPoint(0,0,     vPos_g2ycl[i]);
       g2->SetPoint(1,1143.5,vPos_g3ycl[i]);
       // exclusive
-      //       g2->SetPoint(2,2686.5,vpUVA3Y[i]);
+      // g2->SetPoint(2,2686.5,vpUVA3Y[i]);
        g2->SetPoint(3,3169.5,vPos_g1ycl[i]);
       // inclusive
 
