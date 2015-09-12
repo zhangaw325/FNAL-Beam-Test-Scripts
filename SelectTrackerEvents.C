@@ -289,7 +289,7 @@ void SelectTrackerEvents()
 	  h_Strip_g1ycl->Fill(Strip_g1ycl.at(i));
 	  if(NHits_sCMSNS2LC1.at(i) > 0){
 	    h_Strip_sCMSNS2LC1->Fill(Strip_sCMSNS2LC1.at(i));}
-	  if(Nhits_sCMSNS2LC2.at(i) > 0){
+	  if(NHits_sCMSNS2LC2.at(i) > 0){
 	    h_Strip_sCMSNS2LC2->Fill(Strip_sCMSNS2LC2.at(i));}
 	  if(NHits_sCMSNS2LC3.at(i) > 0){
 	    h_Strip_sCMSNS2LC3->Fill(Strip_sCMSNS2LC3.at(i));}

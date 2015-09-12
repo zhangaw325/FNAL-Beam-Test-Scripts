@@ -9,7 +9,7 @@
 #include <TAxis.h>
 #include "doubleGausFit_withHistParameter.C"
 //int  main(){
-void  AlignTrackers_Shift(){
+  void  AlignTrackers_Shift(){
   string thestring = "Position";
   string txtfilename = thestring + ".txt";
   string shiftHead = "shiftParameters_";
@@ -19,8 +19,8 @@ void  AlignTrackers_Shift(){
   string fout1name = residualHead+thestring+"_alignTrackers.txt";
   fstream fin(txtfilename.c_str(),ios::in);
   if(!fin){cout<<"file not read"<<endl; }
-  fstream fout(foutname.c_str(),ios::app);
-  fstream fout1(fout1name.c_str(),ios::app);
+  fstream fout(foutname.c_str(),ios::out);
+  fstream fout1(fout1name.c_str(),ios::out);
   double Pos_g2xcl=0.0, Pos_g2ycl=0.0;
   double Pos_g3xcl=0.0, Pos_g3ycl=0.0;
   double Pos_g1xcl=0.0, Pos_g1ycl=0.0;
@@ -37,9 +37,9 @@ void  AlignTrackers_Shift(){
   } // getting input
   fin.close();
 
-  double shi_g2xcl=12.25640557, shi_g2ycl=2.03531933;
-  double shi_g3xcl=7.467908772, shi_g3ycl=-2.35761;
-  double shi_g1xcl=-9.94956, shi_g1ycl=-0.70242;
+  double shi_g2xcl=62.36, shi_g2ycl=55.83;
+  double shi_g3xcl=62.72, shi_g3ycl=56.06;
+  double shi_g1xcl=61.91, shi_g1ycl=55.68;
 
 
   double mean_g2xcl=0.0, mean_g2ycl=0.0;
@@ -56,14 +56,14 @@ void  AlignTrackers_Shift(){
     char name2X[15];sprintf(name2X,"Pos_g2xcl_%i",iterNb); char name2Y[15];sprintf(name2Y,"Pos_g2ycl_%i",iterNb);
     char name3X[15];sprintf(name3X,"Pos_g3xcl_%i",iterNb); char name3Y[15];sprintf(name3Y,"Pos_g3ycl_%i",iterNb);
     char name1X[15];sprintf(name1X,"Pos_g1xcl_%i",iterNb); char name1Y[15];sprintf(name1Y,"Pos_g1xcl_%i",iterNb);
-    TH1F* h_Pos_g2xcl = new TH1F(name2X,"",500,-50,50); h_Pos_g2xcl->SetXTitle("mm"); h_Pos_g2xcl->SetYTitle("Frequency");h_Pos_g2xcl->SetLabelSize(0.045,"XY");h_Pos_g2xcl->SetTitleSize(0.045,"XY");
-    TH1F* h_Pos_g2ycl = new TH1F(name2Y,"",500,-50,50); h_Pos_g2ycl->SetXTitle("mm"); h_Pos_g2ycl->SetYTitle("Frequency");h_Pos_g2ycl->SetLabelSize(0.045,"XY");h_Pos_g2ycl->SetTitleSize(0.045,"XY");  
-    TH1F* h_Pos_g1xcl = new TH1F(name3X,"",500,-50,50); h_Pos_g1xcl->SetXTitle("mm"); h_Pos_g1xcl->SetYTitle("Frequency");h_Pos_g1xcl->SetLabelSize(0.045,"XY");h_Pos_g1xcl->SetTitleSize(0.045,"XY");
-    TH1F* h_Pos_g1ycl = new TH1F(name3Y,"",500,-50,50); h_Pos_g1ycl->SetXTitle("mm"); h_Pos_g1ycl->SetYTitle("Frequency");h_Pos_g1ycl->SetLabelSize(0.045,"XY");h_Pos_g1ycl->SetTitleSize(0.045,"XY");  
+    TH1F* h_Pos_g2xcl = new TH1F(name2X,"",100,-10,110); h_Pos_g2xcl->SetXTitle("Cluster position [mm]"); h_Pos_g2xcl->SetYTitle("Frequency");h_Pos_g2xcl->SetLabelSize(0.045,"XY");h_Pos_g2xcl->SetTitleSize(0.045,"XY");
+    TH1F* h_Pos_g2ycl = new TH1F(name2Y,"",100,-10,110); h_Pos_g2ycl->SetXTitle(" Cluster position [mm]"); h_Pos_g2ycl->SetYTitle("Frequency");h_Pos_g2ycl->SetLabelSize(0.045,"XY");h_Pos_g2ycl->SetTitleSize(0.045,"XY");  
+    TH1F* h_Pos_g1xcl = new TH1F(name3X,"",100,-10,110); h_Pos_g1xcl->SetXTitle("Cluster position [mm]"); h_Pos_g1xcl->SetYTitle("Frequency");h_Pos_g1xcl->SetLabelSize(0.045,"XY");h_Pos_g1xcl->SetTitleSize(0.045,"XY");
+    TH1F* h_Pos_g1ycl = new TH1F(name3Y,"",100,-10,110); h_Pos_g1ycl->SetXTitle("Cluster position [mm]"); h_Pos_g1ycl->SetYTitle("Frequency");h_Pos_g1ycl->SetLabelSize(0.045,"XY");h_Pos_g1ycl->SetTitleSize(0.045,"XY");  
 
 
-    TH1F* h_Pos_g3xcl = new TH1F(name1X,"",500,-50,50); h_Pos_g3xcl->SetXTitle("mm"); h_Pos_g3xcl->SetYTitle("Frequency");h_Pos_g3xcl->SetLabelSize(0.045,"XY");h_Pos_g3xcl->SetTitleSize(0.045,"XY");
-    TH1F* h_Pos_g3ycl = new TH1F(name1Y,"",500,-50,50); h_Pos_g3ycl->SetXTitle("mm"); h_Pos_g3ycl->SetYTitle("Frequency");h_Pos_g3ycl->SetLabelSize(0.045,"XY");h_Pos_g3ycl->SetTitleSize(0.045,"XY");  
+    TH1F* h_Pos_g3xcl = new TH1F(name1X,"",100,-10,110); h_Pos_g3xcl->SetXTitle("Cluster position [mm]"); h_Pos_g3xcl->SetYTitle("Frequency");h_Pos_g3xcl->SetLabelSize(0.045,"XY");h_Pos_g3xcl->SetTitleSize(0.045,"XY");
+    TH1F* h_Pos_g3ycl = new TH1F(name1Y,"",100,-10,110); h_Pos_g3ycl->SetXTitle(" Cluster position [mm]"); h_Pos_g3ycl->SetYTitle("Frequency");h_Pos_g3ycl->SetLabelSize(0.045,"XY");h_Pos_g3ycl->SetTitleSize(0.045,"XY");  
 
     char nameRes2X[20];sprintf(nameRes2X,"residual_g2xcl_%i",iterNb);char nameRes2Y[20];sprintf(nameRes2Y,"residual_g2ycl_%i",iterNb);
     char nameRes3X[20];sprintf(nameRes3X,"residual_g3xcl_%i",iterNb);char nameRes3Y[20];sprintf(nameRes3Y,"residual_g3ycl_%i",iterNb);
@@ -98,37 +98,36 @@ void  AlignTrackers_Shift(){
 
 
       //      TGraph* g1 = new TGraph();
-      g1->SetPoint(0,0,     vPos_g2xcl[i]);
-      g1->SetPoint(1,1143.5,vPos_g3xcl[i]);
-      g1->SetPoint(3,3169.5,vPos_g1xcl[i]);
+      g1->SetPoint(0,0,     vPos_g1xcl[i]);
+      g1->SetPoint(1,380,vPos_g2xcl[i]);
+      g1->SetPoint(2,830,vPos_g3xcl[i]);
       //      TF1* f1 = new TF1("line1","[0]+[1]*x",0,3200);
       g1->Fit("line1","Q");
       double intercept1 = f1->GetParameter(0);
       double slope1     = f1->GetParameter(1);
-      double Measured_g2xcl = intercept1 + slope1*0.0;
-      double Measured_g3xcl = intercept1 + slope1*1143.5;
-      double Measured_g1xcl = intercept1 + slope1*3169.5;
+      double Measured_g1xcl = intercept1 + slope1*0.0;
+      double Measured_g2xcl = intercept1 + slope1*380;
+      double Measured_g3xcl = intercept1 + slope1*830;
       h_residual_g2xcl->Fill(Measured_g2xcl-vPos_g2xcl[i]);
       h_residual_g3xcl->Fill(Measured_g3xcl-vPos_g3xcl[i]);
       h_residual_g1xcl->Fill(Measured_g1xcl-vPos_g1xcl[i]);
       delete f1; delete g1;
 
       //      TGraph* g2 = new TGraph();
-      g2->SetPoint(0,0,     vPos_g2ycl[i]);
-      g2->SetPoint(1,1143.5,vPos_g3ycl[i]);
+      g2->SetPoint(0,0,     vPos_g1ycl[i]);
+      g2->SetPoint(1,380,vPos_g2ycl[i]);
       // exclusive
-      //       g2->SetPoint(2,2686.5,vpUVA3Y[i]);
-       g2->SetPoint(3,3169.5,vPos_g1ycl[i]);
+      // g2->SetPoint(2,2686.5,vpUVA3Y[i]);
+      g2->SetPoint(2,830,vPos_g3ycl[i]);
       // inclusive
 
        //      TF1* f2 = new TF1("line2","[0]+[1]*x",0,3200);
       g2->Fit("line2","Q");
       double intercept2 = f2->GetParameter(0);
       double slope2     = f2->GetParameter(1);
-      double Measured_g2ycl = intercept2 + slope2*0.0;
-      double Measured_g3ycl = intercept2 + slope2*1143.5;
-
-      double Measured_g1ycl = intercept2 + slope2*3169.5;
+      double Measured_g1ycl = intercept2 + slope2*0.0;
+      double Measured_g2ycl = intercept2 + slope2*380;
+      double Measured_g3ycl = intercept2 + slope2*830;
 
       h_residual_g2ycl->Fill(Measured_g2ycl-vPos_g2ycl[i]);
       h_residual_g3ycl->Fill(Measured_g3ycl-vPos_g3ycl[i]);
