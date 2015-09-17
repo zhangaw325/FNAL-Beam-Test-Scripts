@@ -198,37 +198,37 @@
     //Actually when the histogram is going into the structure it is disturing the original histogram
     //So, we could not able to open it from root file
     //Thats why we make clone so that we can open the original one.
-    TH1F *h_residual_g2xcl1 = (TH1F*) h_residual_g2xcl->Clone("h_residual_g2xcl1");
-    TH1F *h_residual_g3xcl1 = (TH1F*) h_residual_g3xcl->Clone("h_residual_g3xcl1");
-    TH1F *h_residual_g1xcl1 = (TH1F*) h_residual_g1xcl->Clone("h_residual_g1xcl1");
-    TH1F *h_residual_g2ycl1 = (TH1F*) h_residual_g2ycl->Clone("h_residual_g2ycl1");
-    TH1F *h_residual_g3ycl1 = (TH1F*) h_residual_g3ycl->Clone("h_residual_g3ycl1");
-    TH1F *h_residual_g1ycl1 = (TH1F*) h_residual_g1ycl->Clone("h_residual_g1ycl1");
+    TH1F *h_residual_g2xcl_tmp = (TH1F*) h_residual_g2xcl->Clone("h_residual_g2xcl_tmp");
+    TH1F *h_residual_g3xcl_tmp = (TH1F*) h_residual_g3xcl->Clone("h_residual_g3xcl_tmp");
+    TH1F *h_residual_g1xcl_tmp = (TH1F*) h_residual_g1xcl->Clone("h_residual_g1xcl_tmp");
+    TH1F *h_residual_g2ycl_tmp = (TH1F*) h_residual_g2ycl->Clone("h_residual_g2ycl_tmp");
+    TH1F *h_residual_g3ycl_tmp = (TH1F*) h_residual_g3ycl->Clone("h_residual_g3ycl_tmp");
+    TH1F *h_residual_g1ycl_tmp = (TH1F*) h_residual_g1ycl->Clone("h_residual_g1ycl_tmp");
     //===================== END::
-    myValues = I2GFmainLoop(h_residual_g2xcl1,1,10,1);
+    myValues = I2GFmainLoop(h_residual_g2xcl_tmp,1,10,1);
   if (verbose)
       cout<<"Some problem 13b"<<endl;
     mean_g2xcl = myValues.mean; //sigmaEta5=myValues.sigma;
   if (verbose)
       cout<<"Some problem 13c"<<endl;
-    myValues = I2GFmainLoop(h_residual_g2ycl1,1,10,1);
+    myValues = I2GFmainLoop(h_residual_g2ycl_tmp,1,10,1);
   if (verbose)
       cout<<"Some problem 14"<<endl;
     mean_g2ycl = myValues.mean; //
-    myValues = I2GFmainLoop(h_residual_g3xcl1,1,10,1);
+    myValues = I2GFmainLoop(h_residual_g3xcl_tmp,1,10,1);
   if (verbose)
       cout<<"Some problem 15"<<endl;
     mean_g3xcl = myValues.mean; //
-    myValues = I2GFmainLoop(h_residual_g3ycl1,1,10,1);
+    myValues = I2GFmainLoop(h_residual_g3ycl_tmp,1,10,1);
   if (verbose)
       cout<<"Some problem 16"<<endl;
     mean_g3ycl = myValues.mean;
 
-    myValues = I2GFmainLoop(h_residual_g1xcl1,1,10,1);
+    myValues = I2GFmainLoop(h_residual_g1xcl_tmp,1,10,1);
   if (verbose)
       cout<<"Some problem 17"<<endl;
     mean_g1xcl = myValues.mean; //
-    myValues = I2GFmainLoop(h_residual_g1ycl1,1,10,1);
+    myValues = I2GFmainLoop(h_residual_g1ycl_tmp,1,10,1);
   if (verbose)
       cout<<"Some problem 18"<<endl;
     mean_g1ycl = myValues.mean;

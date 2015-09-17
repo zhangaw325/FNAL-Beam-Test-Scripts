@@ -102,11 +102,11 @@ cout<<"Program Start"<<endl;
   while(1){
     char rootfile[50]; sprintf(rootfile,"_iter%i_exclusive.root",iterNb);
     string outputrootname=ResidualRHead+thestring+rootfile;
-    if (verbose)
+    //if (verbose)
   	cout<<"outputroot file name :  "<< outputrootname <<endl;
     TFile* f = new TFile(outputrootname.c_str(),"recreate");
     iterNb++;
-    char name1X[15];sprintf(name1X,"posREF1X_%i",iterNb); char name1Y[15];sprintf(name1Y,"posg1ycl_%i",iterNb);
+    char name1X[15];sprintf(name1X,"posg1xcl_%i",iterNb); char name1Y[15];sprintf(name1Y,"posg1ycl_%i",iterNb);
     char name2X[15];sprintf(name2X,"posg2xcl_%i",iterNb); char name2Y[15];sprintf(name2Y,"posg2ycl_%i",iterNb);
     char name3X[15];sprintf(name3X,"posg3xcl_%i",iterNb); char name3Y[15];sprintf(name3Y,"posg3ycl_%i",iterNb);
 
@@ -219,6 +219,8 @@ cout<<"Program Start"<<endl;
       double Measuredg1xcl = intercept1 + slope1*100.;
       double Measuredg2xcl = intercept1 + slope1*380.;
       double Measuredg3xcl = intercept1 + slope1*830.;
+      if (verbose)
+      cout<<"measured = "<< Measuredg2xcl <<"\tvPos = "<< vPos_g2xcl[i] <<"\tresidualg2xcl = "<<Measuredg2xcl-vPos_g2xcl[i]<<endl;
       residualg2xcl->Fill(Measuredg2xcl-vPos_g2xcl[i]);
       residualg3xcl->Fill(Measuredg3xcl-vPos_g3xcl[i]);
       residualg1xcl->Fill(Measuredg1xcl-vPos_g1xcl[i]);
@@ -273,29 +275,36 @@ cout<<"test"<<  endl;
     gStyle->SetOptFit(1111);
 //
     I2GFvalues myValues;
-    cout<<"=========================>Passed 1 "<<endl;
-    myValues = I2GFmainLoop(residualg2xcl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 1 "<<endl;
+    TH1F *residualg1xcl_tmp = (TH1F*) residualg1xcl->Clone("residualg1xcl_tmp");
+    TH1F *residualg1ycl_tmp = (TH1F*) residualg1ycl->Clone("residualg1ycl_tmp");
+    TH1F *residualg2xcl_tmp = (TH1F*) residualg2xcl->Clone("residualg2xcl_tmp");
+    TH1F *residualg2ycl_tmp = (TH1F*) residualg2ycl->Clone("residualg2ycl_tmp");
+    TH1F *residualg3xcl_tmp = (TH1F*) residualg3xcl->Clone("residualg3xcl_tmp");
+    TH1F *residualg3ycl_tmp = (TH1F*) residualg3ycl->Clone("residualg3ycl_tmp");
+    myValues = I2GFmainLoop(residualg2xcl_tmp, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 2 "<<endl;
     meanREF2X = myValues.mean; sigmag2xcl=myValues.sigma;
-    cout<<"=========================>Passed 2 "<<endl;
-    myValues = I2GFmainLoop(residualg2ycl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 2 "<<endl;
+    myValues = I2GFmainLoop(residualg2ycl_tmp, 1, 10 , 1);
     meanREF2Y = myValues.mean; sigmag2ycl=myValues.sigma;
-    cout<<"=========================>Passed 3 "<<endl;
-    myValues = I2GFmainLoop(residualg3xcl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 3 "<<endl;
+    myValues = I2GFmainLoop(residualg3xcl_tmp, 1, 10 , 1);
     meanREF3X = myValues.mean; sigmag3xcl=myValues.sigma;
-    cout<<"=========================>Passed 4 "<<endl;
-    myValues = I2GFmainLoop(residualg3ycl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 4 "<<endl;
+    myValues = I2GFmainLoop(residualg3ycl_tmp, 1, 10 , 1);
     meanREF3Y = myValues.mean; sigmag3ycl=myValues.sigma;
    /* myValues = I2GFmainLoop(residualUVA3X, 1, 10 , 1);
     meanUVA3X = myValues.mean; sigmaUVA3X=myValues.sigma;
     myValues = I2GFmainLoop(residualUVA3Y, 1, 10 , 1);
     meanUVA3Y = myValues.mean; sigmaUVA3Y=myValues.sigma;*/
-    cout<<"=========================>Passed 5 "<<endl;
-    myValues = I2GFmainLoop(residualg1xcl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 5 "<<endl;
+    myValues = I2GFmainLoop(residualg1xcl_tmp, 1, 10 , 1);
     meanREF1X = myValues.mean; sigmag1xcl=myValues.sigma;
-    cout<<"=========================>Passed 6 "<<endl;
-    myValues = I2GFmainLoop(residualg1ycl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 6 "<<endl;
+    myValues = I2GFmainLoop(residualg1ycl_tmp, 1, 10 , 1);
     meanREF1Y = myValues.mean; sigmag1ycl=myValues.sigma;
-    cout<<"=========================>Passed 7 "<<endl;
+    if (verbose) cout<<"=========================>Passed 7 "<<endl;
 //
   if (verbose)
     cout<<"residual mean: "<<meanREF2X<<"\t"<<meanREF2Y<<"\t"<<meanREF3X<<"\t"<<meanREF3Y<<"\t"<</*meanUVA3X<<"\t"<<meanUVA3Y<<"\t"<<*/meanREF1X<<"\t"<<meanREF1Y<<endl;
@@ -316,11 +325,13 @@ cout<<"test"<<  endl;
     myValues = I2GFmainLoop(dyREF1UVA3, 1, 10 , 1);
     myValues = I2GFmainLoop(dyREF1REF3, 1, 10 , 1);
     */
-    myValues = I2GFmainLoop(angleREF2, 1, 10 , 1);
-    cout<<"=========================>Passed 8 "<<endl;
+    TH1F *angleREF2_tmp = (TH1F*) angleREF2->Clone("angleREF2_tmp");
+    TH1F *angleREF3_tmp = (TH1F*) angleREF3->Clone("angleREF3_tmp");
+    myValues = I2GFmainLoop(angleREF2_tmp, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 8 "<<endl;
     meanAngleREF2=myValues.mean;
-    myValues = I2GFmainLoop(angleREF3, 1, 10 , 1);
-    cout<<"=========================>Passed 9 "<<endl;
+    myValues = I2GFmainLoop(angleREF3_tmp, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 9 "<<endl;
     meanAngleREF3=myValues.mean;
 
 
@@ -339,13 +350,15 @@ cout<<"test"<<  endl;
     totalAngleREF2 += aREF2REF1;
    // totalAngleUVA3 += aUVA3REF2;
     totalAngleREF3 += aREF3REF1;
-    fout3<<sigmag2xcl<<"\t"<<sigmag2ycl<<"\t"<<sigmag3xcl<<"\t"<<sigmag3ycl<<"\t"<</*sigmaUVA3X<<"\t"<<sigmaUVA3Y<<*/"\t"<<sigmag1xcl<<"\t"<<sigmag1ycl<<"\t"<<totalAngleREF2<<"\t"<</*totalAngleUVA3<<*/"\t"<<totalAngleREF3<<"\t"<<meanXChi2<<"\t"<<meanYChi2<<endl;
+    fout3<<sigmag1xcl<<"\t"<<sigmag1ycl<<"\t"<<sigmag2xcl<<"\t"<<sigmag2ycl<<"\t"<</*sigmaUVA3X<<"\t"<<sigmaUVA3Y<<*/"\t"<<sigmag3xcl<<"\t"<<sigmag3ycl<<"\t"<<totalAngleREF2<<"\t"<</*totalAngleUVA3<<*/"\t"<<totalAngleREF3<<"\t"<<meanXChi2<<"\t"<<meanYChi2<<endl;
+    cout<<sigmag1xcl<<"\t"<<sigmag1ycl<<"\t"<<sigmag2xcl<<"\t"<<sigmag2ycl<<"\t"<</*sigmaUVA3X<<"\t"<<sigmaUVA3Y<<*/"\t"<<sigmag3xcl<<"\t"<<sigmag3ycl<<"\t"<<totalAngleREF2<<"\t"<</*totalAngleUVA3<<*/"\t"<<totalAngleREF3<<"\t"<<meanXChi2<<"\t"<<meanYChi2<<endl;
     
     f->Write();
     f->Close();
     //delete funPosEta5; delete funPosg1ycl; delete funPosUVA3Y; delete funPosg3ycl; delete funPosg2ycl;
     
     double factor = -0.2;
+    shiREF1X = meanREF1X*factor; shiREF1Y = meanREF1Y*factor; 
     shiREF2X = meanREF2X*factor; shiREF2Y = meanREF2Y*factor; 
     shiREF3X = meanREF3X*factor; shiREF3Y = meanREF3Y*factor; 
     factor=0.2;
@@ -354,10 +367,10 @@ cout<<"test"<<  endl;
     aREF3REF1 = meanAngleREF3*factor;
    // aEta5REF2 = meanAngleEta5*factor;
    // if(iterNb>0) break; // only cylce once.
-    if((meanREF2X>=-0.001 && meanREF2X<=0.001) && (meanREF2Y>=-0.001 && meanREF2Y<=0.001))
-    if((meanREF3X>=-0.001 && meanREF3X<=0.001) && (meanREF3Y>=-0.001 && meanREF3Y<=0.001))
-    if((meanREF1X>=-0.001 && meanREF1X<=0.001) && (meanREF1Y>=-0.001 && meanREF1Y<=0.001))
-    if(meanAngleREF3>=-0.001 && meanAngleREF3<=0.001 && meanAngleREF2>=-0.001 && meanAngleREF2<=0.001)
+    if((meanREF1X>=-0.05 && meanREF1X<=0.05) && (meanREF1Y>=-0.05 && meanREF1Y<=0.05))
+    if((meanREF2X>=-0.05 && meanREF2X<=0.05) && (meanREF2Y>=-0.05 && meanREF2Y<=0.05))
+    if((meanREF3X>=-0.05 && meanREF3X<=0.05) && (meanREF3Y>=-0.05 && meanREF3Y<=0.05))
+    if(meanAngleREF3>=-0.05 && meanAngleREF3<=0.05 && meanAngleREF2>=-0.05 && meanAngleREF2<=0.05)
           {
             cout<<"find it...iterating "<<iterNb<<" times."<<endl;
             break;
