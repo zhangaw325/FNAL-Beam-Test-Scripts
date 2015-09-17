@@ -51,9 +51,10 @@ struct I2GFvalues
   TF1 *fit_func;
 };
 
-I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowFit)
+I2GFvalues I2GFmainLoop(TH1F *htemp1, int N_iter, float N_sigma_range, bool ShowFit)
 //Arguments: (histo to be fit, N iterations to find peak using gaus fit, fit range param., do or do not plot fit on histo)
 {
+  TH1F *htemp = (TH1F*) htemp1->Clone();
   I2GFvalues myI2GFvalues;
 
   bool verbose = 0;
