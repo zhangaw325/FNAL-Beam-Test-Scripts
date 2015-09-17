@@ -51,10 +51,13 @@ struct I2GFvalues
   TF1 *fit_func;
 };
 
-I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowFit)
+I2GFvalues I2GFmainLoop(TH1F *htemp1, int N_iter, float N_sigma_range, bool ShowFit)
 //Arguments: (histo to be fit, N iterations to find peak using gaus fit, fit range param., do or do not plot fit on histo)
 {
+  TH1F *htemp = (TH1F*) htemp1->Clone();
   I2GFvalues myI2GFvalues;
+
+  bool verbose = 0;
 
   //Set initial values...(in case fit fails)
   myI2GFvalues.rchi2 = -100;
@@ -64,9 +67,9 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
   myI2GFvalues.sigma_err = -100;
 
   Int_t NPeaks ;
-  TSpectrum *s;// = new TSpectrum(1,1); //TSpectrum(1,1)->Argument: (Number of peaks to find, Distance to neighboring peak: "1"-->3sigma)
+  TSpectrum *s= new TSpectrum(); //TSpectrum(1,1)->Argument: (Number of peaks to find, Distance to neighboring peak: "1"-->3sigma)
  
-
+  //int NPeaks;
   Double_t *Peak;                     //TSpectrum *s = new TSpectrum(); --> No warning message 
   Double_t *PeakAmp;                    
   float peak_pos = 0;
@@ -114,8 +117,14 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
   binMaxCnt_value = (Double_t) htemp->GetXaxis()->GetBinCenter(binMaxCnt); //if the bin number is known and the bin value (in x-axis units) is wanted
   binMaxCnt_counts = (Int_t) htemp->GetBinContent(binMaxCnt); //Finds counts within particular bin
 
+  if (verbose)
+  cout<<"binMaxCnt = "<<binMaxCnt<<"\tbinMaxCnt_value = "<<binMaxCnt_value<<"\t binMaxCnt_counts = "<<binMaxCnt_counts<<endl;
+
   //---------TSpectrum Peak Finding Parameters--------
   if(ShowFit) NPeaks = s->Search(htemp, 2,"",0.5); 
+  if (verbose)
+      cout<<"NPeaks = "<<NPeaks<<endl;
+
   /*opens a canvas (one time in a loop), even with:  s->Search(htemp, 2, "nodraw", 0.9);  else  NPeaks = s->Search(htemp, 2, "", 0.5);  //s->Search(htemp, 2, "nodraw", 0.9);
 
   Npeaks = s->GetNPeaks(); //If using this, need pointer in declaration above: Int_t *NPeaks
@@ -123,6 +132,10 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
 */
   Peak = s->GetPositionX();
   PeakAmp = s->GetPositionY();
+
+
+  if (verbose)
+      cout<<"Peak = "<<Peak[0]<<"\tPeakAmp = "<<PeakAmp[0]<<endl;
 
   for (int i=0; i<NPeaks; i++)
     {
@@ -134,6 +147,12 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
     }
   peak_pos_bin = htemp->GetXaxis()->FindBin(peak_pos); //if the bin value (in x-axis units) is known and the bin number is wanted
   peak_pos_count = htemp->GetBinContent(peak_pos_bin);  //counts in particular bin
+
+
+  if (verbose)
+      cout<<"peak_pos_bin = "<<peak_pos_bin<<"\tpeak_pos_count = "<<peak_pos_count<<endl;
+
+
 
   //------------------------------------------------------------------------------------------------------------------  
 
@@ -208,8 +227,8 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
 
 
 
-  //for (int i=0; i< (N_iter - 1); i++)
-  for (int i=0; i< 2; i++)  //8 seems to work well, so let's keep it constant here.
+  for (int i=0; i< (N_iter ); i++)
+  //for (int i=0; i< 2; i++)  //8 seems to work well, so let's keep it constant here.
     {
       //htemp->Fit("gaus", "", "",(f_mean - (N_sigma_range*f_sigma)), (f_mean + (N_sigma_range*f_sigma) ) ); //show fit
       htemp->Fit("gaus", "Q0", "",(f_mean - (N_sigma_range*f_sigma)), (f_mean + (N_sigma_range*f_sigma) ) ); //don't show fit
@@ -227,9 +246,11 @@ cout << " sigma " << f_sigma << endl;
 
   peak =  func->GetParameter(0); //Amplitude
 
+  if (verbose)
+      cout<<"peak = "<<peak<<endl;
   float bgd_h = 0.25; //background height ~ bgd_h*gaus_amp
 
-  func1 = new TF1("func1", "gaus");
+  func1 = new TF1("func1", "gaus",(f_mean - 3*f_sigma), (f_mean + 3*f_sigma));
   //-----------Fit Parameter constraints not needed here (see below):
   //func1->SetParLimits(0, 0, 1000000);
   //func1->SetParameters(f_const, f_mean, f_sigma);    //Here: (Par1 initial value, Par2 initial value, Par3 initial value, etc)
@@ -238,7 +259,7 @@ cout << " sigma " << f_sigma << endl;
   //func1->SetParLimits(1, f_mean-(f_sigma/2),f_mean+(f_sigma/2) );
   //func1->SetParLimits(2, f_sigma-(f_sigma/2),f_sigma+(f_sigma/2) );
   
-  func2 = new TF1("func2", "gaus");
+  func2 = new TF1("func2", "gaus",(f_mean - 3*f_sigma), (f_mean + 3*f_sigma));
   //-----------Fit Parameter constraints not needed here (see below):
   //func2->SetParameters(f_const/10, f_mean, 4*f_sigma); //(const, mean, sigma)     
   //func2->SetParLimits(0,-1,(0.1*peak_pos_amp) );        //(const)     
@@ -253,7 +274,15 @@ cout << " sigma " << f_sigma << endl;
 
   //func2 = new TF1("func2", "pol2");
   
-  func3 = new TF1("func3", "func1 + func2", (f_mean - 3*f_sigma), (f_mean + 3*f_sigma) );
+  if (verbose)
+      cout<<"f_mean = "<<f_mean<<"\tf_sigma = "<<f_sigma<<endl;
+
+  //func3 = new TF1("func3", "func1 + func2", (f_mean - 3*f_sigma), (f_mean + 3*f_sigma) );
+  func3 = new TF1("func3","gaus(0) + gaus(3)",(f_mean - 3*f_sigma), (f_mean + 3*f_sigma));
+  //func3 = new TF1("func3", "func1 ", (f_mean - 3*f_sigma), (f_mean + 3*f_sigma) );
+
+  if (verbose)
+      cout<<"ERROR 1"<<endl;
   //-----------Fit Parameter constraints:
   func3->SetParameters(f_const, f_mean, f_sigma, f_const/10, f_mean, 4*f_sigma); //Set Initial Valules
   //func3->SetParLimits(0, 0, 1000000);
@@ -264,10 +293,16 @@ cout << " sigma " << f_sigma << endl;
   //func3->SetParLimits(5, 0, 1000000);
 
   //htemp->Fit("func3");//, "", "",(f_mean - (N_sigma_range*f_sigma)), (f_mean + (N_sigma_range*f_sigma) ) ); //Show Fit
+  if (verbose)
+      cout<<"ERROR 2"<<endl;
   htemp->Fit("func3", "Q0"); //Don't show fit
+  if (verbose)
+      cout<<"ERROR 3"<<endl;
   func  = htemp->GetFunction("func3");
   Chi2 = func3->GetChisquare();
   NDF = func->GetNDF();
+  if (verbose)
+      cout<<"Chi2 = "<<Chi2<<endl;
   if (NDF != 0) f_RChi2 = Chi2/NDF;
   f_const = func3->GetParameter(0);
   f_mean = func3->GetParameter(1);
@@ -281,6 +316,10 @@ cout << " sigma " << f_sigma << endl;
   f_sigma2 = func3->GetParameter(5);
   f_sigma_err2 = func3->GetParError(5);
   func3->SetParNames("Primary Constant", "Primary Mean", "Primary Sigma", "Background Constant", "Background Mean", "Background Sigma");
+
+
+  if (verbose)
+      cout<<"f_mean = "<<f_mean<<"\tf_mean_err = "<<f_mean_err<<endl;
   //for (int j=0; j< (N_iter - 1); j++)
   for (int j=0; j<4; j++)
     {
@@ -309,6 +348,8 @@ cout << " sigma " << f_sigma << endl;
       f_sigma2 = func3->GetParameter(5);
       f_sigma_err2 = func3->GetParError(5);
     }
+  if (verbose)
+      cout<<"ERROR 4"<<endl;
 
   
 
@@ -333,6 +374,8 @@ cout << " sigma " << f_sigma << endl;
       myI2GFvalues.sigma_err = f_sigma_err2;
       //myI2GFvalues.fit_func = new TF1("fit_func", "func3"); //not needed
     }
+  if (verbose)
+      cout<<"ERROR 5"<<endl;
   
   return myI2GFvalues;
 
