@@ -10,9 +10,11 @@
 void SelectTrackerEvents()
 {
     fstream fin("Hit_Position_Info.txt",ios::in);
+    fstream fout_1("Eff.txt",ios::out);
 
-    bool verbose = 1;
-    
+    bool verbose = 0;
+   float icut1 =0; float icut2=0; float icut3=0; float icut4=0; float icut5=0; float icut6 =0; float icut7=0; float icut8=0; float icut9=0; float icut10=0; float icut11=0;
+
     //number of hits
     vector <int> NHits_g2xcl, NHits_g2ycl, NHits_g3xcl, NHits_g3ycl, NHits_g1xcl, NHits_g1ycl;
     vector <int> NHits_sCMSNS2LC1, NHits_sCMSNS2LC2, NHits_sCMSNS2LC3;
@@ -74,6 +76,7 @@ void SelectTrackerEvents()
     int nbHits;
     double charge,position,strip;
     int aSingleStrip; double aSingleCharge;
+    fout_1<<"RunNo\tTotal\tcut1\tcut2\tcut3\tcut4\tcut5\tcut6\tcut7\tcut8\tcut9\tcut10\tcut11"<<endl;
     while(fin.good()) 
     {
 	fin>>firstString;
@@ -84,7 +87,7 @@ void SelectTrackerEvents()
 	    if (verbose)
 		cout<<"evnt nb = "<<evtNb<< "\t firstString = "<< firstString << "\t count = "<< count <<endl;	    
 	    if(evtNb%5000==0) 
-		cout<<"event number "<<evtNb<<endl;
+	      cout<<"event number "<<evtNb<<endl;
 	    continue;
 	}
 	//if (evtNb++ > 1) continue;	// Just added this line to read only one event
@@ -92,7 +95,9 @@ void SelectTrackerEvents()
 	if (verbose)
 	    cout<<"nbHits = "<<nbHits << "\t charge = "<< charge << "\t position = "<< position << "\t strip = "<<strip<<endl;
 	    //cout<<"det name = "<<firstString<<"\tnbHits = "<<nbHits << "\t charge = "<< charge << "\t position = "<< position << "\t strip = "<<strip<<endl;
-	for(int i=0;i<nbHits;i++)
+		for(int i=0;i<nbHits;i++)
+	//	for(int i=0;i<100;i++)
+
 	{
 	    fin>>aSingleStrip>>aSingleCharge;
 	}
@@ -167,7 +172,7 @@ void SelectTrackerEvents()
 	    }
 	//}
 	    if (verbose)
-	cout<<endl;
+	      cout<<endl;
     }
 
     
@@ -204,60 +209,100 @@ void SelectTrackerEvents()
     TH1F* h_NHits_sCMSNS2LC2=new TH1F("h_NHits_sCMSNS2LC2","",500, -1, 10);h_NHits_sCMSNS2LC2->SetXTitle("Number of Hits");h_NHits_sCMSNS2LC2->SetYTitle("Frequency");h_NHits_sCMSNS2LC2->SetTitleSize(0.04,"XY");h_NHits_sCMSNS2LC2->SetLabelSize(0.04,"XY");
     TH1F* h_NHits_sCMSNS2LC3=new TH1F("h_NHits_sCMSNS2LC3","",500, -1, 10);h_NHits_sCMSNS2LC3->SetXTitle("Number of Hits");h_NHits_sCMSNS2LC3->SetYTitle("Freqency");h_NHits_sCMSNS2LC3->SetTitleSize(0.04,"XY");h_NHits_sCMSNS2LC3->SetLabelSize(0.04,"XY");
     //    cout << " ####################" <<endl;
+    //////////////////////////////////////////////////////////////////////////////
 
+    //     PROFILE PLOTS
+
+    //////////////////////////////////////////////////////////////////////////////
+
+    //    cout<<"entries before : "<<Pos_g1xcl.size()<<endl;
+    TH2F *BeamProfile_Tracker_1=new TH2F("BeamProfile_Tracker_1","",32,0,100,32,0,100);
+    TH2F *BeamProfile_Tracker_2=new TH2F("BeamProfile_Tracker_2","",32,0,100,32,0,100);
+    TH2F *BeamProfile_Tracker_3=new TH2F("BeamProfile_Tracker_3","",32,0,100,32,0,100);
+
+    //    cout<<"entries : "<<Pos_g1xcl.size()<<endl;
+    // int icut1 =0; int icut2=0; int icut3=0; int icut4=0; int icut5=0; int icut6 =0; int icut7=0; int icut8=0; int icut9=0; int icut10=0; int icut11=0;
 	int totalEvents = 0;
 	for(int i=0; i<evtNb; i++){
-	//set number of hits cut conditions                                                                                                     
+	//set number of hits cut conditions    
+	  //	  cout<<"entries after: "<<Pos_g1xcl.size()<<endl;                                                                                                 
 	Bool_t cutNHits_g2 = false;
 	if(NHits_g2xcl.at(i)>0 && NHits_g2ycl.at(i)>0)
 	  {	
 	    cutNHits_g2 = true;
+	    icut1++;
 	  }
 	Bool_t cutNHits_g3 = false;
         if(NHits_g3xcl.at(i)>0 && NHits_g3ycl.at(i)>0)
           {
             cutNHits_g3 = true;
-          }
+	    icut2++;
+	  }
+	
 	Bool_t cutNHits_g1 = false;
         if(NHits_g1xcl.at(i)>0 && NHits_g1ycl.at(i)>0)
           {
             cutNHits_g1 = true;
-          }
+	    icut3++;
+	  }
+	
 	Bool_t cutNHits_LC1 = false;
-	if(NHits_sCMSNS2LC1.at(i) > 0) cutNHits_LC1 = true;
-
+	if(NHits_sCMSNS2LC1.at(i) > 0) 
+	  {
+	    cutNHits_LC1 = true;
+	    icut4++;
+	  }
+	
 	Bool_t cutNHits_LC2 = false;
-        if(NHits_sCMSNS2LC2.at(i) > 0) cutNHits_LC2 = true;
-
+        if(NHits_sCMSNS2LC2.at(i) > 0) 
+	  {
+	    cutNHits_LC2 = true;
+	    icut5++;
+	  }
+	
 	Bool_t cutNHits_LC3 = false;
-        if(NHits_sCMSNS2LC3.at(i) > 0) cutNHits_LC3 = true;
-
+        if(NHits_sCMSNS2LC3.at(i) > 0)
+	  {
+	    cutNHits_LC3 = true;
+	    icut6++;
+	  }
+	
 	//set position cut consitions
 	Bool_t cutPos_g2X = false;
         if(Pos_g2xcl.at(i)>=0. && Pos_g2xcl.at(i)<=120.)
           {
             cutPos_g2X = true;
-          }
+	    icut7++;
+	  }
+	
 	Bool_t cutPos_g2Y = false;
         if(Pos_g2ycl.at(i)>=0 && Pos_g2ycl.at(i)<=120)
           {
             cutPos_g2Y = true;
-          }
+	    icut8++;
+	  }
+	
 	Bool_t cutPos_g3X = false;
 	if(Pos_g3xcl.at(i)>=0 && Pos_g3xcl.at(i)<=120)
           {
             cutPos_g3X = true;
-          }
+	    icut9++;
+	  }
+	
 	Bool_t cutPos_g1X = false;
 	if(Pos_g1xcl.at(i)>=0 && Pos_g1xcl.at(i)<=120)
           {
             cutPos_g1X = true;
-          }
+	    icut10++;
+	  }
+	
 	Bool_t cutPos_g1Y = false;
         if(Pos_g1ycl.at(i)>=0 && Pos_g1ycl.at(i)<=120)
           {
             cutPos_g1Y = true;
-          }
+	    icut11++;
+	  }
+	
 	//	cout << "######################"<<endl;
 	
 	//then combine the cut conditions & fill histograms
@@ -302,10 +347,68 @@ void SelectTrackerEvents()
 	  h_NHits_sCMSNS2LC1->Fill(NHits_sCMSNS2LC1.at(i));
 	  h_NHits_sCMSNS2LC2->Fill(NHits_sCMSNS2LC2.at(i));
 	  h_NHits_sCMSNS2LC3->Fill(NHits_sCMSNS2LC3.at(i));
-	  cout<<"totalEvents = "<<totalEvents<<endl;
-	}
-	}
-       	fout.close();
+	 
+	  //       	  cout<<"totalEvents = "<<totalEvents<<endl;
+	//trigger loop
+	  //	  for(unsigned int i=0;i<Pos_g1xcl.size();i++){
+	    //	    cout<<"chk thi :"<<Pos_g1xcl.at(i)<<endl;
+
+	  
+	  BeamProfile_Tracker_1->Fill(Pos_g1xcl.at(i),Pos_g1ycl.at(i)); // BeamProfile_Tracker_1->Draw("colz");
+	  BeamProfile_Tracker_2->Fill(Pos_g2xcl.at(i),Pos_g2ycl.at(i)); // BeamProfile_Tracker_2->Draw("colz");
+	  BeamProfile_Tracker_3->Fill(Pos_g3xcl.at(i),Pos_g3ycl.at(i)); //  BeamProfile_Tracker_3->Draw("colz");
+	  
+	  BeamProfile_Tracker_1->Draw("COLZ");
+	  BeamProfile_Tracker_2->Draw("COLZ");
+	  BeamProfile_Tracker_3->Draw("COLZ");  
+	  
+	}// trigger loop
+	}// no of events
+	// BeamProfile_Tracker_1->Write();
+	float Eff[11];
+       
+	  Eff[0] = icut1/evtNb,
+	  Eff[1] = icut2/evtNb,
+	  Eff[2] = icut3/evtNb,
+	  Eff[3] = icut4/evtNb,
+	  Eff[4] = icut5/evtNb,
+	  Eff[5] = icut6/evtNb,
+	  Eff[6] = icut7/evtNb,
+	  Eff[7] = icut8/evtNb,
+	  Eff[8] = icut9/evtNb,
+	  Eff[9] = icut10/evtNb,
+	  Eff[10] = icut11/evtNb,
+	    /* for(unsigned int i=0; i<11; i++){
+	      cout<<"efficiency :"<< Eff[i]<<endl;
+	      }*/
+	  cout<<"efficiency 1 :"<<Eff[0]<<endl;
+	  cout<<"efficiency 2 :"<<Eff[1]<<endl;
+	  cout<<"efficiency 3 :"<<Eff[2]<<endl;
+	  cout<<"efficiency 4 :"<<Eff[3]<<endl;
+	  cout<<"efficiency 5 :"<<Eff[4]<<endl;
+	  cout<<"efficiency 6 :"<<Eff[5]<<endl;
+	  cout<<"efficiency 7 :"<<Eff[6]<<endl;
+	  cout<<"efficiency 8 :"<<Eff[7]<<endl;
+	  cout<<"efficiency 9 :"<<Eff[8]<<endl;
+	  cout<<"efficiency 10 :"<<Eff[9]<<endl;
+	  cout<<"efficiency 11 :"<<Eff[10]<<endl;
+	    
+
+	  fout_1<<"\t"<<"\t"<<Eff[0]<<"\t"<<Eff[1]<<"\t"<<Eff[2]<<"\t"<<Eff[3]<<"\t"<<Eff[4]<<"\t"<<Eff[5]<<"\t"<<Eff[6]<<"\t"<<Eff[7]<<"\t"<<Eff[8]<<"\t"<<Eff[9]<<"\t"<<Eff[10]<<endl;
+	cout<< "cut1 : "<< icut1<<endl;
+	cout<< "cut2 : "<< icut2<<endl;
+	cout<< "cut3 : "<< icut3<<endl;
+	cout<< "cut4 : "<< icut4<<endl;
+	cout<< "cut5 : "<< icut5<<endl;
+	cout<< "cut6 : "<< icut6<<endl;
+	cout<< "cut7 : "<< icut7<<endl;
+	cout<< "cut8 : "<< icut8<<endl;
+	cout<< "cut9 : "<< icut9<<endl;
+	cout<< "cut10 : "<< icut10<<endl;
+	cout<< "cut11 : "<< icut11<<endl;
+
+	fout.close();
+	fout_1.close();
 	f->Write();
 	f->Close();
-}
+}//SelectTrackerEvents

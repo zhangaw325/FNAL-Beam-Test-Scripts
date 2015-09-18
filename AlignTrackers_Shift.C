@@ -38,7 +38,7 @@
     nbLines++;
   } // getting input
   fin.close();
-
+  cout << "................................................"<<endl;
   double shi_g2xcl=62.36, shi_g2ycl=55.83;
   double shi_g3xcl=62.72, shi_g3ycl=56.06;
   double shi_g1xcl=61.91, shi_g1ycl=55.68;
@@ -48,7 +48,7 @@
   double mean_g3xcl=0.0, mean_g3ycl=0.0;
   double mean_g1xcl=0.0, mean_g1ycl=0.0;
 
-
+  cout << "****************************************************"<<endl;
   Int_t iterNb=0;
   if (verbose)
       cout<<"Some problem 1"<<endl;
@@ -59,6 +59,7 @@
     string outputrootname=ResidualRHead+thestring+rootfile;
     TFile* f = new TFile(outputrootname.c_str(),"recreate");  
     iterNb++;
+    cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     char name2X[15];sprintf(name2X,"Pos_g2xcl_%i",iterNb); char name2Y[15];sprintf(name2Y,"Pos_g2ycl_%i",iterNb);
     char name3X[15];sprintf(name3X,"Pos_g3xcl_%i",iterNb); char name3Y[15];sprintf(name3Y,"Pos_g3ycl_%i",iterNb);
     char name1X[15];sprintf(name1X,"Pos_g1xcl_%i",iterNb); char name1Y[15];sprintf(name1Y,"Pos_g1xcl_%i",iterNb);
@@ -95,6 +96,7 @@
 
   if (verbose)
       cout<<"Some problem 5"<<endl;
+    cout<<"///////////////////////////////"<<endl;
     int nnnn=0;
     //TGraph* g1 = new TGraph();
     //TF1* f1 = new TF1("line1","[0]+[1]*x",0,900);
