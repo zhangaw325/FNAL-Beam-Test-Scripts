@@ -25,112 +25,120 @@ int tracking(string thestring, double iterNbX, double iterNbY){
   double pREF3X=0.0, pREF3Y=0.0;
   //double pZZ1=0.0, pZZ2=0.0;
   double pEta5=0.0;
-  const int NNNNN = 6447;
-  double vpREF1X[NNNNN]; double vpREF1Y[NNNNN];
-  double vpREF2X[NNNNN]; double vpREF2Y[NNNNN];
-  double vpREF3X[NNNNN]; double vpREF3Y[NNNNN];
-  //vector<double> vpZZ1; vector<double> vpZZ2;
-  double vpEta5[NNNNN];
-  double shiREF1X=-9.92822, shiREF1Y=-0.68756;
-  double shiREF2X=12.26791212, shiREF2Y=2.02708225;
-  double shiREF3X=7.4824985, shiREF3Y=-2.35562;
-  double shiEta5=0.0;//0.01509;
-  double preshiREF1X=-2265, preshiREF1Y=-32;  
-  double preshiREF2X=-2265, preshiREF2Y=-32;  //2127.4275
-  double preshiREF3X=-2265, preshiREF3Y=-32;
-  double aREF2REF1=0.0056995;//start angle: 0.01197;
-  double aREF3REF1=-0.044254312;//-0.0171;//start angle: 0.008273;
-  double aEta5REF1=0.0;//0.008098; 
-  double tempREF2X, tempREF2Y, tempREF3X, tempREF3Y, tempUVA3X, tempUVA3Y, tempREF1X, tempREF1Y, tempEta5;
-  double meanREF2X=0.0, meanREF2Y=0.0, meanREF3X=0.0, meanREF3Y=0.0, meanUVA3X=0.0, meanUVA3Y=0.0, meanREF1X=0.0, meanREF1Y=0.0, meanEta5=0.0;
-  double sigmaREF2X=0.0,sigmaREF2Y=0.0,sigmaREF3X=0.0,sigmaREF3Y=0.0,sigmaUVA3X=0.0,sigmaUVA3Y=0.0,sigmaREF1X=0.0,sigmaREF1Y=0.0,sigmaEta5=0.0;
-  double meanXChi2=0.0,meanYChi2=0.0, totalChi2=0.0; // chi square of tracks.
-  double maximum=0.0, rms=0.0, lRange=0.0, hRange=0.0;  
-
-  TH1D* hpREF1X = 0;
-  TH1D* hpREF1Y = 0;  
-  TH1D* hpREF2X = 0;
-  TH1D* hpREF2Y = 0;
-  TH1D* hpREF3X = 0;
-  TH1D* hpREF3Y = 0; 
-  TH1D* hpEta5  = 0;
   
-  TH1D* residualREF1X = 0;
-  TH1D* residualREF1Y = 0;
-  TH1D* residualREF2X = 0;
-  TH1D* residualREF2Y = 0;
-  TH1D* residualREF3X = 0;
-  TH1D* residualREF3Y = 0;
-  TH1D* residualEta5 = 0;
-  
-  TH1D* angleREF2=0;
-  TH1D* angleREF3=0;
-  TH1D* angleEta5=0;
-  TH1D* xTrackChi2=0;
-  TH1D* yTrackChi2=0;
-  
-  preshiREF1X = -1810-iterNbX;// - iterNbX*2;
-  preshiREF2X = preshiREF1X; preshiREF3X=preshiREF1X;
-  preshiREF1Y = -40.0 + iterNbY*0.2;
-  preshiREF2Y = preshiREF1Y;  preshiREF3Y = preshiREF1Y;
-  
-  char cp1x[20]; sprintf(cp1x,"%.2f",preshiREF1X);
-  char cp1y[20]; sprintf(cp1y,"%.2f",preshiREF1Y);
-
-  string fout1name = iterHead + thestring + "_inclusive_X_" + cp1x + ".txt"; //TString::Itoa(preshiREF2X,10).Data()
-  //string fout3name = residualSigmaHead+ thestring + "_inclusive_X_" + cp2x + ".txt"; //TString::Itoa(preshiREF2X,10).Data()
-  //string fout2name = chi2Head + thestring + "_inclusive_X_" + cp2x  + ".txt"; //TString::Itoa(preshiREF2X,10).Data()
-  fstream fout1(fout1name.c_str(),ios::out|ios::app);
-  //fstream fout3(fout3name.c_str(),ios::out|ios::app);
-  //fstream fout2(fout2name.c_str(),ios::out|ios::app);
+    double shiREF1X=-9.92822, shiREF1Y=-0.68756;
+    double shiREF2X=12.26791212, shiREF2Y=2.02708225;
+    double shiREF3X=7.4824985, shiREF3Y=-2.35562;
+    double shiEta5=0.0;//0.01509;
+    double preshiREF1X=-2265, preshiREF1Y=-32;
+    double preshiREF2X=-2265, preshiREF2Y=-32;  //2127.4275
+    double preshiREF3X=-2265, preshiREF3Y=-32;
+    double aREF2REF1=0.0056995;//start angle: 0.01197;
+    double aREF3REF1=-0.044254312;//-0.0171;//start angle: 0.008273;
+    double aEta5REF1=0.0;//0.008098;
+    double tempREF2X, tempREF2Y, tempREF3X, tempREF3Y, tempREF1X, tempREF1Y, tempEta5;
+    double meanREF2X=0.0, meanREF2Y=0.0, meanREF3X=0.0, meanREF3Y=0.0, meanREF1X=0.0, meanREF1Y=0.0, meanEta5=0.0;
+    double sigmaREF2X=0.0,sigmaREF2Y=0.0,sigmaREF3X=0.0,sigmaREF3Y=0.0, sigmaREF1X=0.0,sigmaREF1Y=0.0,sigmaEta5=0.0;
+    double meanXChi2=0.0,meanYChi2=0.0, totalChi2=0.0; // chi square of tracks.
+    double maximum=0.0, rms=0.0, lRange=0.0, hRange=0.0;
+    
+    TH1D* hpREF1X = 0;
+    TH1D* hpREF1Y = 0;
+    TH1D* hpREF2X = 0;
+    TH1D* hpREF2Y = 0;
+    TH1D* hpREF3X = 0;
+    TH1D* hpREF3Y = 0;
+    TH1D* hpEta5  = 0;
+    
+    TH1D* residualREF1X = 0;
+    TH1D* residualREF1Y = 0;
+    TH1D* residualREF2X = 0;
+    TH1D* residualREF2Y = 0;
+    TH1D* residualREF3X = 0;
+    TH1D* residualREF3Y = 0;
+    TH1D* residualEta5 = 0;
+    
+    TH1D* angleREF2=0;
+    TH1D* angleREF3=0;
+    TH1D* angleEta5=0;
+    TH1D* xTrackChi2=0;
+    TH1D* yTrackChi2=0;
+    
+    preshiREF1X = -1810-iterNbX;// - iterNbX*2;
+    preshiREF2X = preshiREF1X; preshiREF3X=preshiREF1X;
+    preshiREF1Y = -40.0 + iterNbY*0.2;
+    preshiREF2Y = preshiREF1Y;  preshiREF3Y = preshiREF1Y;
+    
+    char cp1x[20]; sprintf(cp1x,"%.2f",preshiREF1X);
+    char cp1y[20]; sprintf(cp1y,"%.2f",preshiREF1Y);
+    
+    string fout1name = iterHead + thestring + "_inclusive_X_" + cp1x + ".txt"; //TString::Itoa(preshiREF2X,10).Data()
+    //string fout3name = residualSigmaHead+ thestring + "_inclusive_X_" + cp2x + ".txt"; //TString::Itoa(preshiREF2X,10).Data()
+    //string fout2name = chi2Head + thestring + "_inclusive_X_" + cp2x  + ".txt"; //TString::Itoa(preshiREF2X,10).Data()
+    fstream fout1(fout1name.c_str(),ios::out|ios::app);
+    //fstream fout3(fout3name.c_str(),ios::out|ios::app);
+    //fstream fout2(fout2name.c_str(),ios::out|ios::app);
    	
-      fstream fin(txtfilename.c_str(),ios::in);
-      //if(!fin){cout<<"file not read"<<endl; return;}
-      //else cout<<"processing "<<txtfilename<<endl;
-        
-      cout<<iterNbX<<"\t"<<iterNbY<<"\tX "<<preshiREF1X<<"\tY "<<preshiREF1Y<<endl;
-      
-      int nbLines=0;
-      while(fin>>pREF1X>>pREF1Y>>pREF2X>>pREF2Y>>pREF3X>>pREF3Y>>pEta5){
-        vpREF2X[nbLines]=pREF2X; vpREF2Y[nbLines]=pREF2Y; vpREF3X[nbLines]=pREF3X; vpREF3Y[nbLines]=pREF3Y;
-        vpREF1X[nbLines]=pREF1X; vpREF1Y[nbLines]=pREF1Y;
-        vpEta5[nbLines]=pEta5;
-        //shift
-        vpREF2X[nbLines] -= shiREF2X; vpREF2Y[nbLines] -= shiREF2Y;
-        vpREF3X[nbLines] -= shiREF3X; vpREF3Y[nbLines] -= shiREF3Y;
-        vpREF1X[nbLines] -= shiREF1X; vpREF1Y[nbLines] -= shiREF1Y; 
-//        vpEta5[nbLines] ;
-        //rotate
-        tempREF2X=vpREF2X[nbLines]; tempREF2Y=vpREF2Y[nbLines]; tempREF3X=vpREF3X[nbLines]; tempREF3Y=vpREF3Y[nbLines]; 
-        tempREF1X=vpREF1X[nbLines]; tempREF1Y=vpREF1Y[nbLines]; 
-        vpREF2X[nbLines]=tempREF2X*cos(aREF2REF1)-tempREF2Y*sin(aREF2REF1);
-        vpREF2Y[nbLines]=tempREF2X*sin(aREF2REF1)+tempREF2Y*cos(aREF2REF1);
-        vpREF3X[nbLines]=tempREF3X*cos(aREF3REF1)-tempREF3Y*sin(aREF3REF1);
-        vpREF3Y[nbLines]=tempREF3X*sin(aREF3REF1)+tempREF3Y*cos(aREF3REF1);
+    fstream fin(txtfilename.c_str(),ios::in);
+    //if(!fin){cout<<"file not read"<<endl; return;}
+    //else cout<<"processing "<<txtfilename<<endl;
     
-        vpEta5[nbLines] -= aEta5REF1;
-
-        //change origin, move in X and Y
-        vpREF2X[nbLines] -= preshiREF2X; vpREF2Y[nbLines] -= preshiREF2Y;
-        vpREF3X[nbLines] -= preshiREF3X; vpREF3Y[nbLines] -= preshiREF3Y;
-        vpREF1X[nbLines] -= preshiREF1X; vpREF1Y[nbLines] -= preshiREF1Y; 
-
-        //transfer to (r,phi) position
-        double rREF1 = sqrt(vpREF1X[nbLines]*vpREF1X[nbLines]+vpREF1Y[nbLines]*vpREF1Y[nbLines]);
-        double phiREF1 = 0.0; if(vpREF1X[nbLines]!=0.0) phiREF1 = atan(vpREF1Y[nbLines]/vpREF1X[nbLines]);
-        double rREF2 = sqrt(vpREF2X[nbLines]*vpREF2X[nbLines]+vpREF2Y[nbLines]*vpREF2Y[nbLines]);
-        double phiREF2 = 0.0; if(vpREF2X[nbLines]!=0.0) phiREF2 = atan(vpREF2Y[nbLines]/vpREF2X[nbLines]);
-        double rREF3 = sqrt(vpREF3X[nbLines]*vpREF3X[nbLines]+vpREF3Y[nbLines]*vpREF3Y[nbLines]);
-        double phiREF3 = 0.0; if(vpREF3X[nbLines]!=0.0) phiREF3 = atan(vpREF3Y[nbLines]/vpREF3X[nbLines]);
+    cout<<iterNbX<<"\t"<<iterNbY<<"\tX "<<preshiREF1X<<"\tY "<<preshiREF1Y<<endl;
  
-        //asignment new r, phi position values to the vector. Note that from now on the vectors vp.. cantains r and phi values
-        vpREF1X[nbLines]=rREF1; vpREF1Y[nbLines]=phiREF1;    
-        vpREF2X[nbLines]=rREF2; vpREF2Y[nbLines]=phiREF2;
-        vpREF3X[nbLines]=rREF3; vpREF3Y[nbLines]=phiREF3;
+    struct DATA
+    {
+        double  vpREF1X, vpREF1Y, vpREF2X, vpREF2Y, vpREF3X, vpREF3Y, vpEta5;
+    };
     
-        nbLines++;
-        //if(nbLines%10000==0) cout<<nbLines<<endl;
-      }
+    vector<DATA>* v = new vector<DATA>;
+    DATA d;
+    
+    while(fin>>pREF1X>>pREF1Y>>pREF2X>>pREF2Y>>pREF3X>>pREF3Y>>pEta5)
+    {
+        d.vpREF1X = pREF1X;
+        d.vpREF1Y = pREF1Y;
+        d.vpREF2X = pREF2X;
+        d.vpREF2Y = pREF2Y;
+        d.vpREF3X = pREF3X;
+        d.vpREF3Y = pREF3Y;
+        d.vpEta5  = pEta5;
+
+        //shift
+        d.vpREF1X -= shiREF1X; d.vpREF1Y -= shiREF1Y;
+        d.vpREF2X -= shiREF2X; d.vpREF2Y -= shiREF2Y;
+        d.vpREF3X -= shiREF3X; d.vpREF3Y -= shiREF3Y;
+        
+        //rotate
+        d.vpREF2X = d.vpREF2X*cos(aREF2REF1) - d.vpREF2Y*sin(aREF2REF1);
+        d.vpREF2Y = d.vpREF2X*sin(aREF2REF1) + d.vpREF2Y*cos(aREF2REF1);
+        d.vpREF3X = d.vpREF3X*cos(aREF3REF1) - d.vpREF3Y*sin(aREF3REF1);
+        d.vpREF3Y = d.vpREF3X*sin(aREF3REF1) + d.vpREF3Y*cos(aREF3REF1);
+        d.vpEta5 -= aEta5REF1;
+        
+        //change origin, move in X and Y
+        d.vpREF1X -= preshiREF1X; d.vpREF1Y -= preshiREF1Y;
+        d.vpREF2X -= preshiREF2X; d.vpREF2Y -= preshiREF2Y;
+        d.vpREF3X -= preshiREF3X; d.vpREF3Y -= preshiREF3Y;
+        
+        //transfer to (r,phi) position
+        double rREF1	= sqrt(d.vpREF1X*d.vpREF1X+d.vpREF1Y*d.vpREF1Y);
+        double phiREF1	= 0.0; if(d.vpREF1X != 0.0) phiREF1 = atan(d.vpREF1Y/d.vpREF1X);
+        double rREF2	= sqrt(d.vpREF2X*d.vpREF2X+d.vpREF2Y*d.vpREF2Y);
+        double phiREF2	= 0.0; if(d.vpREF2X != 0.0) phiREF2 = atan(d.vpREF2Y/d.vpREF2X);
+        double rREF3	= sqrt(d.vpREF3X*d.vpREF3X+d.vpREF3Y*d.vpREF3Y);
+        double phiREF3	= 0.0; if(d.vpREF3X != 0.0) phiREF3 = atan(d.vpREF3Y/d.vpREF3X);
+        
+        //asignment new r, phi position values to the vector. Note that from now on the vectors vp.. cantains r and phi values
+        d.vpREF1X = rREF1;
+        d.vpREF1Y = phiREF1;
+        d.vpREF2X = rREF2;
+        d.vpREF2Y = phiREF2;
+        d.vpREF3X = rREF3;
+        d.vpREF3Y = phiREF3;
+        
+        v->push_back(d);
+    }
+    
       fin.close();
       //end of reading file
 
@@ -228,19 +236,16 @@ int tracking(string thestring, double iterNbX, double iterNbY){
       double meanAngleEta5=funAngleEta5->GetParameter(1);
       delete funAngleREF3; delete funAngleUVA3; delete funAngleREF1; delete funAngleEta5;
 */
-      //track fitting
-      for(Int_t i=0;i<NNNNN;i++){
-        
-        double rREF1=vpREF1X[i], phiREF1=vpREF1Y[i];//-meanAngleREF1;
-        double rREF2=vpREF2X[i], phiREF2=vpREF2Y[i];
-        double rREF3=vpREF3X[i], phiREF3=vpREF3Y[i];//-meanAngleREF3;
-        double phiEta5=vpEta5[i];//-meanAngleEta5;
+    
+    for(unsigned int i=0; i < v->size(); i++)
+    {
+        d=v->at(i);
 
         //fill track in r direction
         TGraph* g1 = new TGraph();
-        g1->SetPoint(0,100, rREF1);
-        g1->SetPoint(1,380, rREF2);
-        g1->SetPoint(2,880, rREF3);
+        g1->SetPoint(0,100, d.vpREF1X);
+        g1->SetPoint(1,380, d.vpREF2X);
+        g1->SetPoint(2,880, d.vpREF3X);
         g1->GetXaxis()->SetRangeUser(0,900);
         TF1* f1 = new TF1("line1","pol1",0,900);
         g1->Fit("line1","Q");
@@ -249,21 +254,19 @@ int tracking(string thestring, double iterNbX, double iterNbY){
         double MeasuredREF1X = intercept1 + slope1*100;
         double MeasuredREF2X = intercept1 + slope1*380;
         double MeasuredREF3X = intercept1 + slope1*880;
-        residualREF2X->Fill(MeasuredREF2X-rREF2);
-        residualREF3X->Fill(MeasuredREF3X-rREF3);
-        residualUVA3X->Fill(MeasuredUVA3X-rUVA3);
-        residualREF1X->Fill(MeasuredREF1X-rREF1);
+        residualREF2X->Fill(MeasuredREF2X-d.vpREF2X);
+        residualREF3X->Fill(MeasuredREF3X-d.vpREF3X);
+        residualREF1X->Fill(MeasuredREF1X-d.vpREF1X);
         xTrackChi2->Fill(f1->GetChisquare());
         totalChi2 += f1->GetChisquare();
         delete f1; delete g1;
       
         //fill track in phi direction
         TGraph* g2 = new TGraph();
-        g2->SetPoint(0,0,     phiREF2);
-        g2->SetPoint(1,1143.5,phiREF3);
-        g2->SetPoint(2,2011.5,phiEta5);
-        g2->SetPoint(3,2686.5,phiUVA3);
-        g2->SetPoint(4,3169.5,phiREF1);
+        g2->SetPoint(0,100  ,d.vpREF1Y);
+        g2->SetPoint(1,380  ,d.vpREF2Y);
+        g2->SetPoint(2,830  ,d.vpREF3Y);
+        g2->SetPoint(3,1000 ,d.vpEta5);		// need to modify z-position of GE11
         g2->GetXaxis()->SetRangeUser(-1000,3300);
         // inclusive
         //g2->SetPoint(2,2305.5,vpZZ2[i]); //inclusive 1
@@ -274,23 +277,16 @@ int tracking(string thestring, double iterNbX, double iterNbY){
         double slope2     = f2->GetParameter(1);
         double MeasuredREF2Y = intercept2 + slope2*0.0;
         double MeasuredREF3Y = intercept2 + slope2*1143.5;
-        double MeasuredUVA3Y = intercept2 + slope2*2686.5;
         double MeasuredREF1Y = intercept2 + slope2*3169.5;
-        //double MeasuredZZ1  = intercept2 + slope2*2327.5;
-        //double MeasuredZZ2  = intercept2 + slope2*2305.5;
         double MeasuredEta5 = intercept2 + slope2*2011.5;
-        residualREF2Y->Fill((MeasuredREF2Y-phiREF2));
-        residualREF3Y->Fill((MeasuredREF3Y-phiREF3));
-        residualUVA3Y->Fill((MeasuredUVA3Y-phiUVA3));
-        residualREF1Y->Fill((MeasuredREF1Y-phiREF1));
-        residualEta5->Fill((MeasuredEta5-phiEta5));
-        //residualZZ1->Fill(MeasuredZZ1-vpZZ1[i]);
-        //residualZZ2->Fill(MeasuredZZ2-vpZZ2[i]);
+        residualREF2Y->Fill((MeasuredREF2Y-d.vpREF2Y));
+        residualREF3Y->Fill((MeasuredREF3Y-d.vpREF3Y));
+        residualREF1Y->Fill((MeasuredREF1Y-d.vpREF1Y));
+        residualEta5->Fill((MeasuredEta5-d.vpEta5));
         yTrackChi2->Fill(f2->GetChisquare());
         totalChi2 += f2->GetChisquare();
         delete f2; delete g2;
   
-        //nnnn++;
       } //end for loop of filling histograms and fitting tracks
 #if 0
       //cout<<"after for loop"<<endl;
