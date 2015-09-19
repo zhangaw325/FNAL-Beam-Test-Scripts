@@ -51,10 +51,10 @@ struct I2GFvalues
   TF1 *fit_func;
 };
 
-I2GFvalues I2GFmainLoop(TH1F *htemp1, int N_iter, float N_sigma_range, bool ShowFit)
+I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowFit)
 //Arguments: (histo to be fit, N iterations to find peak using gaus fit, fit range param., do or do not plot fit on histo)
 {
-  TH1F *htemp = (TH1F*) htemp1->Clone();
+  //TH1F *htemp = (TH1F*) htemp1->Clone();
   I2GFvalues myI2GFvalues;
 
   bool verbose = 0;
@@ -327,7 +327,8 @@ cout << " sigma " << f_sigma << endl;
       //htemp->Fit("func3", "Q", "", "",(f_mean - (N_sigma_range*f_sigma)), (f_mean + (N_sigma_range*f_sigma) ) ); 
       
       //----------------Show or don't show fit----------------- 
-      if (ShowFit) htemp->Fit("func3", "Q");//*************Show Histo & Fit in quiet mode
+      if (ShowFit) htemp->Fit("func3");//*************Show Histo & Fit in quiet mode
+      //if (ShowFit) htemp->Fit("func3", "Q");//*************Show Histo & Fit in quiet mode
       else htemp->Fit("func3", "Q0"); //*****************Don't show Histo & Fit in quiet mode
       //-------------------------------------------------------     
 

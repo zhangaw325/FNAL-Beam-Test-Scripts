@@ -264,16 +264,13 @@ void  AlignTrackers_Shift(){
 	shi_g3xcl = mean_g3xcl*factor; shi_g3ycl = mean_g3ycl*factor; 
 	shi_g1xcl = mean_g1xcl*factor; shi_g1ycl = mean_g1ycl*factor; 
 	
-	if((mean_g2xcl>=-0.005 && mean_g2xcl<=0.005) && (mean_g2ycl>=-0.005 && mean_g2ycl<=0.005))
-	    if((mean_g3xcl>=-0.005 && mean_g3xcl<=0.005) && (mean_g3ycl>=-0.005 && mean_g3ycl<=0.005))
-		if((mean_g1xcl>=-0.005 && mean_g1xcl<=0.005) && (mean_g1ycl>=-0.005 && mean_g1ycl<=0.005))
+	if ((fabs(mean_g1xcl)<0.005) && (fabs(mean_g1ycl)<0.005))
+	if ((fabs(mean_g2xcl)<0.005) && (fabs(mean_g2ycl)<0.005))
+	if ((fabs(mean_g3xcl)<0.005) && (fabs(mean_g3ycl)<0.005))
 		{
 		    cout<<"find it...iterating "<<iterNb<<" times."<<endl;
 		    break;
 		}
-	//h_residual_g2xcl->Reset();
-	//h_residual_g1xcl->Reset();
-	//h_residual_g3xcl->Reset();
 	
 	if(iterNb>500) break;
 	
@@ -282,5 +279,4 @@ void  AlignTrackers_Shift(){
     
     fout.close();
     fout1.close();
-    // return 0;
 } // entire script

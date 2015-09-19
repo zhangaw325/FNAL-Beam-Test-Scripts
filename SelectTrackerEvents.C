@@ -7,9 +7,29 @@
 #include <TH1.h>
 #include <TH2.h>
 #include <TFile.h>
-void SelectTrackerEvents()
+
+#include "tdrstyle.C"
+#include "CMS_lumi.C"
+
+
+void SelectTrackerEvents(char * InputTextFile, const int RunNumber)
 {
-    fstream fin("Hit_Position_Info.txt",ios::in);
+	setTDRStyle();
+
+	writeExtraText = true;       // if extra text
+	extraText  = "Preliminary";  // default extra text is "Preliminary"
+	lumi_8TeV  = "19.1 fb^{-1}"; // default is "19.7 fb^{-1}"
+	lumi_7TeV  = "4.9 fb^{-1}";  // default is "5.1 fb^{-1}"
+	lumi_sqrtS = "13 TeV";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
+	
+	int iPeriod = 3;    // 1=7TeV, 2=8TeV, 3=7+8TeV, 7=7+8+13TeV, 0=free form (uses lumi_sqrtS)
+
+//   InputTextFile = InputTextFile+".txt";
+    cout<<"Input file = "<<InputTextFile<<endl;
+    cout<<"Run Number = "<<RunNumber<<endl;
+
+    fstream fin(InputTextFile,ios::in);
+    //fstream fin("Hit_Position_Info.txt",ios::in);
     fstream fout_1("Eff.txt",ios::out);
 
     bool verbose = 0;
@@ -176,8 +196,8 @@ void SelectTrackerEvents()
     }
 
     
-    TString outputfile = Form("Position.txt");
-    TString rootfile = Form("CoarseAligned.root");
+    TString outputfile = Form("Tracker_Position_RunNumber%i.txt",RunNumber);
+    TString rootfile = Form("RootFiles/CoarseAligned.root");
     fstream fout(outputfile.Data(),ios::out);
     TFile* f = new TFile(rootfile.Data(),"recreate");
 
@@ -350,7 +370,7 @@ void SelectTrackerEvents()
 	 
 	  //       	  cout<<"totalEvents = "<<totalEvents<<endl;
 	//trigger loop
-	  //	  for(unsigned int i=0;i<Pos_g1xcl.size();i++){
+	  //	  for(unsigned int i=0;i<Pos_g1xcl.size();i++)
 	    //	    cout<<"chk thi :"<<Pos_g1xcl.at(i)<<endl;
 
 	  
@@ -358,12 +378,15 @@ void SelectTrackerEvents()
 	  BeamProfile_Tracker_2->Fill(Pos_g2xcl.at(i),Pos_g2ycl.at(i)); // BeamProfile_Tracker_2->Draw("colz");
 	  BeamProfile_Tracker_3->Fill(Pos_g3xcl.at(i),Pos_g3ycl.at(i)); //  BeamProfile_Tracker_3->Draw("colz");
 	  
-	  BeamProfile_Tracker_1->Draw("COLZ");
-	  BeamProfile_Tracker_2->Draw("COLZ");
-	  BeamProfile_Tracker_3->Draw("COLZ");  
 	  
 	}// trigger loop
-	}// no of events
+	}
+	  //BeamProfile_Tracker_1->Draw("COLZ");
+	  //BeamProfile_Tracker_2->Draw("COLZ");
+	  //BeamProfile_Tracker_3->Draw("COLZ");  
+	
+	
+	// no of events
 	// BeamProfile_Tracker_1->Write();
 	float Eff[11];
        
