@@ -20,22 +20,20 @@ void tracking(string thestring){
   fstream fout1(fout1name.c_str(),ios::out);
   fstream fout2(foutRotationName.c_str(),ios::out);
   fstream fout3(foutchi2name.c_str(),ios::out|ios::app);
+  double pREF1X=0.0, pREF1Y=0.0;
   double pREF2X=0.0, pREF2Y=0.0;
   double pREF3X=0.0, pREF3Y=0.0;
-  double pUVA3X=0.0, pUVA3Y=0.0;
-  double pREF1X=0.0, pREF1Y=0.0;
   //double pZZ1=0.0, pZZ2=0.0;
   //double pEta5=0.0;
+  vector<double> vpREF1X; vector<double> vpREF1Y;
   vector<double> vpREF2X; vector<double> vpREF2Y;
   vector<double> vpREF3X; vector<double> vpREF3Y;
-  vector<double> vpUVA3X; vector<double> vpUVA3Y;
-  vector<double> vpREF1X; vector<double> vpREF1Y;
   //vector<double> vpZZ1; vector<double> vpZZ2;
   //vector<double> vpEta5;
   Int_t nbLines=0;
-  while(fin>>pREF2X>>pREF2Y>>pREF3X>>pREF3Y>>pUVA3X>>pUVA3Y>>pREF1X>>pREF1Y/*>>pEta5*/){
+  while(fin>>pREF1X>>pREF1Y>>pREF2X>>pREF2Y>>pREF3X>>pREF3Y/*>>pEta5*/){
     vpREF2X.push_back(pREF2X); vpREF2Y.push_back(pREF2Y); vpREF3X.push_back(pREF3X); vpREF3Y.push_back(pREF3Y);
-    vpUVA3X.push_back(pUVA3X); vpUVA3Y.push_back(pUVA3Y); vpREF1X.push_back(pREF1X); vpREF1Y.push_back(pREF1Y);
+    vpREF1X.push_back(pREF1X); vpREF1Y.push_back(pREF1Y);
     //vpZZ1.push_back(pZZ1); vpZZ2.push_back(pZZ2);
     //vpEta5.push_back(pEta5);
     nbLines++;

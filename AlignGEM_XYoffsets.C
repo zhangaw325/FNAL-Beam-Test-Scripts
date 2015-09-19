@@ -11,7 +11,6 @@
 //vector<double> DefaultVector; // just used to free memory from vectors.
 int tracking(string thestring, double iterNbX, double iterNbY){
   double PI=TMath::Pi();
-  //string thestring = "Position_REF2X_42_48";
   string txtfilename = thestring + ".txt";
   string residualHead = "rPhi_residual_";
   string residualMeanHead = "rPhi_residualMean_";
@@ -23,7 +22,6 @@ int tracking(string thestring, double iterNbX, double iterNbY){
   double pREF1X=0.0, pREF1Y=0.0;
   double pREF2X=0.0, pREF2Y=0.0;
   double pREF3X=0.0, pREF3Y=0.0;
-  //double pZZ1=0.0, pZZ2=0.0;
   double pEta5=0.0;
   
     double shiREF1X=-9.92822, shiREF1Y=-0.68756;
@@ -42,27 +40,27 @@ int tracking(string thestring, double iterNbX, double iterNbY){
     double meanXChi2=0.0,meanYChi2=0.0, totalChi2=0.0; // chi square of tracks.
     double maximum=0.0, rms=0.0, lRange=0.0, hRange=0.0;
     
-    TH1D* hpREF1X = 0;
-    TH1D* hpREF1Y = 0;
-    TH1D* hpREF2X = 0;
-    TH1D* hpREF2Y = 0;
-    TH1D* hpREF3X = 0;
-    TH1D* hpREF3Y = 0;
-    TH1D* hpEta5  = 0;
+    TH1F* hpREF1X = 0;
+    TH1F* hpREF1Y = 0;
+    TH1F* hpREF2X = 0;
+    TH1F* hpREF2Y = 0;
+    TH1F* hpREF3X = 0;
+    TH1F* hpREF3Y = 0;
+    TH1F* hpEta5  = 0;
     
-    TH1D* residualREF1X = 0;
-    TH1D* residualREF1Y = 0;
-    TH1D* residualREF2X = 0;
-    TH1D* residualREF2Y = 0;
-    TH1D* residualREF3X = 0;
-    TH1D* residualREF3Y = 0;
-    TH1D* residualEta5 = 0;
+    TH1F* residualREF1X = 0;
+    TH1F* residualREF1Y = 0;
+    TH1F* residualREF2X = 0;
+    TH1F* residualREF2Y = 0;
+    TH1F* residualREF3X = 0;
+    TH1F* residualREF3Y = 0;
+    TH1F* residualEta5 = 0;
     
-    TH1D* angleREF2=0;
-    TH1D* angleREF3=0;
-    TH1D* angleEta5=0;
-    TH1D* xTrackChi2=0;
-    TH1D* yTrackChi2=0;
+    TH1F* angleREF2=0;
+    TH1F* angleREF3=0;
+    TH1F* angleEta5=0;
+    TH1F* xTrackChi2=0;
+    TH1F* yTrackChi2=0;
     
     preshiREF1X = -1810-iterNbX;// - iterNbX*2;
     preshiREF2X = preshiREF1X; preshiREF3X=preshiREF1X;
@@ -145,50 +143,45 @@ int tracking(string thestring, double iterNbX, double iterNbY){
       char rootfile[50]; sprintf(rootfile,"_X_%.2f_Y_%.2f_inclusive_doubleGaussian.root",preshiREF2X,preshiREF2Y);
       string newhead = "./RootFiles/";
       string outputrootname=newhead+residualHead+thestring+rootfile;
-//      TFile* f = new TFile(outputrootname.c_str(),"recreate");
+      TFile* f = new TFile(outputrootname.c_str(),"recreate");
 /*
       char name2X[50];sprintf(name2X,"rREF2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); char name2Y[50];sprintf(name2Y,"phiREF2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char name3X[50];sprintf(name3X,"rREF3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); char name3Y[50];sprintf(name3Y,"phiREF3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-      char nameu3X[50];sprintf(nameu3X,"rUVA3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameu3Y[50];sprintf(nameu3Y,"phiUVA3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char name1X[50];sprintf(name1X,"rREF1_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); char name1Y[50];sprintf(name1Y,"phiREF1_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameEta5[50];sprintf(nameEta5,"phiEta5_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); 
-      hpREF2X = new TH1D(name2X,"",1500,1950,2100); hpREF2X->SetXTitle("r [mm]"); hpREF2X->SetYTitle("Frequency");hpREF2X->SetLabelSize(0.05,"XY");hpREF2X->SetTitleSize(0.05,"XY");
-       hpREF2Y = new TH1D(name2Y,"",200,-0.1,0.1); hpREF2Y->SetXTitle("#phi [rad]"); hpREF2Y->SetYTitle("Frequency");hpREF2Y->SetLabelSize(0.05,"XY");hpREF2Y->SetTitleSize(0.05,"XY");  
-       hpREF3X = new TH1D(name3X,"",1500,1950,2100); hpREF3X->SetXTitle("r [mm]"); hpREF3X->SetYTitle("Frequency");hpREF3X->SetLabelSize(0.05,"XY");hpREF3X->SetTitleSize(0.05,"XY");
-       hpREF3Y = new TH1D(name3Y,"",200,-0.1,0.1); hpREF3Y->SetXTitle("#phi [rad]"); hpREF3Y->SetYTitle("Frequency");hpREF3Y->SetLabelSize(0.05,"XY");hpREF3Y->SetTitleSize(0.05,"XY");  
-       hpUVA3X = new TH1D(nameu3X,"",1500,1950,2100); hpUVA3X->SetXTitle("r [mm]"); hpUVA3X->SetYTitle("Frequency");hpUVA3X->SetLabelSize(0.05,"XY");hpUVA3X->SetTitleSize(0.05,"XY");
-       hpUVA3Y = new TH1D(nameu3Y,"",200,-0.1,0.1); hpUVA3Y->SetXTitle("#phi [rad]"); hpUVA3Y->SetYTitle("Frequency");hpUVA3Y->SetLabelSize(0.05,"XY");hpUVA3Y->SetTitleSize(0.05,"XY");  
-       hpREF1X = new TH1D(name1X,"",1500,1950,2100); hpREF1X->SetXTitle("r [mm]"); hpREF1X->SetYTitle("Frequency");hpREF1X->SetLabelSize(0.05,"XY");hpREF1X->SetTitleSize(0.05,"XY");
-       hpREF1Y = new TH1D(name1Y,"",200,-0.1,0.1); hpREF1Y->SetXTitle("#phi [rad]"); hpREF1Y->SetYTitle("Frequency");hpREF1Y->SetLabelSize(0.05,"XY");hpREF1Y->SetTitleSize(0.05,"XY");  
-       hpEta5 = new TH1D(nameEta5,"",200,-0.1,0.1); hpEta5->SetXTitle("#phi [rad]"); hpEta5->SetYTitle("Frequency"); hpEta5->SetLabelSize(0.05,"XY");hpEta5->SetTitleSize(0.05,"XY");
+      hpREF2X = new TH1F(name2X,"",1500,1950,2100); hpREF2X->SetXTitle("r [mm]"); hpREF2X->SetYTitle("Frequency");hpREF2X->SetLabelSize(0.05,"XY");hpREF2X->SetTitleSize(0.05,"XY");
+      hpREF2Y = new TH1F(name2Y,"",200,-0.1,0.1); hpREF2Y->SetXTitle("#phi [rad]"); hpREF2Y->SetYTitle("Frequency");hpREF2Y->SetLabelSize(0.05,"XY");hpREF2Y->SetTitleSize(0.05,"XY");  
+      hpREF3X = new TH1F(name3X,"",1500,1950,2100); hpREF3X->SetXTitle("r [mm]"); hpREF3X->SetYTitle("Frequency");hpREF3X->SetLabelSize(0.05,"XY");hpREF3X->SetTitleSize(0.05,"XY");
+      hpREF3Y = new TH1F(name3Y,"",200,-0.1,0.1); hpREF3Y->SetXTitle("#phi [rad]"); hpREF3Y->SetYTitle("Frequency");hpREF3Y->SetLabelSize(0.05,"XY");hpREF3Y->SetTitleSize(0.05,"XY");  
+      hpREF1X = new TH1F(name1X,"",1500,1950,2100); hpREF1X->SetXTitle("r [mm]"); hpREF1X->SetYTitle("Frequency");hpREF1X->SetLabelSize(0.05,"XY");hpREF1X->SetTitleSize(0.05,"XY");
+      hpREF1Y = new TH1F(name1Y,"",200,-0.1,0.1); hpREF1Y->SetXTitle("#phi [rad]"); hpREF1Y->SetYTitle("Frequency");hpREF1Y->SetLabelSize(0.05,"XY");hpREF1Y->SetTitleSize(0.05,"XY");  
+      hpEta5 = new TH1F(nameEta5,"",200,-0.1,0.1); hpEta5->SetXTitle("#phi [rad]"); hpEta5->SetYTitle("Frequency"); hpEta5->SetLabelSize(0.05,"XY");hpEta5->SetTitleSize(0.05,"XY");
 */
       char nameRes1X[50];sprintf(nameRes1X,"residualREF1_r_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameRes1Y[50];sprintf(nameRes1Y,"residualREF1_phi_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameRes2X[50];sprintf(nameRes2X,"residualREF2_r_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameRes2Y[50];sprintf(nameRes2Y,"residualREF2_phi_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameRes3X[50];sprintf(nameRes3X,"residualREF3_r_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameRes3Y[50];sprintf(nameRes3Y,"residualREF3_phi_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-    //char nameResZZ1[50];sprintf(nameResZZ1,"residualZZ1_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameResZZ2[50];sprintf(nameResZZ2,"residualZZ2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameResEta5[50];sprintf(nameResEta5,"residualEta5_phi_X_%.1f_Y_%.1f",preshiREF1X, preshiREF1Y);
-      residualREF1X = new TH1D(nameRes1X,"",1000,-2,2); residualREF1X->SetXTitle("Residual in r [mm]"); residualREF1X->SetYTitle("Frequency");residualREF1X->SetLabelSize(0.05,"XY");residualREF1X->SetTitleSize(0.05,"XY");
-      residualREF1Y = new TH1D(nameRes1Y,"",1000,-0.005,0.005); residualREF1Y->SetXTitle("Residual in #phi [rad]"); residualREF1Y->SetYTitle("Frequency");residualREF1Y->SetLabelSize(0.05,"XY");residualREF1Y->SetTitleSize(0.05,"XY");
-      residualREF2X = new TH1D(nameRes2X,"",1000,-2,2); residualREF2X->SetXTitle("Residual in r [mm]"); residualREF2X->SetYTitle("Frequency");residualREF2X->SetLabelSize(0.05,"XY");residualREF2X->SetTitleSize(0.05,"XY");
-      residualREF2Y = new TH1D(nameRes2Y,"",1000,-0.005,0.005); residualREF2Y->SetXTitle("Residual in #phi [rad]"); residualREF2Y->SetYTitle("Frequency");residualREF2Y->SetLabelSize(0.05,"XY");residualREF2Y->SetTitleSize(0.05,"XY");
-      residualREF3X = new TH1D(nameRes3X,"",1000,-2,2); residualREF3X->SetXTitle("Residual in r [mm]"); residualREF3X->SetYTitle("Frequency");residualREF3X->SetLabelSize(0.05,"XY");residualREF3X->SetTitleSize(0.05,"XY");
-      residualREF3Y = new TH1D(nameRes3Y,"",1000,-0.005,0.005); residualREF3Y->SetXTitle("Residual in #phi [rad]"); residualREF3Y->SetYTitle("Frequency");residualREF3Y->SetLabelSize(0.05,"XY");residualREF3Y->SetTitleSize(0.05,"XY");
-      residualEta5 = new TH1D(nameResEta5,"",1000,-0.02,0.02); residualEta5->SetXTitle("Residual in #phi [rad]"); residualEta5->SetYTitle("Frequency");residualEta5->SetLabelSize(0.05,"XY");residualEta5->SetTitleSize(0.05,"XY");
+
+      residualREF1X = new TH1F(nameRes1X,"",1000,-2,2); residualREF1X->SetXTitle("Residual in r [mm]"); residualREF1X->SetYTitle("Frequency");residualREF1X->SetLabelSize(0.05,"XY");residualREF1X->SetTitleSize(0.05,"XY");
+      residualREF1Y = new TH1F(nameRes1Y,"",1000,-0.005,0.005); residualREF1Y->SetXTitle("Residual in #phi [rad]"); residualREF1Y->SetYTitle("Frequency");residualREF1Y->SetLabelSize(0.05,"XY");residualREF1Y->SetTitleSize(0.05,"XY");
+      residualREF2X = new TH1F(nameRes2X,"",1000,-2,2); residualREF2X->SetXTitle("Residual in r [mm]"); residualREF2X->SetYTitle("Frequency");residualREF2X->SetLabelSize(0.05,"XY");residualREF2X->SetTitleSize(0.05,"XY");
+      residualREF2Y = new TH1F(nameRes2Y,"",1000,-0.005,0.005); residualREF2Y->SetXTitle("Residual in #phi [rad]"); residualREF2Y->SetYTitle("Frequency");residualREF2Y->SetLabelSize(0.05,"XY");residualREF2Y->SetTitleSize(0.05,"XY");
+      residualREF3X = new TH1F(nameRes3X,"",1000,-2,2); residualREF3X->SetXTitle("Residual in r [mm]"); residualREF3X->SetYTitle("Frequency");residualREF3X->SetLabelSize(0.05,"XY");residualREF3X->SetTitleSize(0.05,"XY");
+      residualREF3Y = new TH1F(nameRes3Y,"",1000,-0.005,0.005); residualREF3Y->SetXTitle("Residual in #phi [rad]"); residualREF3Y->SetYTitle("Frequency");residualREF3Y->SetLabelSize(0.05,"XY");residualREF3Y->SetTitleSize(0.05,"XY");
+      residualEta5 = new TH1F(nameResEta5,"",1000,-0.02,0.02); residualEta5->SetXTitle("Residual in #phi [rad]"); residualEta5->SetYTitle("Frequency");residualEta5->SetLabelSize(0.05,"XY");residualEta5->SetTitleSize(0.05,"XY");
 /*    
       char nameAngleREF3[50]; sprintf(nameAngleREF3,"angleREF3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-      char nameAngleUVA3[50]; sprintf(nameAngleUVA3,"angleUVA3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameAngleREF1[50]; sprintf(nameAngleREF1,"angleREF1_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameAngleEta5[50]; sprintf(nameAngleEta5,"angleEta5_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-       angleREF3 = new TH1D(nameAngleREF3,"Rotation angle distribution of REF3 and REF2",1000,-0.005,0.005); angleREF3->SetXTitle("Angle [rad]"); angleREF3->SetYTitle("Frequency");
-       angleUVA3 = new TH1D(nameAngleUVA3,"Rotation angle distribution of UVA3 and REF2",1000,-0.005,0.005); angleUVA3->SetXTitle("Angle [rad]"); angleUVA3->SetYTitle("Frequency");
-       angleREF1 = new TH1D(nameAngleREF1,"Rotation angle distribution of REF1 and REF2",1000,-0.005,0.005); angleREF1->SetXTitle("Angle [rad]"); angleREF1->SetYTitle("Frequency");
-       angleEta5 = new TH1D(nameAngleEta5,"Rotation Eta5 and REF2",500,-0.2,0.2);
+       angleREF3 = new TH1F(nameAngleREF3,"Rotation angle distribution of REF3 and REF2",1000,-0.005,0.005); angleREF3->SetXTitle("Angle [rad]"); angleREF3->SetYTitle("Frequency");
+       angleREF1 = new TH1F(nameAngleREF1,"Rotation angle distribution of REF1 and REF2",1000,-0.005,0.005); angleREF1->SetXTitle("Angle [rad]"); angleREF1->SetYTitle("Frequency");
+       angleEta5 = new TH1F(nameAngleEta5,"Rotation Eta5 and REF2",500,-0.2,0.2);
 */    
       char nameChi2X[50]; sprintf(nameChi2X,"XTrackChi2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameChi2Y[50]; sprintf(nameChi2Y,"YTrackChi2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-       xTrackChi2 = new TH1D(nameChi2X,"Chi square of tracks in X projection",1000,0,0.2); xTrackChi2->SetXTitle("#chi^{2} of track in r"); xTrackChi2->SetYTitle("Frequency");
+       xTrackChi2 = new TH1F(nameChi2X,"Chi square of tracks in X projection",1000,0,0.2); xTrackChi2->SetXTitle("#chi^{2} of track in r"); xTrackChi2->SetYTitle("Frequency");
        xTrackChi2->SetTitleSize(0.04,"XY"); xTrackChi2->SetLabelSize(0.04,"XY");
-       yTrackChi2 = new TH1D(nameChi2Y,"Chi square of tracks in Y projection",1000,0,0.00002); yTrackChi2->SetXTitle("#chi^{2} of track in #phi"); yTrackChi2->SetYTitle("Frequency");
+       yTrackChi2 = new TH1F(nameChi2Y,"Chi square of tracks in Y projection",1000,0,0.00002); yTrackChi2->SetXTitle("#chi^{2} of track in #phi"); yTrackChi2->SetYTitle("Frequency");
        yTrackChi2->SetTitleSize(0.04,"XY"); yTrackChi2->SetLabelSize(0.04,"XY");
     
       //fill histograms first
@@ -269,16 +262,14 @@ int tracking(string thestring, double iterNbX, double iterNbY){
         g2->SetPoint(3,1000 ,d.vpEta5);		// need to modify z-position of GE11
         g2->GetXaxis()->SetRangeUser(-1000,3300);
         // inclusive
-        //g2->SetPoint(2,2305.5,vpZZ2[i]); //inclusive 1
-        //g2->SetPoint(2,2327.5,vpZZ1[i]);  //inclusive 2
         TF1* f2 = new TF1("line2","pol1",0,3200);
         g2->Fit("line2","Q");
         double intercept2 = f2->GetParameter(0);
         double slope2     = f2->GetParameter(1);
-        double MeasuredREF2Y = intercept2 + slope2*0.0;
-        double MeasuredREF3Y = intercept2 + slope2*1143.5;
-        double MeasuredREF1Y = intercept2 + slope2*3169.5;
-        double MeasuredEta5 = intercept2 + slope2*2011.5;
+        double MeasuredREF1Y = intercept2 + slope2*100.0;
+        double MeasuredREF2Y = intercept2 + slope2*380.0;
+        double MeasuredREF3Y = intercept2 + slope2*830.0;
+        double MeasuredEta5 = intercept2 + slope2*1000.0;
         residualREF2Y->Fill((MeasuredREF2Y-d.vpREF2Y));
         residualREF3Y->Fill((MeasuredREF3Y-d.vpREF3Y));
         residualREF1Y->Fill((MeasuredREF1Y-d.vpREF1Y));
@@ -288,13 +279,12 @@ int tracking(string thestring, double iterNbX, double iterNbY){
         delete f2; delete g2;
   
       } //end for loop of filling histograms and fitting tracks
-#if 0
       //cout<<"after for loop"<<endl;
       //going to fit residual histograms
       gStyle->SetOptFit(1111);
     
-/*
       myValues = I2GFmainLoop(residualREF2X,1,10,1);  meanREF2X = myValues.mean; sigmaREF2X=myValues.sigma;
+/*
       myValues = I2GFmainLoop(residualREF2Y,1,10,1);  meanREF2Y = myValues.mean; sigmaREF2Y=myValues.sigma;
       myValues = I2GFmainLoop(residualREF3X,1,10,1);  meanREF3X = myValues.mean; sigmaREF3X=myValues.sigma;
       myValues = I2GFmainLoop(residualREF3Y,1,10,1);  meanREF3Y = myValues.mean; sigmaREF3Y=myValues.sigma;
@@ -303,6 +293,7 @@ int tracking(string thestring, double iterNbX, double iterNbY){
       myValues = I2GFmainLoop(residualREF1X,1,10,1);  meanREF1X = myValues.mean; sigmaREF1X=myValues.sigma;
       myValues = I2GFmainLoop(residualREF1Y,1,10,1);  meanREF1Y = myValues.mean; sigmaREF1Y=myValues.sigma;
 */      
+#if 0
       I2GFvalues myValues;
       myValues = I2GFmainLoop(residualEta5,1,10,1);
       meanEta5 = myValues.mean; sigmaEta5=myValues.sigma;

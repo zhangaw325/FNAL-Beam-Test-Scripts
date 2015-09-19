@@ -307,13 +307,13 @@ void SelectTrackerEvents()
 	
 	//then combine the cut conditions & fill histograms
 	Bool_t trigger=false;
-	if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true )// && cutNHits_LC1==true && cutNHits_LC2==true && cutNHits_LC3==true) 
+	if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true && cutNHits_LC1==true )// && cutNHits_LC1==true && cutNHits_LC2==true && cutNHits_LC3==true) 
 	  {
 	    trigger = true;
 	  }
 	if(trigger){
 	  totalEvents++;
-	  fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<<endl;
+	  fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<< "\t"<< Pos_sCMSNS2LC1.at(i)<<endl;
 	  h_Pos_g2xcl->Fill(Pos_g2xcl.at(i));
 	  h_Pos_g2ycl->Fill(Pos_g2ycl.at(i));
 	  h_Pos_g3xcl->Fill(Pos_g3xcl.at(i));
