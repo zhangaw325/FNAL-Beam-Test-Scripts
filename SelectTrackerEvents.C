@@ -12,7 +12,7 @@
 #include "CMS_lumi.C"
 
 
-void SelectTrackerEvents(char * InputTextFile, const int RunNumber)
+void SelectTrackerEvents(char * InputTextFile, const int RunNumber, char * LargeGEM)
 {
 	setTDRStyle();
 
@@ -197,7 +197,8 @@ void SelectTrackerEvents(char * InputTextFile, const int RunNumber)
 
     
     TString outputfile = Form("Tracker_Position_RunNumber%i.txt",RunNumber);
-    TString rootfile = Form("RootFiles/CoarseAligned.root");
+    TString rootfile = Form("CoarseAligned.root");
+    //TString rootfile = Form("RootFiles/CoarseAligned.root");
     fstream fout(outputfile.Data(),ios::out);
     TFile* f = new TFile(rootfile.Data(),"recreate");
 
