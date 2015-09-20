@@ -8,8 +8,11 @@
 #include <TH2.h>
 #include <TFile.h>
 
-void tracking(string Thestring){
- string thestring = "Hit_Position_Info";
+void tracking(string thestring){
+
+bool verbose = 0;
+cout<<"Program Start"<<endl;
+ //string thestring = "Hit_Position_Info";
   string txtfilename = thestring + std::string(".txt");
   string shiftHead = "RotationBack_shiftParameters_";
   string rotateHead = "RotationBack_angles_";
@@ -27,23 +30,21 @@ void tracking(string Thestring){
   fstream fout1(fout1name.c_str(),ios::out);
   fstream fout2(foutRotationName.c_str(),ios::out);
   fstream fout3(foutchi2name.c_str(),ios::out|ios::app);
+  double Pos_g1xcl=0.0, Pos_g1ycl=0.0;
   double Pos_g2xcl=0.0, Pos_g2ycl=0.0;
   double Pos_g3xcl=0.0, Pos_g3ycl=0.0;
-  //double pUVA3X=0.0, pUVA3Y=0.0;
-  double Pos_g1xcl=0.0, Pos_g1ycl=0.0;
-  //double pZZ1=0.0, pZZ2=0.0;
-  //double pEta5=0.0;
+  vector<double> vPos_g1xcl; vector<double> vPos_g1ycl;
   vector<double> vPos_g2xcl; vector<double> vPos_g2ycl;
   vector<double> vPos_g3xcl; vector<double> vPos_g3ycl;
  double CalculateCosTheta1(double x, double y, double x1,double y1); 
 // vector<double> vpUVA3X; vector<double> vpUVA3Y;
-  vector<double> vPos_g1xcl; vector<double> vPos_g1ycl;
   //vector<double> vpZZ1; vector<double> vpZZ2;
   //vector<double> vpEta5;
   Int_t nbLines=0;
-  while(fin>>Pos_g2xcl>>Pos_g2ycl>>Pos_g3xcl>>Pos_g3ycl>>/*pUVA3X>>pUVA3Y>>*/Pos_g1xcl>>Pos_g1ycl/*>>pEta5*/){
-    vPos_g2xcl.push_back(Pos_g2xcl); vPos_g2ycl.push_back(Pos_g2ycl); vPos_g3xcl.push_back(Pos_g3xcl); vPos_g3ycl.push_back(Pos_g3ycl);
-   /* vpUVA3X.push_back(pUVA3X); vpUVA3Y.push_back(pUVA3Y);*/ vPos_g1xcl.push_back(Pos_g1xcl); vPos_g1ycl.push_back(Pos_g1ycl);
+  while(fin>>Pos_g1xcl>>Pos_g1ycl>>Pos_g2xcl>>Pos_g2ycl>>/*pUVA3X>>pUVA3Y>>*/Pos_g3xcl>>Pos_g3ycl/*>>pEta5*/){
+	vPos_g1xcl.push_back(Pos_g1xcl); vPos_g1ycl.push_back(Pos_g1ycl);
+	vPos_g2xcl.push_back(Pos_g2xcl); vPos_g2ycl.push_back(Pos_g2ycl); vPos_g3xcl.push_back(Pos_g3xcl); vPos_g3ycl.push_back(Pos_g3ycl);
+   /* vpUVA3X.push_back(pUVA3X); vpUVA3Y.push_back(pUVA3Y);*/ 
     //vpZZ1.push_back(pZZ1); vpZZ2.push_back(pZZ2);
     //vpEta5.push_back(pEta5);
     nbLines++;
@@ -63,13 +64,15 @@ void tracking(string Thestring){
   double shiEta5=29.5
  */
  //fine alignment parameters
+  double shiREF1X=61.91, shiREF1Y=55.68;
   double shiREF2X=62.36, shiREF2Y=55.83;
   double shiREF3X=62.72, shiREF3Y=56.06;
  // double shiUVA3X=-8.389, shiUVA3Y=15.779;
-  double shiREF1X=61.91, shiREF1Y=55.68;
-  double aREF3REF2=0.009499;
- // double aUVA3REF2=-0.004731;
-  double aREF1REF2=-0.02473;
+  double aREF2REF1=0.00;
+  double aREF3REF1=0.00;
+
+  if (verbose)
+  	cout<<"ERROR 1 "<<endl;
 
   
 //  double shiREF2X=12.26791212, shiREF2Y=2.02708225;
@@ -82,62 +85,48 @@ void tracking(string Thestring){
 //  double aREF1REF2=0;//-0.0486;//-0.0171;//start angle: 0.008273;
   
   //double aEta5REF2;
-  double temPos_g2xcl, temPos_g2ycl, temPos_g3xcl, temPos_g3ycl,/* tempUVA3X, tempUVA3Y,*/ temPos_g1xcl, temPos_g1ycl, tempEta5;
+  double temPos_g2xcl, temPos_g2ycl, temPos_g3xcl, temPos_g3ycl, temPos_g1xcl, temPos_g1ycl;
 
+  double meanREF1X=0.0, meanREF1Y=0.0;
   double meanREF2X=0.0, meanREF2Y=0.0;
   double meanREF3X=0.0, meanREF3Y=0.0;
-//  double meanUVA3X=0.0, meanUVA3Y=0.0;
-  double meanREF1X=0.0, meanREF1Y=0.0;
-  //double meanZZ1=0.0, meanZZ2=0.0;
-  //double meanEta5=0;
+
+  double meanAngleREF2=0.0;
   double meanAngleREF3=0.0;
- // double meanAngleUVA3=0.0;
-  double meanAngleREF1=0.0;
-  //double meanAngleEta5=0.0;
+
   double sigmag2xcl=0.0,sigmag2ycl=0.0,sigmag3xcl=0.0,sigmag3ycl=0.0,/*sigmaUVA3X=0.0,sigmaUVA3Y=0.0,*/sigmag1xcl=0.0,sigmag1ycl=0.0;
-  double totalAngleREF3=0.0,/* totalAngleUVA3=0.0,*/ totalAngleREF1=0.0;
+  double totalAngleREF2=0.0,/* totalAngleUVA3=0.0,*/ totalAngleREF3=0.0;
   double meanXChi2=0.0,meanYChi2=0.0; // chi square for tracks.
 
   Int_t iterNb=0;
   while(1){
     char rootfile[50]; sprintf(rootfile,"_iter%i_exclusive.root",iterNb);
     string outputrootname=ResidualRHead+thestring+rootfile;
+    //if (verbose)
+  	cout<<"outputroot file name :  "<< outputrootname <<endl;
     TFile* f = new TFile(outputrootname.c_str(),"recreate");
     iterNb++;
+    char name1X[15];sprintf(name1X,"posg1xcl_%i",iterNb); char name1Y[15];sprintf(name1Y,"posg1ycl_%i",iterNb);
     char name2X[15];sprintf(name2X,"posg2xcl_%i",iterNb); char name2Y[15];sprintf(name2Y,"posg2ycl_%i",iterNb);
     char name3X[15];sprintf(name3X,"posg3xcl_%i",iterNb); char name3Y[15];sprintf(name3Y,"posg3ycl_%i",iterNb);
-  //  char nameu3X[15];sprintf(nameu3X,"posUVA3X_%i",iterNb);char nameu3Y[15];sprintf(nameu3Y,"posUVA3Y_%i",iterNb);
-    char name1X[15];sprintf(name1X,"posREF1X_%i",iterNb); char name1Y[15];sprintf(name1Y,"posg1ycl_%i",iterNb);
-    //char nameZZ1[15];sprintf(nameZZ1,"pos10cmZZ1_%i",iterNb); char nameZZ2[15];sprintf(nameZZ2,"pos10cmZZ2_%i",iterNb);
-    //char nameEta5[15];sprintf(nameEta5,"posEta5_%i",iterNb); 
-    TH1F* hPos_g2xcl = new TH1F(name2X,"",500,-10,120); hPos_g2xcl->SetXTitle("mm"); hPos_g2xcl->SetYTitle("Frequency");hPos_g2xcl->SetLabelSize(0.045,"XY");hPos_g2xcl->SetTitleSize(0.045,"XY");
-    TH1F* hPos_g2ycl = new TH1F(name2Y,"",500,-10,120); hPos_g2ycl->SetXTitle("mm"); hPos_g2ycl->SetYTitle("Frequency");hPos_g2ycl->SetLabelSize(0.045,"XY");hPos_g2ycl->SetTitleSize(0.045,"XY");  
-    TH1F* hPos_g3xcl = new TH1F(name3X,"",500,-10,120); hPos_g3xcl->SetXTitle("mm"); hPos_g3xcl->SetYTitle("Frequency");hPos_g3xcl->SetLabelSize(0.045,"XY");hPos_g3xcl->SetTitleSize(0.045,"XY");
-    TH1F* hPos_g3ycl = new TH1F(name3Y,"",500,-10,120); hPos_g3ycl->SetXTitle("mm"); hPos_g3ycl->SetYTitle("Frequency");hPos_g3ycl->SetLabelSize(0.045,"XY");hPos_g3ycl->SetTitleSize(0.045,"XY");  
-   // TH1F* hpUVA3X = new TH1F(nameu3X,"",500,-10,120); hpUVA3X->SetXTitle("mm"); hpUVA3X->SetYTitle("Frequency");hpUVA3X->SetLabelSize(0.045,"XY");hpUVA3X->SetTitleSize(0.045,"XY");
-   // TH1F* hpUVA3Y = new TH1F(nameu3Y,"",500,-10,120); hpUVA3Y->SetXTitle("mm"); hpUVA3Y->SetYTitle("Frequency");hpUVA3Y->SetLabelSize(0.045,"XY");hpUVA3Y->SetTitleSize(0.045,"XY");  
-    TH1F *hPos_g1xcl = new TH1F(name1X,"",500,-10,120); hPos_g1xcl->SetXTitle("mm"); hPos_g1xcl->SetYTitle("Frequency");hPos_g1xcl->SetLabelSize(0.045,"XY");hPos_g1xcl->SetTitleSize(0.045,"XY");
-    TH1F *hPos_g1ycl = new TH1F(name1Y,"",500,-10,120); hPos_g1ycl->SetXTitle("mm"); hPos_g1ycl->SetYTitle("Frequency");hPos_g1ycl->SetLabelSize(0.045,"XY");hPos_g1ycl->SetTitleSize(0.045,"XY");  
-    //TH1F* hpZZ1 = new TH1F(nameZZ1,"",600,-150,150); hpZZ1->SetXTitle("mm"); hpZZ1->SetYTitle("Frequency"); hpZZ1->SetLabelSize(0.045,"XY");hpZZ1->SetTitleSize(0.045,"XY");
-    //TH1F* hpZZ2 = new TH1F(nameZZ2,"",600,-150,150); hpZZ2->SetXTitle("mm"); hpZZ2->SetYTitle("Frequency"); hpZZ2->SetLabelSize(0.045,"XY");hpZZ2->SetTitleSize(0.045,"XY");
-    //TH1F* hpEta5 = new TH1F(nameEta5,"",600,-150,150); hpEta5->SetXTitle("mm"); hpEta5->SetYTitle("Frequency"); hpEta5->SetLabelSize(0.045,"XY");hpEta5->SetTitleSize(0.045,"XY");
+
+    TH1F *hPos_g1xcl = new TH1F(name1X,"",500,-60,60); hPos_g1xcl->SetXTitle("mm"); hPos_g1xcl->SetYTitle("Frequency");hPos_g1xcl->SetLabelSize(0.045,"XY");hPos_g1xcl->SetTitleSize(0.045,"XY");
+    TH1F *hPos_g1ycl = new TH1F(name1Y,"",500,-60,60); hPos_g1ycl->SetXTitle("mm"); hPos_g1ycl->SetYTitle("Frequency");hPos_g1ycl->SetLabelSize(0.045,"XY");hPos_g1ycl->SetTitleSize(0.045,"XY");  
+    TH1F* hPos_g2xcl = new TH1F(name2X,"",500,-60,60); hPos_g2xcl->SetXTitle("mm"); hPos_g2xcl->SetYTitle("Frequency");hPos_g2xcl->SetLabelSize(0.045,"XY");hPos_g2xcl->SetTitleSize(0.045,"XY");
+    TH1F* hPos_g2ycl = new TH1F(name2Y,"",500,-60,60); hPos_g2ycl->SetXTitle("mm"); hPos_g2ycl->SetYTitle("Frequency");hPos_g2ycl->SetLabelSize(0.045,"XY");hPos_g2ycl->SetTitleSize(0.045,"XY");  
+    TH1F* hPos_g3xcl = new TH1F(name3X,"",500,-60,60); hPos_g3xcl->SetXTitle("mm"); hPos_g3xcl->SetYTitle("Frequency");hPos_g3xcl->SetLabelSize(0.045,"XY");hPos_g3xcl->SetTitleSize(0.045,"XY");
+    TH1F* hPos_g3ycl = new TH1F(name3Y,"",500,-60,60); hPos_g3ycl->SetXTitle("mm"); hPos_g3ycl->SetYTitle("Frequency");hPos_g3ycl->SetLabelSize(0.045,"XY");hPos_g3ycl->SetTitleSize(0.045,"XY");  
+
+    char nameRes1X[20];sprintf(nameRes1X,"residualg1xcl_%i",iterNb);char nameRes1Y[20];sprintf(nameRes1Y,"residualg1ycl_%i",iterNb);
     char nameRes2X[20];sprintf(nameRes2X,"residualg2xcl_%i",iterNb);char nameRes2Y[20];sprintf(nameRes2Y,"residualg2ycl_%i",iterNb);
     char nameRes3X[20];sprintf(nameRes3X,"residualg3xcl_%i",iterNb);char nameRes3Y[20];sprintf(nameRes3Y,"residualg3ycl_%i",iterNb);
-  //  char nameResu3X[20];sprintf(nameResu3X,"residualUVA3X_%i",iterNb);char nameResu3Y[20];sprintf(nameResu3Y,"residualUVA3Y_%i",iterNb);
-    char nameRes1X[20];sprintf(nameRes1X,"residualg1xcl_%i",iterNb);char nameRes1Y[20];sprintf(nameRes1Y,"residualg1ycl_%i",iterNb);
-    //char nameResZZ1[20];sprintf(nameResZZ1,"residualZZ1_%i",iterNb);char nameResZZ2[20];sprintf(nameResZZ2,"residualZZ2_%i",iterNb);
-    //char nameResEta5[20];sprintf(nameResEta5,"residualEta5_%i",iterNb);
+
+    TH1F* residualg1xcl = new TH1F(nameRes1X,"",200,-2,2); residualg1xcl->SetXTitle("mm"); residualg1xcl->SetYTitle("Frequency");residualg1xcl->SetLabelSize(0.045,"XY");residualg1xcl->SetTitleSize(0.045,"XY");
+    TH1F* residualg1ycl = new TH1F(nameRes1Y,"",200,-2,2); residualg1ycl->SetXTitle("mm"); residualg1ycl->SetYTitle("Frequency");residualg1ycl->SetLabelSize(0.045,"XY");residualg1ycl->SetTitleSize(0.045,"XY");
     TH1F* residualg2xcl = new TH1F(nameRes2X,"",200,-2,2); residualg2xcl->SetXTitle("Residual [mm]"); residualg2xcl->SetYTitle("Frequency");residualg2xcl->SetLabelSize(0.045,"XY");residualg2xcl->SetTitleSize(0.045,"XY");
     TH1F* residualg2ycl = new TH1F(nameRes2Y,"",200,-2,2); residualg2ycl->SetXTitle("Residual [mm]"); residualg2ycl->SetYTitle("Frequency");residualg2ycl->SetLabelSize(0.045,"XY");residualg2ycl->SetTitleSize(0.045,"XY");
     TH1F* residualg3xcl = new TH1F(nameRes3X,"",200,-2,2); residualg3xcl->SetXTitle("Residual [mm]"); residualg3xcl->SetYTitle("Frequency");residualg3xcl->SetLabelSize(0.045,"XY");residualg3xcl->SetTitleSize(0.045,"XY");
     TH1F* residualg3ycl = new TH1F(nameRes3Y,"",200,-2,2); residualg3ycl->SetXTitle("Residual [mm]"); residualg3ycl->SetYTitle("Frequency");residualg3ycl->SetLabelSize(0.045,"XY");residualg3ycl->SetTitleSize(0.045,"XY");
-   // TH1F* residualUVA3X = new TH1F(nameResu3X,"",200,-2,2); residualUVA3X->SetXTitle("Residual [mm]"); residualUVA3X->SetYTitle("Frequency");residualUVA3X->SetLabelSize(0.045,"XY");residualUVA3X->SetTitleSize(0.045,"XY");
-   // TH1F* residualUVA3Y = new TH1F(nameResu3Y,"",200,-2,2); residualUVA3Y->SetXTitle("Residual [mm]"); residualUVA3Y->SetYTitle("Frequency");residualUVA3Y->SetLabelSize(0.045,"XY");residualUVA3Y->SetTitleSize(0.045,"XY");
-    TH1F* residualg1xcl = new TH1F(nameRes1X,"",200,-2,2); residualg1xcl->SetXTitle("mm"); residualg1xcl->SetYTitle("Frequency");residualg1xcl->SetLabelSize(0.045,"XY");residualg1xcl->SetTitleSize(0.045,"XY");
-    TH1F* residualg1ycl = new TH1F(nameRes1Y,"",200,-2,2); residualg1ycl->SetXTitle("mm"); residualg1ycl->SetYTitle("Frequency");residualg1ycl->SetLabelSize(0.045,"XY");residualg1ycl->SetTitleSize(0.045,"XY");
-    //TH1F* residualZZ1 = new TH1F(nameResZZ1,"",320,-16,16); residualZZ1->SetXTitle("Residual [mm]"); residualZZ1->SetYTitle("Frequency");residualZZ1->SetLabelSize(0.045,"XY");residualZZ1->SetTitleSize(0.045,"XY");
-    ////TH1F* residualZZ2 = new TH1F(nameResZZ2,"",320,-16,16); residualZZ2->SetXTitle("Residual [mm]"); residualZZ2->SetYTitle("Frequency");residualZZ2->SetLabelSize(0.045,"XY");residualZZ2->SetTitleSize(0.045,"XY");
-    //TH1F* residualEta5 = new TH1F(nameResEta5,"",320,-16,16); residualEta5->SetXTitle("Residual [mm]"); residualEta5->SetYTitle("Frequency");residualEta5->SetLabelSize(0.045,"XY");residualEta5->SetTitleSize(0.045,"XY");
     /*
     char nameDxg3xcl[20]; sprintf(nameDxg3xcl,"g3xcl_g2xcl_%i",iterNb); char nameDyg3ycl[20]; sprintf(nameDyg3ycl,"g3ycl_g2ycl_%i",iterNb); 
     char nameDxUVA3X[20]; sprintf(nameDxUVA3X,"UVA3X_g2xcl_%i",iterNb); char nameDyUVA3Y[20]; sprintf(nameDyUVA3Y,"UVA3Y_g2ycl_%i",iterNb); 
@@ -162,11 +151,11 @@ void tracking(string Thestring){
     TH1F* dyREF1UVA3 = new TH1F(nameDyREF1UVA3,"",400,-4,4); dyREF1UVA3->SetXTitle("Delta_Y_g1ycl_UVA3Y [mm]"); dyREF1UVA3->SetYTitle("Frequency"); dyREF1UVA3->SetLabelSize(0.045,"XY"); dyREF1UVA3->SetTitleSize(0.045,"XY");
     TH1F* dyREF1REF3 = new TH1F(nameDyREF1REF3,"",400,-4,4); dyREF1REF3->SetXTitle("Delta_Y_g1ycl_g3ycl [mm]"); dyREF1REF3->SetYTitle("Frequency"); dyREF1REF3->SetLabelSize(0.045,"XY"); dyREF1REF3->SetTitleSize(0.045,"XY");
     */
+    TH1F* angleREF2 = new TH1F("angleREF2","Rotation angle distribution of REF1 and REF2",1000,-0.5,0.5); angleREF2->SetXTitle("Angle [radian]"); angleREF2->SetYTitle("Frequency");
     TH1F* angleREF3 = new TH1F("angleREF3","Rotation angle distribution of REF3 and REF2",1000,-0.5,0.5); angleREF3->SetXTitle("Angle [radian]"); angleREF3->SetYTitle("Frequency");
     //TH1F* angleREF3_2 = new TH1F("angleREF3","Get From Delta_y",2000,-0.5,3.5); angleREF3_2->SetXTitle("Rotation angle of ERF3 and REF2 [radian]"); angleREF3_2->SetYTitle("Frequency");
    // TH1F* angleUVA3 = new TH1F("angleUVA3","Rotation angle distribution of UVA3 and REF2",1000,-0.5,0.5); angleUVA3->SetXTitle("Angle [radian]"); angleUVA3->SetYTitle("Frequency");
     //TH1F* angleUVA3_2 = new TH1F("angleUVA3_2","Get From Delta_y",2000,-0.5,3.5); angleUVA3_2->SetXTitle("Rotation angle of UVA3 and REF2 [radian]"); angleUVA3_2->SetYTitle("Frequency");
-    TH1F* angleREF1 = new TH1F("angleREF1","Rotation angle distribution of REF1 and REF2",1000,-0.5,0.5); angleREF1->SetXTitle("Angle [radian]"); angleREF1->SetYTitle("Frequency");
     //TH1F* angleREF1_2 = new TH1F("angleREF1_2","Get From Delta_y",2000,-0.5,3.5); angleREF1_2->SetXTitle("Rotation angle of ERF1 and REF2 [radian]"); angleREF1_2->SetYTitle("Frequency");
     //TH1F* angleEta5 = new TH1F("angleEta5","Rotation Eta5 and REF2",1000,-0.5,0.5);
     //delta-y up: 200,-4,4
@@ -174,40 +163,40 @@ void tracking(string Thestring){
     //deltayZZ->SetLabelSize(0.045,"XY");deltayZZ->SetTitleSize(0.045,"XY");
     //cout<<"shift: "<<shiREF2X<<"\t"<<shiREF2Y<<"\t"<<shiREF3X<<"\t"<<shiREF3Y<<"\t"<<shiUVA3X<<"\t"<<shiUVA3Y<<"\t"<<shiREF1X<<"\t"<<shiREF1Y<<endl;
     
-    TH1F* xTrackChi2 = new TH1F("XTrackChi2","Chi square of tracks in X projection",1000,0,0.2); xTrackChi2->SetXTitle("#chi^{2} of track in X"); xTrackChi2->SetYTitle("Frequency");
-    xTrackChi2->SetTitleSize(0.04,"XY"); xTrackChi2->SetLabelSize(0.04,"XY");
-    TH1F* yTrackChi2 = new TH1F("YTrackChi2","Chi square of tracks in Y projection",1000,0,0.2); yTrackChi2->SetXTitle("#chi^{2} of track in Y"); yTrackChi2->SetYTitle("Frequency");
-    yTrackChi2->SetTitleSize(0.04,"XY"); yTrackChi2->SetLabelSize(0.04,"XY");
+    TH1F* xTrackChi2 = new TH1F("XTrackChi2","Chi square of tracks in X projection",1000,0,10); xTrackChi2->SetXTitle("#chi^{2} of track in X"); xTrackChi2->SetYTitle("Frequency"); xTrackChi2->SetTitleSize(0.04,"XY"); xTrackChi2->SetLabelSize(0.04,"XY");
+    TH1F* yTrackChi2 = new TH1F("YTrackChi2","Chi square of tracks in Y projection",1000,0,10); yTrackChi2->SetXTitle("#chi^{2} of track in Y"); yTrackChi2->SetYTitle("Frequency"); yTrackChi2->SetTitleSize(0.04,"XY"); yTrackChi2->SetLabelSize(0.04,"XY");
+
+    if (verbose)
+    	cout<<"Successfully Defined all histogram"<<endl;
     
-    fout<<"shift: "<<shiREF2X<<"\t"<<shiREF2Y<<"\t"<<shiREF3X<<"\t"<<shiREF3Y<<"\t"<</*shiUVA3X<<"\t"<<shiUVA3Y<<"\t"<<*/shiREF1X<<"\t"<<shiREF1Y<<endl;
-    fout2<<"rotation: "<<aREF3REF2<<"\t"<</*aUVA3REF2<<"\t"<<*/aREF1REF2<<endl;
+    fout<<"shift: "<<shiREF1X<<"\t"<<shiREF1Y<<"\t"<<shiREF2X<<"\t"<<shiREF2Y<<"\t"<</*shiUVA3X<<"\t"<<shiUVA3Y<<"\t"<<*/shiREF3X<<"\t"<<shiREF3Y<<endl;
+    fout2<<"rotation: "<<aREF2REF1<<"\t"<</*aUVA3REF2<<"\t"<<*/aREF3REF1<<endl;
+    if (verbose)
+    {
+    cout<<"shift: "<<shiREF1X<<"\t"<<shiREF1Y<<"\t"<<shiREF2X<<"\t"<<shiREF2Y<<"\t"<</*shiUVA3X<<"\t"<<shiUVA3Y<<"\t"<<*/shiREF3X<<"\t"<<shiREF3Y<<endl;
+    cout<<"rotation: "<<aREF2REF1<<"\t"<</*aUVA3REF2<<"\t"<<*/aREF3REF1<<endl;
+	cout<<"===============================>vPos size = "<< vPos_g1xcl.size() <<endl;
+    }
     int nnnn=0;
-    for(Int_t i=0;i<vPos_g2xcl.size();i++){
+    for(Int_t i=0;i<vPos_g1xcl.size();i++){
     	//shift
+      if (verbose)
+      	cout<<"ERROR 2 "<<endl;
+      vPos_g1xcl[i] = vPos_g1xcl[i] - shiREF1X; vPos_g1ycl[i] = vPos_g1ycl[i] - shiREF1Y;
       vPos_g2xcl[i] = vPos_g2xcl[i] - shiREF2X; vPos_g2ycl[i] = vPos_g2ycl[i] - shiREF2Y;      
       vPos_g3xcl[i] = vPos_g3xcl[i] - shiREF3X; vPos_g3ycl[i] = vPos_g3ycl[i] - shiREF3Y;
-   //   vpUVA3X[i] = vpUVA3X[i] - shiUVA3X; vpUVA3Y[i] = vpUVA3Y[i] - shiUVA3Y;
-      vPos_g1xcl[i] = vPos_g1xcl[i] - shiREF1X; vPos_g1ycl[i] = vPos_g1ycl[i] - shiREF1Y;
-     // vpZZ1[i] = vpZZ1[i] - shiZZ1; vpZZ2[i] = vpZZ2[i] - shiZZ2;
-      //vpEta5[i] = vpEta5[i] - shiEta5; 
       temPos_g2xcl=vPos_g2xcl[i]; temPos_g2ycl=vPos_g2ycl[i]; temPos_g3xcl=vPos_g3xcl[i]; temPos_g3ycl=vPos_g3ycl[i]; 
-     // tempUVA3X=vpUVA3X[i]; tempUVA3Y=vpUVA3Y[i]; temPos_g1xcl=vPos_g1xcl[i]; tempg1ycl=vPos_g1ycl[i]; 
-      //tempEta5=vpEta5[i];
+      temPos_g1xcl=vPos_g1xcl[i]; temPos_g1ycl=vPos_g1ycl[i]; 
+
       //rotate back
-      vPos_g3xcl[i]=temPos_g3xcl*cos(aREF3REF2)-temPos_g3ycl*sin(aREF3REF2);
-      vPos_g3ycl[i]=temPos_g3xcl*sin(aREF3REF2)+temPos_g3ycl*cos(aREF3REF2);
-     // vpUVA3X[i]=tempUVA3X*cos(aUVA3REF2)-tempUVA3Y*sin(aUVA3REF2);
-    //  vpUVA3Y[i]=tempUVA3X*sin(aUVA3REF2)+tempUVA3Y*cos(aUVA3REF2);//
-      vPos_g1xcl[i]=temPos_g1xcl*cos(aREF1REF2)-temPos_g1ycl*sin(aREF1REF2);
-      vPos_g1ycl[i]=temPos_g1xcl*sin(aREF1REF2)+temPos_g1ycl*cos(aREF1REF2);
-      //vpEta5[i]=temPos_g2xcl*sin(aEta5REF2)+tempEta5*cos(aEta5REF2);
-      
+      vPos_g2xcl[i]=temPos_g2xcl*cos(aREF2REF1)-temPos_g2ycl*sin(aREF2REF1);
+      vPos_g2ycl[i]=temPos_g2xcl*sin(aREF2REF1)+temPos_g2ycl*cos(aREF2REF1);
+      vPos_g3xcl[i]=temPos_g3xcl*cos(aREF3REF1)-temPos_g3ycl*sin(aREF3REF1);
+      vPos_g3ycl[i]=temPos_g3xcl*sin(aREF3REF1)+temPos_g3ycl*cos(aREF3REF1);
+
+      hPos_g1xcl->Fill(vPos_g1xcl[i]); hPos_g1ycl->Fill(vPos_g1ycl[i]);
       hPos_g2xcl->Fill(vPos_g2xcl[i]); hPos_g2ycl->Fill(vPos_g2ycl[i]);
       hPos_g3xcl->Fill(vPos_g3xcl[i]); hPos_g3ycl->Fill(vPos_g3ycl[i]);
-     // hpUVA3X->Fill(vpUVA3X[i]); hpUVA3Y->Fill(vpUVA3Y[i]);
-      hPos_g1xcl->Fill(vPos_g1xcl[i]); hPos_g1ycl->Fill(vPos_g1ycl[i]);
-      //hpZZ1->Fill(vpZZ1[i]); hpZZ2->Fill(vpZZ2[i]);
-      //hpEta5->Fill(vpEta5[i]); //cout<<vpEta5[i]<<endl;
       /*
       dxg3xcl->Fill(vPos_g3xcl[i]-vPos_g2xcl[i]); dyg3ycl->Fill(vPos_g3ycl[i]-vPos_g2ycl[i]);
       dxUVA3X->Fill(vpUVA3X[i]-vPos_g2xcl[i]); dyUVA3Y->Fill(vpUVA3Y[i]-vPos_g2ycl[i]);
@@ -217,70 +206,63 @@ void tracking(string Thestring){
       dxREF1REF3->Fill(vPos_g1xcl[i]-vPos_g3xcl[i]); dyREF1REF3->Fill(vPos_g1ycl[i]-vPos_g3ycl[i]);
       */
       TGraph* g1 = new TGraph();
-      g1->SetPoint(0,100,     vPos_g2xcl[i]);
-      g1->SetPoint(1,380,vPos_g3xcl[i]);
- //     g1->SetPoint(2,2686.5,vpUVA3X[i]);
-    g1->SetPoint(3,830,vPos_g1xcl[i]);
-      TF1* f1 = new TF1("line1","[0]+[1]*x",0,3200);
+      g1->SetPoint(0,100, vPos_g1xcl[i]);
+      g1->SetPoint(1,380, vPos_g2xcl[i]);
+      g1->SetPoint(2,830, vPos_g3xcl[i]);
+
+      TF1* f1 = new TF1("line1","[0]+[1]*x",0,900);
       g1->Fit("line1","Q");
       double intercept1 = f1->GetParameter(0);
       double slope1     = f1->GetParameter(1);
-      double Measuredg2xcl = intercept1 + slope1*100.;
-      double Measuredg3xcl = intercept1 + slope1*380.;
-     // double MeasuredUVA3X = intercept1 + slope1*2686.5;
-      double Measuredg1xcl = intercept1 + slope1*830.;
+      double Measuredg1xcl = intercept1 + slope1*100.;
+      double Measuredg2xcl = intercept1 + slope1*380.;
+      double Measuredg3xcl = intercept1 + slope1*830.;
+      if (verbose)
+      cout<<"measured = "<< Measuredg2xcl <<"\tvPos = "<< vPos_g2xcl[i] <<"\tresidualg2xcl = "<<Measuredg2xcl-vPos_g2xcl[i]<<endl;
       residualg2xcl->Fill(Measuredg2xcl-vPos_g2xcl[i]);
       residualg3xcl->Fill(Measuredg3xcl-vPos_g3xcl[i]);
-     // residualUVA3X->Fill(MeasuredUVA3X-vpUVA3X[i]);
       residualg1xcl->Fill(Measuredg1xcl-vPos_g1xcl[i]);
       xTrackChi2->Fill(f1->GetChisquare());
-      //cout<<f1->GetChisquare()<<"\t";
+  if (verbose)
+      cout<<f1->GetChisquare()<<"\t";
       delete f1; delete g1;
 
       TGraph* g2 = new TGraph();
-      g2->SetPoint(0,100,     vPos_g2ycl[i]);
-      g2->SetPoint(1,380,vPos_g3ycl[i]);
-      // exclusive
-    //  g2->SetPoint(2,2686.5,vpUVA3Y[i]);
-      g2->SetPoint(3,830,vPos_g1ycl[i]);
+      g2->SetPoint(0,100, vPos_g1ycl[i]);
+      g2->SetPoint(1,380, vPos_g2ycl[i]);
+      g2->SetPoint(2,830, vPos_g3ycl[i]);
       // inclusive
       //g2->SetPoint(2,2305.5,vpZZ2[i]); //inclusive 1
       //g2->SetPoint(2,2327.5,vpZZ1[i]);  //inclusive 2
       //g2->SetPoint(3,2686.5,vpUVA3Y[i]);
 
+  if (verbose)
 cout<<"test"<<  endl;
-      //g2->SetPoint(4,3169.5,vPos_g1ycl[i]);
-      //g2->SetPoint(3,3169.5,vPos_g1ycl[i]);    
-      TF1* f2 = new TF1("line2","[0]+[1]*x",0,3200);
+
+      TF1* f2 = new TF1("line2","[0]+[1]*x",0,900);
       g2->Fit("line2","Q");
       double intercept2 = f2->GetParameter(0);
       double slope2     = f2->GetParameter(1);
-      double Measuredg2ycl = intercept2 + slope2*100.;
-      double Measuredg3ycl = intercept2 + slope2*380.;
-     // double MeasuredUVA3Y = intercept2 + slope2*2686.5;
-      double Measuredg1ycl = intercept2 + slope2*830.;
-      //double MeasuredZZ1  = intercept2 + slope2*2327.5;
-      //double MeasuredZZ2  = intercept2 + slope2*2305.5;
-      //double MeasuredEta5 = intercept2 + slope2*2011.5;
+      double Measuredg1ycl = intercept2 + slope2*100.;
+      double Measuredg2ycl = intercept2 + slope2*380.;
+      double Measuredg3ycl = intercept2 + slope2*830.;
+
       residualg2ycl->Fill(Measuredg2ycl-vPos_g2ycl[i]);
       residualg3ycl->Fill(Measuredg3ycl-vPos_g3ycl[i]);
-     // residualUVA3Y->Fill(MeasuredUVA3Y-vpUVA3Y[i]);
       residualg1ycl->Fill(Measuredg1ycl-vPos_g1ycl[i]);
-      //residualZZ1->Fill(MeasuredZZ1-vpZZ1[i]);
-      //residualZZ2->Fill(MeasuredZZ2-vpZZ2[i]);
-      //residualEta5->Fill(MeasuredEta5-vpEta5[i]);
-      //deltayZZ->Fill(vpZZ1[i]-vpZZ2[i]);
+
       yTrackChi2->Fill(f2->GetChisquare());
-      //cout<<f2->GetChisquare()<<endl;
+  if (verbose)
+      cout<<f2->GetChisquare()<<endl;
       delete f2; delete g2;
       
-      double cosineREF3 = CalculateCosTheta1(vPos_g2xcl[i],vPos_g2ycl[i],vPos_g3xcl[i],vPos_g3ycl[i]);
+      double cosineREF2 = CalculateCosTheta1(vPos_g1xcl[i],vPos_g1ycl[i],vPos_g2xcl[i],vPos_g2ycl[i]);
      // double cosineUVA3 = CalculateCosTheta1(vPos_g2xcl[i],vPos_g2ycl[i],vpUVA3X[i],vPos_g3ycl[i]);
-    double cosineREF1 = CalculateCosTheta1(vPos_g2xcl[i],vPos_g2ycl[i],vPos_g1xcl[i],vPos_g1ycl[i]);
+      double cosineREF3 = CalculateCosTheta1(vPos_g1xcl[i],vPos_g1ycl[i],vPos_g3xcl[i],vPos_g3ycl[i]);
      // double cosineEta5 = CalculateCosTheta1(vPos_g2xcl[i],vPos_g2ycl[i],vPos_g2xcl[i],vpEta5[i]);
-    angleREF3->Fill(cosineREF3);   //angleREF3_2->Fill(cosineREF3_2);
+      angleREF2->Fill(cosineREF2);   //angleREF3_2->Fill(cosineREF3_2);
      // angleUVA3->Fill(cosineUVA3); //angleUVA3_2->Fill(cosineUVA3_2);
-  angleREF1->Fill(cosineREF1); //angleREF1_2->Fill(cosineREF1_2);
+      angleREF3->Fill(cosineREF3); //angleREF1_2->Fill(cosineREF1_2);
       //angleEta5->Fill(cosineEta5);
       
       nnnn++;
@@ -289,25 +271,40 @@ cout<<"test"<<  endl;
     } //for loop
     //cout<<"after for loop"<<endl;
     gStyle->SetOptFit(1111);
-
+//
     I2GFvalues myValues;
-    myValues = I2GFmainLoop(residualg2xcl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 1 "<<endl;
+    TH1F *residualg1xcl_tmp = (TH1F*) residualg1xcl->Clone("residualg1xcl_tmp");
+    TH1F *residualg1ycl_tmp = (TH1F*) residualg1ycl->Clone("residualg1ycl_tmp");
+    TH1F *residualg2xcl_tmp = (TH1F*) residualg2xcl->Clone("residualg2xcl_tmp");
+    TH1F *residualg2ycl_tmp = (TH1F*) residualg2ycl->Clone("residualg2ycl_tmp");
+    TH1F *residualg3xcl_tmp = (TH1F*) residualg3xcl->Clone("residualg3xcl_tmp");
+    TH1F *residualg3ycl_tmp = (TH1F*) residualg3ycl->Clone("residualg3ycl_tmp");
+    myValues = I2GFmainLoop(residualg2xcl_tmp, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 2 "<<endl;
     meanREF2X = myValues.mean; sigmag2xcl=myValues.sigma;
-    myValues = I2GFmainLoop(residualg2ycl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 2 "<<endl;
+    myValues = I2GFmainLoop(residualg2ycl_tmp, 1, 10 , 1);
     meanREF2Y = myValues.mean; sigmag2ycl=myValues.sigma;
-    myValues = I2GFmainLoop(residualg3xcl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 3 "<<endl;
+    myValues = I2GFmainLoop(residualg3xcl_tmp, 1, 10 , 1);
     meanREF3X = myValues.mean; sigmag3xcl=myValues.sigma;
-    myValues = I2GFmainLoop(residualg3ycl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 4 "<<endl;
+    myValues = I2GFmainLoop(residualg3ycl_tmp, 1, 10 , 1);
     meanREF3Y = myValues.mean; sigmag3ycl=myValues.sigma;
    /* myValues = I2GFmainLoop(residualUVA3X, 1, 10 , 1);
     meanUVA3X = myValues.mean; sigmaUVA3X=myValues.sigma;
     myValues = I2GFmainLoop(residualUVA3Y, 1, 10 , 1);
     meanUVA3Y = myValues.mean; sigmaUVA3Y=myValues.sigma;*/
-    myValues = I2GFmainLoop(residualg1xcl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 5 "<<endl;
+    myValues = I2GFmainLoop(residualg1xcl_tmp, 1, 10 , 1);
     meanREF1X = myValues.mean; sigmag1xcl=myValues.sigma;
-    myValues = I2GFmainLoop(residualg1ycl, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 6 "<<endl;
+    myValues = I2GFmainLoop(residualg1ycl_tmp, 1, 10 , 1);
     meanREF1Y = myValues.mean; sigmag1ycl=myValues.sigma;
-
+    if (verbose) cout<<"=========================>Passed 7 "<<endl;
+//
+  if (verbose)
     cout<<"residual mean: "<<meanREF2X<<"\t"<<meanREF2Y<<"\t"<<meanREF3X<<"\t"<<meanREF3Y<<"\t"<</*meanUVA3X<<"\t"<<meanUVA3Y<<"\t"<<*/meanREF1X<<"\t"<<meanREF1Y<<endl;
         //<<meanZZ1<<"\t"<<meanZZ2<<endl;
     fout1<<"residual mean: "<<meanREF2X<<"\t"<<meanREF2Y<<"\t"<<meanREF3X<<"\t"<<meanREF3Y<<"\t"<</*meanUVA3X<<"\t"<<meanUVA3Y<<"\t"<<*/meanREF1X<<"\t"<<meanREF1Y<<endl;
@@ -326,12 +323,14 @@ cout<<"test"<<  endl;
     myValues = I2GFmainLoop(dyREF1UVA3, 1, 10 , 1);
     myValues = I2GFmainLoop(dyREF1REF3, 1, 10 , 1);
     */
-    myValues = I2GFmainLoop(angleREF3, 1, 10 , 1);
+    TH1F *angleREF2_tmp = (TH1F*) angleREF2->Clone("angleREF2_tmp");
+    TH1F *angleREF3_tmp = (TH1F*) angleREF3->Clone("angleREF3_tmp");
+    myValues = I2GFmainLoop(angleREF2_tmp, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 8 "<<endl;
+    meanAngleREF2=myValues.mean;
+    myValues = I2GFmainLoop(angleREF3_tmp, 1, 10 , 1);
+    if (verbose) cout<<"=========================>Passed 9 "<<endl;
     meanAngleREF3=myValues.mean;
-   // myValues = I2GFmainLoop(angleUVA3, 1, 10 , 1);
-   // meanAngleUVA3=myValues.mean;
-    myValues = I2GFmainLoop(angleREF1, 1, 10 , 1);
-    meanAngleREF1=myValues.mean;
     //maximum=angleEta5->GetMean(); rms=angleEta5->GetRMS(1); lRange=maximum-rms*0.7; hRange=maximum+rms*0.7;
     //TF1* funAngleEta5=new TF1("funAngleEta5","gaus",lRange,hRange); angleEta5->Fit("funAngleEta5","RQ");
     //meanAngleEta5=funAngleEta5->GetParameter(1);
@@ -342,46 +341,37 @@ cout<<"test"<<  endl;
     //TF1* funYTrackChi2=new TF1("funYTrackChi2","gaus",lRange,hRange); yTrackChi2->Fit("funYTrackChi2","RQ");
     meanYChi2=yTrackChi2->GetMean();
     
-    totalAngleREF3 += aREF3REF2;
+    totalAngleREF2 += aREF2REF1;
    // totalAngleUVA3 += aUVA3REF2;
-    totalAngleREF1 += aREF1REF2;
-    fout3<<sigmag2xcl<<"\t"<<sigmag2ycl<<"\t"<<sigmag3xcl<<"\t"<<sigmag3ycl<<"\t"<</*sigmaUVA3X<<"\t"<<sigmaUVA3Y<<*/"\t"<<sigmag1xcl<<"\t"<<sigmag1ycl<<"\t"<<totalAngleREF3<<"\t"<</*totalAngleUVA3<<*/"\t"<<totalAngleREF1<<"\t"<<meanXChi2<<"\t"<<meanYChi2<<endl;
+    totalAngleREF3 += aREF3REF1;
+    fout3<<sigmag1xcl<<"\t"<<sigmag1ycl<<"\t"<<sigmag2xcl<<"\t"<<sigmag2ycl<<"\t"<</*sigmaUVA3X<<"\t"<<sigmaUVA3Y<<*/"\t"<<sigmag3xcl<<"\t"<<sigmag3ycl<<"\t"<<totalAngleREF2<<"\t"<</*totalAngleUVA3<<*/"\t"<<totalAngleREF3<<"\t"<<meanXChi2<<"\t"<<meanYChi2<<endl;
+    cout<<sigmag1xcl<<"\t"<<sigmag1ycl<<"\t"<<sigmag2xcl<<"\t"<<sigmag2ycl<<"\t"<</*sigmaUVA3X<<"\t"<<sigmaUVA3Y<<*/"\t"<<sigmag3xcl<<"\t"<<sigmag3ycl<<"\t"<<totalAngleREF2<<"\t"<</*totalAngleUVA3<<*/"\t"<<totalAngleREF3<<"\t"<<meanXChi2<<"\t"<<meanYChi2<<endl;
     
     f->Write();
     f->Close();
     //delete funPosEta5; delete funPosg1ycl; delete funPosUVA3Y; delete funPosg3ycl; delete funPosg2ycl;
     
     double factor = -0.2;
-    //shiREF2X = meanREF2X*factor; shiREF2Y = meanREF2Y*factor; 
-    //shiREF3X = meanREF3X*factor; shiREF3Y = meanREF3Y*factor; 
-    //shiUVA3X = meanUVA3X*factor; shiUVA3Y = meanUVA3Y*factor; 
-    //shiREF1X = meanREF1X*factor; shiREF1Y = meanREF1Y*factor; 
-    //shiZZ1 = meanZZ1*factor; shiZZ2 = meanZZ2*factor; 
-    //shiEta5 = meanEta5*factor;
+    shiREF1X = meanREF1X*factor; shiREF1Y = meanREF1Y*factor; 
+    shiREF2X = meanREF2X*factor; shiREF2Y = meanREF2Y*factor; 
+    shiREF3X = meanREF3X*factor; shiREF3Y = meanREF3Y*factor; 
     factor=0.2;
-    shiREF2X=0.0; shiREF2Y=0.0;
-    shiREF3X=0.0; shiREF3Y=0.0;
-//    shiUVA3X=0.0; shiUVA3Y=0.0;
-    shiREF1X=0.0; shiREF1Y=0.0;
     
-    aREF3REF2 = 0.0 ;
-  //  aUVA3REF2 = 0.0;
-    aREF1REF2 = 0.0;
-    //aUVA3REF2 = meanAngleUVA3*factor;
-    //aREF1REF2 = meanAngleREF1*factor;
+    aREF2REF1 = meanAngleREF2*factor;
+    aREF3REF1 = meanAngleREF3*factor;
    // aEta5REF2 = meanAngleEta5*factor;
    // if(iterNb>0) break; // only cylce once.
-    //if((meanREF2X>=-0.001 && meanREF2X<=0.001) && (meang2ycl>=-0.001 && meanREF2Y<=0.001))
-    //  if((meanREF3X>=-0.001 && meanREF3X<=0.001) && (meanREF3Y>=-0.001 && meanREF3Y<=0.001))
-    //    if((meanUVA3X>=-0.001 && meanUVA3X<=0.001) && (meanUVA3Y>=-0.001 && meanUVA3Y<=0.001))
-    //    	if((meanREF1X>=-0.001 && meanREF1X<=0.001) && (meanREF1Y>=-0.001 && meanREF1Y<=0.001) && meanEta5<=0.005)
-    //if(meanAngleREF3>=-0.001 && meanAngleREF3<=0.001 && meanAngleUVA3>=-0.001 && meanAngleUVA3<=0.001 && meanAngleREF1>=-0.001 && meanAngleREF1<=0.001)
-    //      {
-    //        cout<<"find it...iterating "<<iterNb<<" times."<<endl;
-    //        break;
-    //      }
+    if((meanREF1X>=-0.05 && meanREF1X<=0.05) && (meanREF1Y>=-0.05 && meanREF1Y<=0.05))
+    if((meanREF2X>=-0.05 && meanREF2X<=0.05) && (meanREF2Y>=-0.05 && meanREF2Y<=0.05))
+    if((meanREF3X>=-0.05 && meanREF3X<=0.05) && (meanREF3Y>=-0.05 && meanREF3Y<=0.05))
+    if(meanAngleREF3>=-0.05 && meanAngleREF3<=0.05 && meanAngleREF2>=-0.05 && meanAngleREF2<=0.05)
+          {
+            cout<<"find it...iterating "<<iterNb<<" times."<<endl;
+            break;
+          }
   // break;
-    if(iterNb==1) break;
+    if(iterNb==50) break;
+
  }//while(1)
  fout.close();
  fout1.close();
@@ -390,13 +380,10 @@ cout<<"test"<<  endl;
 
 int AlignTrackers_shift_rotate(){
 	
-  string name[1]={
-  	"Position" 
- }; 
-{
-return false;
-}
-  for(int i=0;i<1;i++) tracking(name[i]);  
+  string name={"Position"}; 
+cout<<"Start of program"<<endl;
+for(int i=0;i<1;i++) tracking(name);  
+return 0;
 }
 
 double CalculateCosTheta1(double x, double y, double x1,double y1){
