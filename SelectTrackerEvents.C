@@ -8,13 +8,13 @@
 #include <TH2.h>
 #include <TFile.h>
 
-#include "tdrstyle.C"
-#include "CMS_lumi.C"
+//#include "tdrstyle.C"
+//#include "CMS_lumi.C"
 
 
-void SelectTrackerEvents(char * InputTextFile, const int RunNumber, char * LargeGEM)
+void SelectTrackerEvents(char * InputTextFile, const int RunNumber, string LargeGEM)
 {
-	setTDRStyle();
+/*	setTDRStyle();
 
 	writeExtraText = true;       // if extra text
 	extraText  = "Preliminary";  // default extra text is "Preliminary"
@@ -23,7 +23,7 @@ void SelectTrackerEvents(char * InputTextFile, const int RunNumber, char * Large
 	lumi_sqrtS = "13 TeV";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
 	
 	int iPeriod = 3;    // 1=7TeV, 2=8TeV, 3=7+8TeV, 7=7+8+13TeV, 0=free form (uses lumi_sqrtS)
-
+*/
 //   InputTextFile = InputTextFile+".txt";
     cout<<"Input file = "<<InputTextFile<<endl;
     cout<<"Run Number = "<<RunNumber<<endl;
@@ -196,8 +196,16 @@ void SelectTrackerEvents(char * InputTextFile, const int RunNumber, char * Large
 	      cout<<endl;
     }
 
-    
-    TString outputfile = Form("Tracker_Position_RunNumber%i.txt",RunNumber);
+    TString outputfile;
+    if ( LargeGEM == "No")
+        outputfile = Form("TrackerOnly_Position_RunNumber%i.txt",RunNumber);
+    if ( LargeGEM == "LC1")
+        outputfile = Form("TrackerAndLC1_Position_RunNumber%i.txt",RunNumber);
+    if ( LargeGEM == "LC2")
+        outputfile = Form("TrackerAndLC2_Position_RunNumber%i.txt",RunNumber);
+    if ( LargeGEM == "LC3")
+        outputfile = Form("TrackerAndLC3_Position_RunNumber%i.txt",RunNumber);
+
     TString rootfile = Form("CoarseAligned.root");
     //TString rootfile = Form("RootFiles/CoarseAligned.root");
     fstream fout(outputfile.Data(),ios::out);
@@ -332,13 +340,33 @@ void SelectTrackerEvents(char * InputTextFile, const int RunNumber, char * Large
 	
 	//then combine the cut conditions & fill histograms
 	Bool_t trigger=false;
-	if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true && cutNHits_LC1==true )// && cutNHits_LC1==true && cutNHits_LC2==true && cutNHits_LC3==true) 
-	  {
-	    trigger = true;
-	  }
+	if ( LargeGEM == "No")
+	    if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true )
+		trigger = true;
+	if ( LargeGEM == "LC1")
+	    if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true && cutNHits_LC1==true ) 
+		trigger = true;
+	if ( LargeGEM == "LC2")
+	    if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true && cutNHits_LC2==true ) 
+		trigger = true;
+	if ( LargeGEM == "LC3")
+	    if(cutNHits_g2==true && cutNHits_g3==true && cutNHits_g1==true && cutNHits_LC3==true ) 
+		trigger = true;
+
+
+
 	if(trigger){
 	  totalEvents++;
-	  fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<< "\t"<< Pos_sCMSNS2LC1.at(i)<<endl;
+
+	if ( LargeGEM == "No")
+	    fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<<endl;
+	if ( LargeGEM == "LC1")
+	    fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<< "\t"<< Pos_sCMSNS2LC1.at(i)<<endl;
+	if ( LargeGEM == "LC2")
+	    fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<< "\t"<< Pos_sCMSNS2LC2.at(i)<<endl;
+	if ( LargeGEM == "LC3")
+	    fout<<Pos_g2xcl.at(i)<<"\t"<<Pos_g2ycl.at(i)<<"\t"<<Pos_g3xcl.at(i)<<"\t"<<Pos_g3ycl.at(i)<<"\t"<<Pos_g1xcl.at(i)<<"\t"<<Pos_g1ycl.at(i)<< "\t"<< Pos_sCMSNS2LC3.at(i)<<endl;
+
 	  h_Pos_g2xcl->Fill(Pos_g2xcl.at(i));
 	  h_Pos_g2ycl->Fill(Pos_g2ycl.at(i));
 	  h_Pos_g3xcl->Fill(Pos_g3xcl.at(i));
