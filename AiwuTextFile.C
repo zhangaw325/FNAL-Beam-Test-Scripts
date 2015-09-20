@@ -44,9 +44,14 @@ cout<< "Total "<<nentries<<endl;
    // create a text file
    //
    std::ofstream file_out("Hit_Position_Info.txt");
+   std::ofstream file_out1("Effeciency_Info.txt");
    if (!file_out){
        std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
    }
+if (!file_out1){
+       std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
+   }
+
 
    Long64_t nbytes = 0, nb = 0;
    bool verbose = 0;
@@ -347,6 +352,10 @@ if (NumCluster_LC3 !=0)
 	      //cout<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
 	      //cout<<"EventNb "<<jentry<<endl;
 	  file_out<<"EventNb "<<EventNb<<endl;
+          file_out1 << setw(5) << "EventNb "<< EventNb <<" "<<
+           setw(5) << "efficiency_g1 "<< (float)g1_Hit_count*100./(float)nentries<<" "<<
+           setw(5) << "efficiency_g2 "<< (float)g2_Hit_count*100./(float)nentries<<" "<<
+          setw(5) << "efficiency_g3 " << (float)g3_Hit_count*100./(float)nentries<<"\n";
 	  //file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
       
 }
