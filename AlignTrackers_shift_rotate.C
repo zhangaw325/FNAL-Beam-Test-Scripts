@@ -8,11 +8,11 @@
 #include <TH2.h>
 #include <TFile.h>
 
-void tracking(string thestring){
+void tracking(string thestring,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y ){
 
 bool verbose = 0;
 cout<<"Program Start"<<endl;
- //string thestring = "Hit_Position_Info";
+  //string thestring = "Hit_Position_Info";
   string txtfilename = thestring + std::string(".txt");
   string shiftHead = "RotationBack_shiftParameters_";
   string rotateHead = "RotationBack_angles_";
@@ -64,10 +64,11 @@ cout<<"Program Start"<<endl;
   double shiEta5=29.5
  */
  //fine alignment parameters
-  double shiREF1X=61.91, shiREF1Y=55.68;
+  /* double shiREF1X=61.91, shiREF1Y=55.68;
   double shiREF2X=62.36, shiREF2Y=55.83;
   double shiREF3X=62.72, shiREF3Y=56.06;
- // double shiUVA3X=-8.389, shiUVA3Y=15.779;
+  */
+  // double shiUVA3X=-8.389, shiUVA3Y=15.779;
   double aREF2REF1=0.00;
   double aREF3REF1=0.00;
 
@@ -384,13 +385,17 @@ cout<<"test"<<  endl;
  fout2.close();
 } // entire script
 
-int AlignTrackers_shift_rotate(){
+  /* double shiREF1X =61.91, shiREF1Y =55.68;
+  double shiREF2X =62.36, shiREF2Y =55.83;
+  double shiREF3X =62.72, shiREF3Y =56.06;
+  */
+int AlignTrackers_shift_rotate(string name, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y ){
 	
-  string name={"Position"}; 
+//  string name={"Position"}; 
+ cout<<"Name of input file = "<<name<<endl;
+  name={"Position"}; 
 cout<<"Start of program"<<endl;
-//{
-//}
-for(int i=0;i<1;i++) tracking(name);  
+for(int i=0;i<1;i++) tracking(name, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y);  
 return 0;
 }
 
