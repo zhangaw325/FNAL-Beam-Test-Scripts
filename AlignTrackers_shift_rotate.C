@@ -8,7 +8,7 @@
 #include <TH2.h>
 #include <TFile.h>
 
-void tracking(string thestring,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y ){
+void tracking(string thestring,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos ){
 
 bool verbose = 0;
 cout<<"Program Start"<<endl;
@@ -209,17 +209,17 @@ cout<<"Program Start"<<endl;
       dxREF1REF3->Fill(vPos_g1xcl[i]-vPos_g3xcl[i]); dyREF1REF3->Fill(vPos_g1ycl[i]-vPos_g3ycl[i]);
       */
       TGraph* g1 = new TGraph();
-      g1->SetPoint(0,100, vPos_g1xcl[i]);
-      g1->SetPoint(1,380, vPos_g2xcl[i]);
-      g1->SetPoint(2,830, vPos_g3xcl[i]);
+      g1->SetPoint(0,Trk1Pos, vPos_g1xcl[i]);
+      g1->SetPoint(1,Trk2Pos, vPos_g2xcl[i]);
+      g1->SetPoint(2,Trk3Pos, vPos_g3xcl[i]);
 
       TF1* f1 = new TF1("line1","[0]+[1]*x",0,900);
       g1->Fit("line1","Q");
       double intercept1 = f1->GetParameter(0);
       double slope1     = f1->GetParameter(1);
-      double Measuredg1xcl = intercept1 + slope1*100.;
-      double Measuredg2xcl = intercept1 + slope1*380.;
-      double Measuredg3xcl = intercept1 + slope1*830.;
+      double Measuredg1xcl = intercept1 + slope1*Trk1Pos;
+      double Measuredg2xcl = intercept1 + slope1*Trk2Pos;
+      double Measuredg3xcl = intercept1 + slope1*Trk3Pos;
       if (verbose)
       cout<<"measured = "<< Measuredg2xcl <<"\tvPos = "<< vPos_g2xcl[i] <<"\tresidualg2xcl = "<<Measuredg2xcl-vPos_g2xcl[i]<<endl;
       residualg2xcl->Fill(Measuredg2xcl-vPos_g2xcl[i]);
@@ -231,9 +231,9 @@ cout<<"Program Start"<<endl;
       delete f1; delete g1;
 
       TGraph* g2 = new TGraph();
-      g2->SetPoint(0,100, vPos_g1ycl[i]);
-      g2->SetPoint(1,380, vPos_g2ycl[i]);
-      g2->SetPoint(2,830, vPos_g3ycl[i]);
+      g2->SetPoint(0,Trk1Pos, vPos_g1ycl[i]);
+      g2->SetPoint(1,Trk2Pos, vPos_g2ycl[i]);
+      g2->SetPoint(2,Trk3Pos, vPos_g3ycl[i]);
       // inclusive
       //g2->SetPoint(2,2305.5,vpZZ2[i]); //inclusive 1
       //g2->SetPoint(2,2327.5,vpZZ1[i]);  //inclusive 2
@@ -246,9 +246,9 @@ cout<<"test"<<  endl;
       g2->Fit("line2","Q");
       double intercept2 = f2->GetParameter(0);
       double slope2     = f2->GetParameter(1);
-      double Measuredg1ycl = intercept2 + slope2*100.;
-      double Measuredg2ycl = intercept2 + slope2*380.;
-      double Measuredg3ycl = intercept2 + slope2*830.;
+      double Measuredg1ycl = intercept2 + slope2*Trk1Pos;
+      double Measuredg2ycl = intercept2 + slope2*Trk2Pos;
+      double Measuredg3ycl = intercept2 + slope2*Trk3Pos;
 
       residualg2ycl->Fill(Measuredg2ycl-vPos_g2ycl[i]);
       residualg3ycl->Fill(Measuredg3ycl-vPos_g3ycl[i]);
@@ -389,13 +389,13 @@ cout<<"test"<<  endl;
   double shiREF2X =62.36, shiREF2Y =55.83;
   double shiREF3X =62.72, shiREF3Y =56.06;
   */
-int AlignTrackers_shift_rotate(string name, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y ){
+int AlignTrackers_shift_rotate(string name, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos ){
 	
 //  string name={"Position"}; 
  cout<<"Name of input file = "<<name<<endl;
   name={"Position"}; 
 cout<<"Start of program"<<endl;
-for(int i=0;i<1;i++) tracking(name, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y);  
+for(int i=0;i<1;i++) tracking(name, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, Trk1Pos, Trk2Pos, Trk3Pos);  
 return 0;
 }
 

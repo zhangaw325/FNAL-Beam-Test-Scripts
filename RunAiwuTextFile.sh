@@ -21,7 +21,9 @@ do
     	#perl -spe 's/CRC-Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22-141011_013955-0.root/$a/' < 
 	#echo ${PathOfInputData}$(basename $f)/CRC-$(basename $f)-0.root
 	echo $f
+	git checkout AiwuTextFile.h
 	sed -i "s?CRC-Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22-141011_013955-0.root?${f}?g" AiwuTextFile.h
+	root -l -b -q RunAiwuTextFile.C
     done
     ((++RunCounter))
 done

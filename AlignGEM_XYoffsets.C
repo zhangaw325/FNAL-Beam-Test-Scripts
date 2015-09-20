@@ -9,9 +9,11 @@
 #include "doubleGausFit_withHistParameter.C"
 
 //vector<double> DefaultVector; // just used to free memory from vectors.
-int tracking(string thestring, double iterNbX, double iterNbY){
+int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos ){
   double PI=TMath::Pi();
-  string txtfilename = thestring + ".txt";
+  string txtfilename = thestring ;
+  //string txtfilename = thestring + ".txt";
+  thestring = "PostionLC1";
   string residualHead = "rPhi_residual_";
   string residualMeanHead = "rPhi_residualMean_";
   string residualSigmaHead="rPhi_residualSigma_";
@@ -24,10 +26,12 @@ int tracking(string thestring, double iterNbX, double iterNbY){
   double pREF3X=0.0, pREF3Y=0.0;
   double pEta5=0.0;
   
+  /* 
     double shiREF1X=-9.92822, shiREF1Y=-0.68756;
     double shiREF2X=12.26791212, shiREF2Y=2.02708225;
     double shiREF3X=7.4824985, shiREF3Y=-2.35562;
     double shiEta5=0.0;//0.01509;
+    */
     double preshiREF1X=-2265, preshiREF1Y=-32;
     double preshiREF2X=-2265, preshiREF2Y=-32;  //2127.4275
     double preshiREF3X=-2265, preshiREF3Y=-32;
@@ -144,39 +148,21 @@ int tracking(string thestring, double iterNbX, double iterNbY){
       string newhead = "./RootFiles/";
       string outputrootname=newhead+residualHead+thestring+rootfile;
       TFile* f = new TFile(outputrootname.c_str(),"recreate");
-/*
-      char name2X[50];sprintf(name2X,"rREF2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); char name2Y[50];sprintf(name2Y,"phiREF2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-      char name3X[50];sprintf(name3X,"rREF3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); char name3Y[50];sprintf(name3Y,"phiREF3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-      char name1X[50];sprintf(name1X,"rREF1_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); char name1Y[50];sprintf(name1Y,"phiREF1_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-      char nameEta5[50];sprintf(nameEta5,"phiEta5_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y); 
-      hpREF2X = new TH1F(name2X,"",1500,1950,2100); hpREF2X->SetXTitle("r [mm]"); hpREF2X->SetYTitle("Frequency");hpREF2X->SetLabelSize(0.05,"XY");hpREF2X->SetTitleSize(0.05,"XY");
-      hpREF2Y = new TH1F(name2Y,"",200,-0.1,0.1); hpREF2Y->SetXTitle("#phi [rad]"); hpREF2Y->SetYTitle("Frequency");hpREF2Y->SetLabelSize(0.05,"XY");hpREF2Y->SetTitleSize(0.05,"XY");  
-      hpREF3X = new TH1F(name3X,"",1500,1950,2100); hpREF3X->SetXTitle("r [mm]"); hpREF3X->SetYTitle("Frequency");hpREF3X->SetLabelSize(0.05,"XY");hpREF3X->SetTitleSize(0.05,"XY");
-      hpREF3Y = new TH1F(name3Y,"",200,-0.1,0.1); hpREF3Y->SetXTitle("#phi [rad]"); hpREF3Y->SetYTitle("Frequency");hpREF3Y->SetLabelSize(0.05,"XY");hpREF3Y->SetTitleSize(0.05,"XY");  
-      hpREF1X = new TH1F(name1X,"",1500,1950,2100); hpREF1X->SetXTitle("r [mm]"); hpREF1X->SetYTitle("Frequency");hpREF1X->SetLabelSize(0.05,"XY");hpREF1X->SetTitleSize(0.05,"XY");
-      hpREF1Y = new TH1F(name1Y,"",200,-0.1,0.1); hpREF1Y->SetXTitle("#phi [rad]"); hpREF1Y->SetYTitle("Frequency");hpREF1Y->SetLabelSize(0.05,"XY");hpREF1Y->SetTitleSize(0.05,"XY");  
-      hpEta5 = new TH1F(nameEta5,"",200,-0.1,0.1); hpEta5->SetXTitle("#phi [rad]"); hpEta5->SetYTitle("Frequency"); hpEta5->SetLabelSize(0.05,"XY");hpEta5->SetTitleSize(0.05,"XY");
-*/
+
       char nameRes1X[50];sprintf(nameRes1X,"residualREF1_r_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameRes1Y[50];sprintf(nameRes1Y,"residualREF1_phi_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameRes2X[50];sprintf(nameRes2X,"residualREF2_r_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameRes2Y[50];sprintf(nameRes2Y,"residualREF2_phi_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameRes3X[50];sprintf(nameRes3X,"residualREF3_r_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);char nameRes3Y[50];sprintf(nameRes3Y,"residualREF3_phi_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameResEta5[50];sprintf(nameResEta5,"residualEta5_phi_X_%.1f_Y_%.1f",preshiREF1X, preshiREF1Y);
 
-      residualREF1X = new TH1F(nameRes1X,"",1000,-2,2); residualREF1X->SetXTitle("Residual in r [mm]"); residualREF1X->SetYTitle("Frequency");residualREF1X->SetLabelSize(0.05,"XY");residualREF1X->SetTitleSize(0.05,"XY");
-      residualREF1Y = new TH1F(nameRes1Y,"",1000,-0.005,0.005); residualREF1Y->SetXTitle("Residual in #phi [rad]"); residualREF1Y->SetYTitle("Frequency");residualREF1Y->SetLabelSize(0.05,"XY");residualREF1Y->SetTitleSize(0.05,"XY");
-      residualREF2X = new TH1F(nameRes2X,"",1000,-2,2); residualREF2X->SetXTitle("Residual in r [mm]"); residualREF2X->SetYTitle("Frequency");residualREF2X->SetLabelSize(0.05,"XY");residualREF2X->SetTitleSize(0.05,"XY");
-      residualREF2Y = new TH1F(nameRes2Y,"",1000,-0.005,0.005); residualREF2Y->SetXTitle("Residual in #phi [rad]"); residualREF2Y->SetYTitle("Frequency");residualREF2Y->SetLabelSize(0.05,"XY");residualREF2Y->SetTitleSize(0.05,"XY");
-      residualREF3X = new TH1F(nameRes3X,"",1000,-2,2); residualREF3X->SetXTitle("Residual in r [mm]"); residualREF3X->SetYTitle("Frequency");residualREF3X->SetLabelSize(0.05,"XY");residualREF3X->SetTitleSize(0.05,"XY");
-      residualREF3Y = new TH1F(nameRes3Y,"",1000,-0.005,0.005); residualREF3Y->SetXTitle("Residual in #phi [rad]"); residualREF3Y->SetYTitle("Frequency");residualREF3Y->SetLabelSize(0.05,"XY");residualREF3Y->SetTitleSize(0.05,"XY");
-      residualEta5 = new TH1F(nameResEta5,"",1000,-0.02,0.02); residualEta5->SetXTitle("Residual in #phi [rad]"); residualEta5->SetYTitle("Frequency");residualEta5->SetLabelSize(0.05,"XY");residualEta5->SetTitleSize(0.05,"XY");
-/*    
-      char nameAngleREF3[50]; sprintf(nameAngleREF3,"angleREF3_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-      char nameAngleREF1[50]; sprintf(nameAngleREF1,"angleREF1_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-      char nameAngleEta5[50]; sprintf(nameAngleEta5,"angleEta5_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
-       angleREF3 = new TH1F(nameAngleREF3,"Rotation angle distribution of REF3 and REF2",1000,-0.005,0.005); angleREF3->SetXTitle("Angle [rad]"); angleREF3->SetYTitle("Frequency");
-       angleREF1 = new TH1F(nameAngleREF1,"Rotation angle distribution of REF1 and REF2",1000,-0.005,0.005); angleREF1->SetXTitle("Angle [rad]"); angleREF1->SetYTitle("Frequency");
-       angleEta5 = new TH1F(nameAngleEta5,"Rotation Eta5 and REF2",500,-0.2,0.2);
-*/    
+      residualREF1X = new TH1F(nameRes1X,"",1000,-8,8); residualREF1X->SetXTitle("Residual in r [mm]"); residualREF1X->SetYTitle("Frequency");residualREF1X->SetLabelSize(0.05,"XY");residualREF1X->SetTitleSize(0.05,"XY");
+      residualREF1Y = new TH1F(nameRes1Y,"",1000,-20,20); residualREF1Y->SetXTitle("Residual in #phi [rad]"); residualREF1Y->SetYTitle("Frequency");residualREF1Y->SetLabelSize(0.05,"XY");residualREF1Y->SetTitleSize(0.05,"XY");
+      residualREF2X = new TH1F(nameRes2X,"",1000,-8,8); residualREF2X->SetXTitle("Residual in r [mm]"); residualREF2X->SetYTitle("Frequency");residualREF2X->SetLabelSize(0.05,"XY");residualREF2X->SetTitleSize(0.05,"XY");
+      residualREF2Y = new TH1F(nameRes2Y,"",1000,-20,20); residualREF2Y->SetXTitle("Residual in #phi [rad]"); residualREF2Y->SetYTitle("Frequency");residualREF2Y->SetLabelSize(0.05,"XY");residualREF2Y->SetTitleSize(0.05,"XY");
+      residualREF3X = new TH1F(nameRes3X,"",1000,-8,8); residualREF3X->SetXTitle("Residual in r [mm]"); residualREF3X->SetYTitle("Frequency");residualREF3X->SetLabelSize(0.05,"XY");residualREF3X->SetTitleSize(0.05,"XY");
+      residualREF3Y = new TH1F(nameRes3Y,"",1000,-20,40); residualREF3Y->SetXTitle("Residual in #phi [rad]"); residualREF3Y->SetYTitle("Frequency");residualREF3Y->SetLabelSize(0.05,"XY");residualREF3Y->SetTitleSize(0.05,"XY");
+      residualEta5 = new TH1F(nameResEta5,"",1000,-20,20); residualEta5->SetXTitle("Residual in #phi [rad]"); residualEta5->SetYTitle("Frequency");residualEta5->SetLabelSize(0.05,"XY");residualEta5->SetTitleSize(0.05,"XY");
+
+
       char nameChi2X[50]; sprintf(nameChi2X,"XTrackChi2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
       char nameChi2Y[50]; sprintf(nameChi2Y,"YTrackChi2_X_%.1f_Y_%.1f",preshiREF2X, preshiREF2Y);
        xTrackChi2 = new TH1F(nameChi2X,"Chi square of tracks in X projection",1000,0,0.2); xTrackChi2->SetXTitle("#chi^{2} of track in r"); xTrackChi2->SetYTitle("Frequency");
@@ -185,50 +171,6 @@ int tracking(string thestring, double iterNbX, double iterNbY){
        yTrackChi2->SetTitleSize(0.04,"XY"); yTrackChi2->SetLabelSize(0.04,"XY");
     
       //fill histograms first
-/*
-      for(Int_t i=0;i<NNNNN;i++){
-      	hpREF2X->Fill(vpREF2X[i]); hpREF2Y->Fill(vpREF2Y[i]);
-      	hpREF3X->Fill(vpREF3X[i]); hpREF3Y->Fill(vpREF3Y[i]);
-      	hpUVA3X->Fill(vpUVA3X[i]); hpUVA3Y->Fill(vpUVA3Y[i]);
-      	hpREF1X->Fill(vpREF1X[i]); hpREF1Y->Fill(vpREF1Y[i]);
-      	hpEta5->Fill(vpEta5[i]);
-    	
-        angleREF3->Fill(vpREF3Y[i]-vpREF2Y[i]);
-        angleUVA3->Fill(vpUVA3Y[i]-vpREF2Y[i]);
-        angleREF1->Fill(vpREF1Y[i]-vpREF2Y[i]);
-        angleEta5->Fill(vpEta5[i]-vpREF2Y[i]);
-      }
-*/      
-/*
-      I2GFvalues myValues;
-      myValues = I2GFmainLoop(angleREF3,1,10,1);  double meanAngleREF3 = myValues.mean;
-      myValues = I2GFmainLoop(angleUVA3,1,10,1);  double meanAngleUVA3 = myValues.mean;
-      myValues = I2GFmainLoop(angleREF1,1,10,1);  double meanAngleREF1 = myValues.mean;
-      myValues = I2GFmainLoop(angleEta5,1,10,1);  double meanAngleEta5 = myValues.mean;
-*//* 
-      double maximum = angleREF3->GetXaxis()->GetBinCenter(angleREF3->GetMaximumBin());   
-      double rms = angleREF3->GetRMS(1); 
-      double lRange = maximum - rms*2; 
-      double hRange = maximum + rms*2;
-      TF1* funAngleREF3 = new TF1("funAngleREF3","gaus",lRange,hRange); angleREF3->Fit("funAngleREF3","RQ");
-      double meanAngleREF3=funAngleREF3->GetParameter(1);
-      maximum = angleUVA3->GetXaxis()->GetBinCenter(angleUVA3->GetMaximumBin());
-      rms = angleUVA3->GetRMS(1);
-      lRange = maximum - rms*2; hRange = maximum + rms*2;
-      TF1* funAngleUVA3 = new TF1("funAngleUVA3","gaus",lRange,hRange); angleUVA3->Fit("funAngleUVA3","RQ");
-      double meanAngleUVA3=funAngleUVA3->GetParameter(1);
-      maximum = angleREF1->GetXaxis()->GetBinCenter(angleREF1->GetMaximumBin());
-      rms = angleREF1->GetRMS(1);
-      lRange = maximum - rms*2; hRange = maximum + rms*2;
-      TF1* funAngleREF1 = new TF1("funAngleREF1","gaus",lRange,hRange); angleREF1->Fit("funAngleREF1","RQ");
-      double meanAngleREF1=funAngleREF1->GetParameter(1);
-      maximum = angleEta5->GetXaxis()->GetBinCenter(angleEta5->GetMaximumBin());
-      rms = angleEta5->GetRMS(1);
-      lRange = maximum - rms*2; hRange = maximum + rms*2;
-      TF1* funAngleEta5 = new TF1("funAngleEta5","gaus",lRange,hRange); angleEta5->Fit("funAngleEta5","RQ");
-      double meanAngleEta5=funAngleEta5->GetParameter(1);
-      delete funAngleREF3; delete funAngleUVA3; delete funAngleREF1; delete funAngleEta5;
-*/
     
     for(unsigned int i=0; i < v->size(); i++)
     {
@@ -236,17 +178,18 @@ int tracking(string thestring, double iterNbX, double iterNbY){
 
         //fill track in r direction
         TGraph* g1 = new TGraph();
-        g1->SetPoint(0,100, d.vpREF1X);
-        g1->SetPoint(1,380, d.vpREF2X);
-        g1->SetPoint(2,880, d.vpREF3X);
+        g1->SetPoint(0,Trk1Pos, d.vpREF1X);
+        g1->SetPoint(1,Trk2Pos, d.vpREF2X);
+        g1->SetPoint(2,Trk3Pos, d.vpREF3X);
         g1->GetXaxis()->SetRangeUser(0,900);
         TF1* f1 = new TF1("line1","pol1",0,900);
         g1->Fit("line1","Q");
         double intercept1 = f1->GetParameter(0);
         double slope1     = f1->GetParameter(1);
-        double MeasuredREF1X = intercept1 + slope1*100;
-        double MeasuredREF2X = intercept1 + slope1*380;
-        double MeasuredREF3X = intercept1 + slope1*880;
+        double MeasuredREF1X = intercept1 + slope1*Trk1Pos;
+        double MeasuredREF2X = intercept1 + slope1*Trk2Pos;
+        double MeasuredREF3X = intercept1 + slope1*Trk3Pos;
+
         residualREF2X->Fill(MeasuredREF2X-d.vpREF2X);
         residualREF3X->Fill(MeasuredREF3X-d.vpREF3X);
         residualREF1X->Fill(MeasuredREF1X-d.vpREF1X);
@@ -256,20 +199,20 @@ int tracking(string thestring, double iterNbX, double iterNbY){
       
         //fill track in phi direction
         TGraph* g2 = new TGraph();
-        g2->SetPoint(0,100  ,d.vpREF1Y);
-        g2->SetPoint(1,380  ,d.vpREF2Y);
-        g2->SetPoint(2,830  ,d.vpREF3Y);
-        g2->SetPoint(3,1000 ,d.vpEta5);		// need to modify z-position of GE11
-        g2->GetXaxis()->SetRangeUser(-1000,3300);
+        g2->SetPoint(0,Trk1Pos ,d.vpREF1Y);
+        g2->SetPoint(1,Trk2Pos ,d.vpREF2Y);
+        g2->SetPoint(2,Trk3Pos ,d.vpREF3Y);
+        g2->SetPoint(3,GEMPos  ,d.vpEta5);		// need to modify z-position of GE11
+        g2->GetXaxis()->SetRangeUser(0,2200);
         // inclusive
-        TF1* f2 = new TF1("line2","pol1",0,3200);
+        TF1* f2 = new TF1("line2","pol1",0,2200);
         g2->Fit("line2","Q");
         double intercept2 = f2->GetParameter(0);
         double slope2     = f2->GetParameter(1);
-        double MeasuredREF1Y = intercept2 + slope2*100.0;
-        double MeasuredREF2Y = intercept2 + slope2*380.0;
-        double MeasuredREF3Y = intercept2 + slope2*830.0;
-        double MeasuredEta5 = intercept2 + slope2*1000.0;
+        double MeasuredREF1Y = intercept2 + slope2*Trk1Pos;
+        double MeasuredREF2Y = intercept2 + slope2*Trk2Pos;
+        double MeasuredREF3Y = intercept2 + slope2*Trk3Pos;
+        double MeasuredEta5  = intercept2 + slope2*GEMPos;
         residualREF2Y->Fill((MeasuredREF2Y-d.vpREF2Y));
         residualREF3Y->Fill((MeasuredREF3Y-d.vpREF3Y));
         residualREF1Y->Fill((MeasuredREF1Y-d.vpREF1Y));
@@ -279,12 +222,11 @@ int tracking(string thestring, double iterNbX, double iterNbY){
         delete f2; delete g2;
   
       } //end for loop of filling histograms and fitting tracks
-      //cout<<"after for loop"<<endl;
       //going to fit residual histograms
       gStyle->SetOptFit(1111);
     
-      myValues = I2GFmainLoop(residualREF2X,1,10,1);  meanREF2X = myValues.mean; sigmaREF2X=myValues.sigma;
 /*
+      myValues = I2GFmainLoop(residualREF2X,1,10,1);  meanREF2X = myValues.mean; sigmaREF2X=myValues.sigma;
       myValues = I2GFmainLoop(residualREF2Y,1,10,1);  meanREF2Y = myValues.mean; sigmaREF2Y=myValues.sigma;
       myValues = I2GFmainLoop(residualREF3X,1,10,1);  meanREF3X = myValues.mean; sigmaREF3X=myValues.sigma;
       myValues = I2GFmainLoop(residualREF3Y,1,10,1);  meanREF3Y = myValues.mean; sigmaREF3Y=myValues.sigma;
@@ -293,10 +235,11 @@ int tracking(string thestring, double iterNbX, double iterNbY){
       myValues = I2GFmainLoop(residualREF1X,1,10,1);  meanREF1X = myValues.mean; sigmaREF1X=myValues.sigma;
       myValues = I2GFmainLoop(residualREF1Y,1,10,1);  meanREF1Y = myValues.mean; sigmaREF1Y=myValues.sigma;
 */      
-#if 0
       I2GFvalues myValues;
-      myValues = I2GFmainLoop(residualEta5,1,10,1);
-      meanEta5 = myValues.mean; sigmaEta5=myValues.sigma;
+      
+      TH1F *residualEta5_tmp = (TH1F*) residualEta5->Clone("residualEta5_tmp");
+
+      myValues = I2GFmainLoop(residualEta5_tmp,1,10,1);   meanEta5 = myValues.mean; sigmaEta5=myValues.sigma;
 /*
       maximum = residualEta5->GetXaxis()->GetBinCenter(residualEta5->GetMaximumBin());
       rms = residualEta5->GetRMS(1);
@@ -349,22 +292,21 @@ int tracking(string thestring, double iterNbX, double iterNbY){
    //   delete angleEta5;
   //}
  fout1.close();
-#endif
  //fout3.close();
  //fout2.close();
  return 0;
 } // entire script
 
-int AlignGEM_XYoffsets(){
+int AlignGEM_XYoffsets(string InputTextFile, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y , double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos){
 	
-  string name[1]={
-  	"Position_Cluster_run017_HVScan_4150V_32GeV_20131017_1254pm_all"
-  };
-  //for(int i=0;i<1;i++)
+//  string name[1]={
+//  	"Position_Cluster_run017_HVScan_4150V_32GeV_20131017_1254pm_all"
+//  };
   for(int iterNbX=0;iterNbX<=50;iterNbX++)
     for(int iterNbY=0;iterNbY<101;iterNbY++)
     {
-     tracking(name[0],iterNbX, iterNbY);
+     tracking(InputTextFile, iterNbX, iterNbY, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, shiEta5, Trk1Pos, Trk2Pos, Trk3Pos, GEMPos );
+     //tracking(name[0],iterNbX, iterNbY);
     }
   return 0;
 }

@@ -1,3 +1,8 @@
+/*
+ * 1. Make range external variable
+ * 2. 
+ */
+
 #include <vector>
 #include <TFile.h>
 #include <TTree.h>
@@ -14,7 +19,7 @@
     double shi_g3xcl =62.72, shi_g3ycl =56.06;
     double shi_g1xcl =61.91, shi_g1ycl =55.68;
     */
-void  AlignTrackers_Shift( string txtfilename, int RunNumber, double shi_g1xcl, double shi_g1ycl, double shi_g2xcl, double shi_g2ycl, double shi_g3xcl, double shi_g3ycl ){
+void  AlignTrackers_Shift( string txtfilename, int RunNumber, double shi_g1xcl, double shi_g1ycl, double shi_g2xcl, double shi_g2ycl, double shi_g3xcl, double shi_g3ycl , double Trk1Pos, double Trk2Pos, double Trk3Pos){
     string thestring = "Position";
     //string txtfilename = thestring + ".txt";	// Input text file 
     cout<<"Input text file = "<< txtfilename <<endl;
@@ -139,9 +144,9 @@ void  AlignTrackers_Shift( string txtfilename, int RunNumber, double shi_g1xcl, 
 		cout<<"Some problem 7"<<endl;
 	    
 	    
-	    g1->SetPoint(0,0., vPos_g1xcl[i]);
-	    g1->SetPoint(1,380.,vPos_g2xcl[i]);
-	    g1->SetPoint(2,830.,vPos_g3xcl[i]);
+	    g1->SetPoint(0, Trk1Pos, vPos_g1xcl[i]);
+	    g1->SetPoint(1, Trk2Pos, vPos_g2xcl[i]);
+	    g1->SetPoint(2, Trk3Pos, vPos_g3xcl[i]);
 	    
 	    if (verbose)
 		cout<<"vPos_g1xcl["<<i<<"] = "<<vPos_g1xcl[i]<<"\tvPos_g2xcl["<<i<<"] = "<<vPos_g2xcl[i]<<"\tvPos_g3xcl["<<i<<"] = "<<vPos_g3xcl[i]<<endl;
@@ -150,9 +155,9 @@ void  AlignTrackers_Shift( string txtfilename, int RunNumber, double shi_g1xcl, 
 	    
 	    double intercept1 = f1->GetParameter(0);
 	    double slope1     = f1->GetParameter(1);
-	    double Measured_g1xcl = intercept1 + slope1*0.0;
-	    double Measured_g2xcl = intercept1 + slope1*380.;
-	    double Measured_g3xcl = intercept1 + slope1*830.;
+	    double Measured_g1xcl = intercept1 + slope1*Trk1Pos;
+	    double Measured_g2xcl = intercept1 + slope1*Trk2Pos;
+	    double Measured_g3xcl = intercept1 + slope1*Trk3Pos;
 	    
 	    if (verbose)
 		cout<<"intercept1 = "<<intercept1<<"\tslope1 = "<<slope1 <<endl;
@@ -169,18 +174,18 @@ void  AlignTrackers_Shift( string txtfilename, int RunNumber, double shi_g1xcl, 
 	    if (verbose)
 		cout<<"Some problem 8"<<endl;
 	    
-	    g2->SetPoint(0,0,     vPos_g1ycl[i]);
-	    g2->SetPoint(1,380,vPos_g2ycl[i]);
-	    g2->SetPoint(2,830,vPos_g3ycl[i]);
+	    g2->SetPoint(0,Trk1Pos,vPos_g1ycl[i]);
+	    g2->SetPoint(1,Trk2Pos,vPos_g2ycl[i]);
+	    g2->SetPoint(2,Trk3Pos,vPos_g3ycl[i]);
 	    
 	    // inclusive
 	    
 	    g2->Fit("line2","Q");
 	    double intercept2 = f2->GetParameter(0);
 	    double slope2     = f2->GetParameter(1);
-	    double Measured_g1ycl = intercept2 + slope2*0.0;
-	    double Measured_g2ycl = intercept2 + slope2*380;
-	    double Measured_g3ycl = intercept2 + slope2*830;
+	    double Measured_g1ycl = intercept2 + slope2*Trk1Pos;
+	    double Measured_g2ycl = intercept2 + slope2*Trk2Pos;
+	    double Measured_g3ycl = intercept2 + slope2*Trk3Pos;
 	    
 	    if (verbose)
 		cout<<"Some problem 9"<<endl;
