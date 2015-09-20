@@ -49,8 +49,8 @@ cout<< "Total "<<nentries<<endl;
        std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
    }
 if (!file_out1){
-       std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
-   }
+     std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
+ }
 
 
    Long64_t nbytes = 0, nb = 0;
@@ -352,11 +352,7 @@ if (NumCluster_LC3 !=0)
 	      //cout<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
 	      //cout<<"EventNb "<<jentry<<endl;
 	  file_out<<"EventNb "<<EventNb<<endl;
-          file_out1 << setw(5) << "EventNb "<< EventNb <<" "<<
-           setw(5) << "efficiency_g1 "<< (float)g1_Hit_count*100./(float)nentries<<" "<<
-           setw(5) << "efficiency_g2 "<< (float)g2_Hit_count*100./(float)nentries<<" "<<
-          setw(5) << "efficiency_g3 " << (float)g3_Hit_count*100./(float)nentries<<"\n";
-	  //file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
+//file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
       
 }
 
@@ -931,7 +927,21 @@ g1x = jentry ;
     //================================    
     //====================== END::  Clear few arrays: Those behaving Strange.	===============================	
 
-  }
+file_out1 << setw(5) << "EventNb "<< EventNb <<" "<<
+           setw(5) << "efficiency_g1 "<< (float)g1_Hit_count*100./(float)nentries<<" "<<
+           setw(5) << "efficiency_g2 "<< (float)g2_Hit_count*100./(float)nentries<<" "<<
+          setw(5) << "efficiency_g3 " << (float)g3_Hit_count*100./(float)nentries<<"\n";
+
+	  //file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
+}
+
+/*std::ofstream file_out1("Effeciency_Info.txt");
+
+file_out1 << setw(5) << "EventNb "<< EventNb <<" "<<
+           setw(5) << "efficiency_g1 "<< (float)g1_Hit_count*100./(float)nentries<<" "<<
+           setw(5) << "efficiency_g2 "<< (float)g2_Hit_count*100./(float)nentries<<" "<<
+          setw(5) << "efficiency_g3 " << (float)g3_Hit_count*100./(float)nentries<<"\n";
+*/
 cout<<"g1x_Hit=============> "<<g1x_Hit_count<<endl;
 cout<<"efficiency_g1x "<<(float) g1x_Hit_count* 100./(float) nentries<<endl;
 
@@ -961,4 +971,4 @@ cout<<"efficiency_LC2 "<<(float) LC2_Hit_count* 100./(float) nentries<<endl;
 cout<<"LC3_Hits=============> "<<LC3_Hit_count<<endl;
 cout<<"efficiency_LC3 "<<(float) LC3_Hit_count* 100./(float) nentries<<endl;
 
-}
+  }
