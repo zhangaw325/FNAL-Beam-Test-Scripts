@@ -206,7 +206,7 @@ void SelectTrackerEvents(char * InputTextFile, const int RunNumber, string Large
     if ( LargeGEM == "LC3")
         outputfile = Form("TrackerAndLC3_Position_RunNumber%i.txt",RunNumber);
 
-    TString rootfile = Form("CoarseAligned.root");
+    TString rootfile = Form("CoarseAligned_%i.root",RunNumber);
     //TString rootfile = Form("RootFiles/CoarseAligned.root");
     fstream fout(outputfile.Data(),ios::out);
     TFile* f = new TFile(rootfile.Data(),"recreate");
