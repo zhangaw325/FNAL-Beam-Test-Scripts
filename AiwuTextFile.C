@@ -4,13 +4,6 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 
-//int main()
-//{
-//    gROOT->ProcessLine(.L AiwuTextFile.C);
-//    AiwuTextFile t;
-//    t.Loop();
-//}
-
 void AiwuTextFile::Loop()
 {
 //   In a ROOT session, you can do:
@@ -44,11 +37,15 @@ cout<< "Total "<<nentries<<endl;
    // create a text file
    //
    std::ofstream file_out("Hit_Position_Info.txt");
-   std::ofstream file_out1("Effeciency_Info.txt");
+   std::ofstream file_out1("GE11s_Effeciency_Info.txt");
+   std::ofstream file_outTrk("GE11s_Effeciency_Info_WithTracker.txt");
    if (!file_out){
        std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
    }
 if (!file_out1){
+     std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
+ }
+if (!file_outTrk){
      std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
  }
 
@@ -104,14 +101,10 @@ if (!file_out1){
 if (NumCluster_g1x !=0 ) 
 {
            g1x_Hit_count++;
-//cout<<"g1x_hits "<<g1x_Hit_count<<endl;
-//cout<<"efficiency_g1x "<<(float) g1x_Hit_count/(float) nentries<<endl;
 }
 
       if (verbose)
 	  cout<<"Actual number of clusters = "<<NumCluster_g1x<<endl;
-	// if (NumCluster_g1x != 1) 
-	//  continue;
 
       //
       //
@@ -131,8 +124,6 @@ if (NumCluster_g1x !=0 )
 if (NumCluster_g1y !=0 )
 {
            g1y_Hit_count++;
-//cout<<"g1y_hits "<<g1y_Hit_count<<endl;
-//cout<<"efficiency_g1y "<<(float) g1y_Hit_count/(float) nentries<<endl;
 
 }
 
@@ -165,8 +156,6 @@ if (NumCluster_g1x !=0 && NumCluster_g1y !=0)
 if (NumCluster_g2x !=0 )
 {
            g2x_Hit_count++;
-//cout<<"g2x_hits "<<g2x_Hit_count<<endl;
-//cout<<"efficiency_g2x "<<(float) g2x_Hit_count/(float) nentries<<endl;
 }
  
       if (verbose)
@@ -192,8 +181,6 @@ if (NumCluster_g2x !=0 )
  if (NumCluster_g2y !=0 )
 {
            g2y_Hit_count++;
-//cout<<"g2y_hits "<<g2y_Hit_count<<endl;
-//cout<<"efficiency_g2y "<<(float) g2y_Hit_count/(float) nentries<<endl;
 }
  
 if (NumCluster_g2x !=0 && NumCluster_g2y !=0)
@@ -223,8 +210,6 @@ if (NumCluster_g2x !=0 && NumCluster_g2y !=0)
 if (NumCluster_g3x !=0 )
 {
            g3x_Hit_count++;
-//cout<<"g3x_hits "<<g3x_Hit_count<<endl;
-//cout<<"efficiency_g3x "<<(float) g3x_Hit_count/(float) nentries<<endl;
 }
  
       if (verbose)
@@ -248,8 +233,6 @@ if (NumCluster_g3x !=0 )
  if (NumCluster_g3y !=0 )
 {
            g3y_Hit_count++;
-//cout<<"g3y_hits "<<g3y_Hit_count<<endl;
-//cout<<"efficiency_g3y "<<(float) g3y_Hit_count/(float) nentries<<endl;
 }
  if (NumCluster_g3x !=0 && NumCluster_g3y !=0)
     {       g3_Hit_count++;
@@ -264,7 +247,6 @@ if (NumCluster_g3x !=0 )
            g1_Hit_count++;
 cout<<"NumCluster_g1x: "<<NumCluster_g1x<<"   "<<"NumCluster_g1y: "<<NumCluster_g1y<<endl;
 //cout<<"g1_hits "<<g1_Hit_count<<endl;
-//cout<<"efficiency_g1 "<<(float) g1_Hit_count/(float) nentries<<endl;
 }*/
 
 	// if (NumCluster_g3y != 1) 
@@ -284,10 +266,10 @@ cout<<"NumCluster_g1x: "<<NumCluster_g1x<<"   "<<"NumCluster_g1y: "<<NumCluster_
 	      break;
 	  NumCluster_LC1 += 1;
       }
-if (NumCluster_LC1 !=0)
-{
-  LC1_Hit_count++;
-} 
+      if (NumCluster_LC1 !=0)
+	{
+	    LC1_Hit_count++;
+	} 
 
       if (verbose)
 	  cout<<"Actual number of clusters = "<<NumCluster_LC1<<endl;
@@ -306,11 +288,10 @@ if (NumCluster_LC1 !=0)
 	      break;
 	  NumCluster_LC2 += 1;
       }
-
-if (NumCluster_LC2 !=0)
-{
-  LC2_Hit_count++;
-}
+      if (NumCluster_LC2 !=0)
+	{
+	    LC2_Hit_count++;
+	}
 
       if (verbose)
 	  cout<<"Actual number of clusters = "<<NumCluster_LC2<<endl;
@@ -328,12 +309,11 @@ if (NumCluster_LC2 !=0)
 	      break;
 	  NumCluster_LC3 += 1;
       }
-
-if (NumCluster_LC3 !=0)
-{
-  LC3_Hit_count++;
-}
-     if (verbose)
+      if (NumCluster_LC3 !=0)
+      {
+	  LC3_Hit_count++;
+      }
+      if (verbose)
 	  cout<<"Actual number of clusters = "<<NumCluster_LC3<<endl;
 	// if (NumCluster_LC3 != 1) 
 	//  continue;
@@ -373,7 +353,6 @@ if (NumCluster_LC3 !=0)
 		  break;
 	      channelFired +=g1xcl_ngeoch[nch];
 	      //cout<<"Channel Fired = "<<channelFired<<endl;
- //cout<<"effeciency "<<(float) jentry/ (float) nentries <<endl;
 	  }
 	  if (verbose)
 	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<g1xcl_geoposX[0]<<"\t"<<g1xcl_geoposch[0]<<"\t";
@@ -391,7 +370,6 @@ if (NumCluster_LC3 !=0)
 		      std::cout<<(g1xcl_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
 		  //std::cout<<(g1xcl_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
 		  file_out<<(g1xcl_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
-//	    cout<<"effeciency_1 "<<(float) jentry/ (float) nentries <<endl;
    }
 	      count_ngeoch_occ += 1;
 	  }
@@ -400,7 +378,6 @@ if (NumCluster_LC3 !=0)
 	  // std::cout<<std::endl;
 int g1x = jentry ;
 	  file_out<<std::endl;
- cout<<"effeciency_g1x "<<(float) jentry/ (float) nentries <<endl;
   }
    //================================	END::	Reference Tracker 1 (g1xcl)   ======================================================
    
@@ -927,21 +904,14 @@ int g1x = jentry ;
     //================================    
     //====================== END::  Clear few arrays: Those behaving Strange.	===============================	
 
-file_out1 << setw(5) << "EventNb "<< EventNb <<" "<<
-           setw(5) << "efficiency_g1 "<< (float)g1_Hit_count*100./(float)nentries<<" "<<
-           setw(5) << "efficiency_g2 "<< (float)g2_Hit_count*100./(float)nentries<<" "<<
-          setw(5) << "efficiency_g3 " << (float)g3_Hit_count*100./(float)nentries<<"\n";
 
 	  //file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
 }
 
-/*std::ofstream file_out1("Effeciency_Info.txt");
-
-file_out1 << setw(5) << "EventNb "<< EventNb <<" "<<
-           setw(5) << "efficiency_g1 "<< (float)g1_Hit_count*100./(float)nentries<<" "<<
-           setw(5) << "efficiency_g2 "<< (float)g2_Hit_count*100./(float)nentries<<" "<<
-          setw(5) << "efficiency_g3 " << (float)g3_Hit_count*100./(float)nentries<<"\n";
-*/
+file_out1 << "Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22"<<"\t"<<
+           setw(5) <<  (float)LC1_Hit_count*100./(float)nentries<<" "<<
+           setw(5) <<  (float)LC2_Hit_count*100./(float)nentries<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count*100./(float)nentries<<"\n";
 cout<<"g1x_Hit=============> "<<g1x_Hit_count<<endl;
 cout<<"efficiency_g1x "<<(float) g1x_Hit_count* 100./(float) nentries<<endl;
 
