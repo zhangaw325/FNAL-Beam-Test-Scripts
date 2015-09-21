@@ -39,7 +39,7 @@ void Master_test(const char* inputfile, string RunName , int EfficiencyType )//m
     Long64_t nentries = t->GetEntries();
     cout<< "Total "<<nentries<<endl;
 
-    string outputtxtfile = RunName+".txt";
+    string outputtxtfile = "HitTxtFiles/"+RunName+".txt";
     std::ofstream file_out(outputtxtfile);
     std::ofstream file_out1;
     file_out1.open("GE11s_Effeciency_Info.txt", std::ios_base::app);

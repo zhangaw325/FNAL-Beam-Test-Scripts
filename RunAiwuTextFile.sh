@@ -2,10 +2,35 @@ IRunNo=$1
 FRunNo=$2
 RunCounter=$IRunNo
 #PathOfInputData=/afs/cern.ch/work/p/pbarria/public/TB_H2_OCT_2014/beamdata
-PathOfInputData=/tmp/beamdata
+PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407
+#PathOfInputData=/tmp/beamdata
 EfficiencyType=0
 
+function make_dir
+{
+
+#	------------------------------------------------------------------------
+#	It Checks IF the output data directory exists or not
+#	No Arguments
+#	------------------------------------------------------------------------
+
+	if [ -d "${1}" ]; then
+		echo "Directory ${1} Exists......."
+	else
+		mkdir ${1}
+		echo "Directory ${1} Created................."
+	fi
+}	# end of make_dir
+
+
 rm GE11s_Effeciency_Info.txt
+
+make_dir HitTxtFiles
+make_dir RootFiles
+make_dir ResidualFiles
+make_dir ShiftParameterFiles
+make_dir EfficiencyTxtFiles
+
 echo -e "RunName\t\t\t\t\t\t\t\t GE11_IV_GIF \t GE11_IV \t GE11_V" > GE11s_Effeciency_Info.txt
 while [ $RunCounter -le $FRunNo ]
 do
@@ -42,4 +67,4 @@ do
     ((++RunCounter))
 done
 cp GE11s_Effeciency_Info.txt GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt
-
+mv GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt EfficiencyTxtFiles/
