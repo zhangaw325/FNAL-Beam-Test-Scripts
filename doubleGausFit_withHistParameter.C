@@ -66,18 +66,13 @@ I2GFvalues I2GFmainLoop(TH1F *htemp, int N_iter, float N_sigma_range, bool ShowF
   myI2GFvalues.sigma = -100;
   myI2GFvalues.sigma_err = -100;
 
-<<<<<<< HEAD
 
-  TSpectrum *s = new TSpectrum(); //TSpectrum(1,1)->Argument: (Number of peaks to find, Distance to neighboring peak: "1"-->3sigma)
-  Int_t NPeaks;
- Double_t *Peak;                     //TSpectrum *s = new TSpectrum(); --> No warning message 
-=======
   Int_t NPeaks ;
   TSpectrum *s= new TSpectrum(); //TSpectrum(1,1)->Argument: (Number of peaks to find, Distance to neighboring peak: "1"-->3sigma)
  
   //int NPeaks;
   Double_t *Peak;                     //TSpectrum *s = new TSpectrum(); --> No warning message 
->>>>>>> upstream/Develop
+
   Double_t *PeakAmp;                    
   float peak_pos = 0;
   float peak_pos_amp = 0;  //Initial value, assuming positive going peaks
