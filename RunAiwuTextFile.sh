@@ -3,9 +3,28 @@ FRunNo=$2
 RunCounter=$IRunNo
 #PathOfInputData=/afs/cern.ch/work/p/pbarria/public/TB_H2_OCT_2014/beamdata
 #PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407
-#PathOfInputData=/tmp/beamdata
-PathOfInputData=/afs/cern.ch/user/r/rasharma/work/GEM/TBA/FNAL-Beam-Test-Scripts
+PathOfInputData=/home/ramkrishna/TEMP/FNAL_BT
+#PathOfInputData=/afs/cern.ch/user/r/rasharma/work/GEM/TBA/FNAL-Beam-Test-Scripts
+    #/*
+    # * EfficiencyType : If want to calculate efficiency of each GE11's independently
+    # *			Using trigger from hardware only put it equal to 0
+    # *
+    # *			If want to trigger it using two of the reference tracker 
+    # *			put it = 1
+    # *
+    # *			if want to trigger it only when it passes from all three reference
+    # *			tracker then put it = 2
+    # */
 EfficiencyType=0
+
+    #/*
+    # * TrkOnly	    : If you want output text file in which there are hit iff there is 
+    # *		      hit only in all three tracker then put this = 1
+    # *		    
+    # *		      If you want to get hit iff there is hit in all tracker as well
+    # *		      as in GE11's then put this = 0
+    # */
+TrkOnly=1
 
 if [[ $EfficiencyType == 0 ]]; then
 	OutputEffFileName="GE11s_Efficiency_Independent.txt"
@@ -19,7 +38,6 @@ fi
 
 function make_dir
 {
-
 #	------------------------------------------------------------------------
 #	It Checks IF the output data directory exists or not
 #	No Arguments
@@ -58,24 +76,20 @@ do
             fi
         fi
     fi
-    for dir in $PathOfInputData/Run$file*; do
+    for dir in $PathOfInputData/Run$file*; do	    # Start of dir for loop
     	#perl -spe 's/CRC-Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22-141011_013955-0.root/$a/' < 
 	#echo ${PathOfInputData}$(basename $f)/CRC-$(basename $f)-0.root
 	echo "===============================================:"
 	echo "Directory name : "$dir
 	echo "Base name : "$(basename $dir)
 	RunName=$(basename $dir)
-	for rootfile in $dir/CRC*.root;do
+	for rootfile in $dir/CRC*.root;do	# Start of rootfile for loop
 	    echo "Root file name : "$rootfile
 	    ./CreateHeader.sh $rootfile rd51tbgeo
-	    root -l -b -q Master_test.C\(\"${rootfile}\",\"${RunName}\",${EfficiencyType}\)
-	done
-	#./CreateHeader.sh $f rd51tbgeo
-	#git checkout AiwuTextFile.h
-	#sed -i "s?CRC-Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22-141011_013955-0.root?${f}?g" AiwuTextFile.h
-	#root -l -b -q RunAiwuTextFile.C
-    done
-    ((++RunCounter))
-done
+	    root -l -b -q Master_test.C\(\"${rootfile}\",\"${RunName}\",${EfficiencyType},${TrkOnly}\)
+	done	# END of rootfile for loop
+    done	# END of dir for loop
+    ((++RunCounter))	# increment counter for while loop
+done			# while loop ends
 cp ${OutputEffFileName} GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt
 mv GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt EfficiencyTxtFiles/

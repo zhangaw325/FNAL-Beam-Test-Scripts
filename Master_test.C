@@ -16,7 +16,7 @@
 #include <vector>
 #include <iostream>
 using namespace std;
-void Master_test(const char* inputfile, string RunName , int EfficiencyType )//main programme
+void Master_test(const char* inputfile, string RunName , int EfficiencyType , int TrkOnly )//main programme
 {
 
     /*
@@ -63,7 +63,7 @@ void Master_test(const char* inputfile, string RunName , int EfficiencyType )//m
     //================================   initialize some of variables   ======================================================
     Long64_t nbytes = 0, nb = 0;
     bool verbose = 0;
-    bool TrkOnly = 0;
+//    bool TrkOnly = 1;
 
     int count_ngeoch_occ = 0;
     int EventNb = 0;
@@ -360,8 +360,8 @@ if (NumCluster_g3x !=0 )
               cout<<"EventNb "<<EventNb<<endl;
               //cout<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
               //cout<<"EventNb "<<jentry<<endl;
-          file_out<<"EventNb "<<EventNb<<endl;
-//file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
+//          file_out<<"EventNb "<<EventNb<<endl;
+file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
       
 }
 
@@ -369,8 +369,6 @@ if (NumCluster_g3x !=0 )
   //================================   Reference Tracker 1 (CRC.g1xcl)   ======================================================
       int channelFired = 0;             //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-    //  if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
 //cout<<"final "<<jentry<<endl;
@@ -401,7 +399,7 @@ if (NumCluster_g3x !=0 )
                       std::cout<<(CRC.g1xcl_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
                   //std::cout<<(CRC.g1xcl_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
                   file_out<<(CRC.g1xcl_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
-   }
+	      }
               count_ngeoch_occ += 1;
           }
           if (verbose)
@@ -415,8 +413,6 @@ int g1x = jentry ;
    //================================   Reference Tracker 1 (CRC.g1ycl)   ======================================================
       channelFired = 0;         //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-    //  if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
           if (verbose)
@@ -462,8 +458,6 @@ int g1x = jentry ;
    //================================   Reference Tracker 1 (CRC.g2xcl)   ======================================================
       channelFired = 0;         //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-  //    if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
          if (verbose)
@@ -507,8 +501,6 @@ int g1x = jentry ;
    //================================   Reference Tracker 1 (CRC.g2ycl)   ======================================================
       channelFired = 0;         //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-//      if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
           if (verbose)
@@ -550,8 +542,6 @@ int g1x = jentry ;
    //================================   Reference Tracker 1 (CRC.g3xcl)   ======================================================
       channelFired = 0;         //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-    //  if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
           if (verbose)
@@ -595,8 +585,6 @@ int g1x = jentry ;
 
       channelFired = 0;         //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-//      if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
           if (verbose)
@@ -639,8 +627,6 @@ int g1x = jentry ;
    //================================   GE1/1  1 (sCMSNS2LC1)   ======================================================
       channelFired = 0;         //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-    //  if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
           if (verbose)
@@ -689,8 +675,6 @@ int g1x = jentry ;
    //================================	GE1/1  1 (sCMSNS2LC2)   ======================================================
       channelFired = 0;		//==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-    //  if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
           if (verbose)
@@ -735,8 +719,6 @@ int g1x = jentry ;
    //================================	GE1/1  1 (sCMSNS2LC3)   ======================================================
       channelFired = 0;		//==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
-      //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
-    //  if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
     if (Trigger)
       {
           if (verbose)
@@ -751,8 +733,8 @@ int g1x = jentry ;
 	      //cout<<"Channel Fired = "<<channelFired<<endl;
 	  }
 	  if (verbose)
-	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[0]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
-	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[0]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
+	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
+	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
 	  count_ngeoch_occ = 0;
 	  for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC3;nch++)
 	  {
