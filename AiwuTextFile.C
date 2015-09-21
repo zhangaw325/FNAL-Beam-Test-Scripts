@@ -357,7 +357,7 @@ if (NumCluster_LC3 !=0)
 }
 
    //================================	Reference Tracker 1 (g1xcl)   ======================================================
-      channelFired = 0;		//==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
+      int channelFired = 0;		//==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
       //if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1)
       if (NumCluster_g1x == 1 &&  NumCluster_g1y ==1 && NumCluster_g2x == 1 && NumCluster_g2y==1 && NumCluster_g3x ==1 && NumCluster_g3y == 1 && NumCluster_LC1 == 1 && NumCluster_LC2 == 1 && NumCluster_LC3 == 1)
@@ -398,7 +398,7 @@ if (NumCluster_LC3 !=0)
 	  if (verbose)
 	      std::cout<<std::endl;
 	  // std::cout<<std::endl;
-g1x = jentry ;
+int g1x = jentry ;
 	  file_out<<std::endl;
  cout<<"effeciency_g1x "<<(float) jentry/ (float) nentries <<endl;
   }
