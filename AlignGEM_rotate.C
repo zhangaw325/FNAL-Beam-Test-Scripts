@@ -9,7 +9,7 @@
 #include "doubleGausFit_withHistParameter.C"
 
 //vector<double> DefaultVector; // just used to free memory from vectors.
-int tracking(string thestring, double iterRotate){
+int tracking(string thestring, double iterRotate,  double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, , double shiREF3Y, double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos ){
   double PI=TMath::Pi();
   //string thestring = "Position_REF2X_42_48";
   string txtfilename = thestring + ".txt";
@@ -26,6 +26,7 @@ int tracking(string thestring, double iterRotate){
   double pREF1X=0.0, pREF1Y=0.0;
   //double pZZ1=0.0, pZZ2=0.0;
   double pEta5=0.0;
+  /*
   const int NNNNN = 6447;
   double vpREF2X[NNNNN]; double vpREF2Y[NNNNN];
   double vpREF3X[NNNNN]; double vpREF3Y[NNNNN];
@@ -38,6 +39,7 @@ int tracking(string thestring, double iterRotate){
   double shiUVA3X=-0.7097, shiUVA3Y=15.75778;
   double shiREF1X=-9.92822, shiREF1Y=-0.68756;
   double shiEta5=0.0;//0.01509;
+  */
   double preshiREF2X=-2265, preshiREF2Y=-32;  //2127.4275
   double preshiREF3X=-2265, preshiREF3Y=-32;
   double preshiUVA3X=-2265, preshiUVA3Y=-32;
@@ -46,13 +48,15 @@ int tracking(string thestring, double iterRotate){
   double aUVA3REF2=-0.013489;//0.02807;//start angle: 0.01102
   double aREF1REF2=-0.044254312;//-0.0171;//start angle: 0.008273;
   double aEta5REF2=-0.1+0.001*iterRotate;//0.008098; 
+
+
   double tempREF2X, tempREF2Y, tempREF3X, tempREF3Y, tempUVA3X, tempUVA3Y, tempREF1X, tempREF1Y, tempEta5;
   double meanREF2X=0.0, meanREF2Y=0.0, meanREF3X=0.0, meanREF3Y=0.0, meanUVA3X=0.0, meanUVA3Y=0.0, meanREF1X=0.0, meanREF1Y=0.0, meanEta5=0.0;
   double sigmaREF2X=0.0,sigmaREF2Y=0.0,sigmaREF3X=0.0,sigmaREF3Y=0.0,sigmaUVA3X=0.0,sigmaUVA3Y=0.0,sigmaREF1X=0.0,sigmaREF1Y=0.0,sigmaEta5=0.0;
   double meanXChi2=0.0,meanYChi2=0.0, totalChi2=0.0; // chi square of tracks.
   double maximum=0.0, rms=0.0, lRange=0.0, hRange=0.0;  
 
-  TH1D* hpREF2X=0;
+  TH1D* hpREF2X = 0;
   TH1D* hpREF2Y = 0;
   TH1D* hpREF3X = 0;
   TH1D* hpREF3Y = 0; 
@@ -99,35 +103,48 @@ int tracking(string thestring, double iterRotate){
       //else cout<<"processing "<<txtfilename<<endl;
         
       cout<<iterRotate<<"\t"<<aEta5REF2<<"\tX "<<preshiREF2X<<"\tY "<<preshiREF2Y<<endl;
-      
+  
+      struct DATA
+      {
+	  double  vpREF1X, vpREF1Y, vpREF2X, vpREF2Y, vpREF3X, vpREF3Y, vpEta5;
+      }
+
+      vector<DATA>* v = new vector<DATA>;
+      DATA d;
+
       int nbLines=0;
-      while(fin>>pREF2X>>pREF2Y>>pREF3X>>pREF3Y>>pUVA3X>>pUVA3Y>>pREF1X>>pREF1Y>>pEta5){
-        vpREF2X[nbLines]=pREF2X; vpREF2Y[nbLines]=pREF2Y; vpREF3X[nbLines]=pREF3X; vpREF3Y[nbLines]=pREF3Y;
-        vpUVA3X[nbLines]=pUVA3X; vpUVA3Y[nbLines]=pUVA3Y; vpREF1X[nbLines]=pREF1X; vpREF1Y[nbLines]=pREF1Y;
-        vpEta5[nbLines]=pEta5;
+      while(fin>>pREF2X>>pREF2Y>>pREF3X>>pREF3Y>>pUVA3X>>pUVA3Y>>pREF1X>>pREF1Y>>pEta5)
+      {
+	  d.vpREF1X = pREF1X;
+	  d.vpREF1Y = pREF1Y;
+	  d.vpREF2X = pREF2X;
+	  d.vpREF2Y = pREF2Y;
+	  d.vpREF3X = pREF3X;
+	  d.vpREF3Y = pREF3Y;
+	  d.vpEta5  = pEta5;
+
         //shift
-        vpREF2X[nbLines] -= shiREF2X; vpREF2Y[nbLines] -= shiREF2Y;
-        vpREF3X[nbLines] -= shiREF3X; vpREF3Y[nbLines] -= shiREF3Y;
-        vpUVA3X[nbLines] -= shiUVA3X; vpUVA3Y[nbLines] -= shiUVA3Y;
-        vpREF1X[nbLines] -= shiREF1X; vpREF1Y[nbLines] -= shiREF1Y; 
+        d.vpREF2X -= shiREF2X; d.vpREF2Y -= shiREF2Y;
+        d.vpREF3X -= shiREF3X; d.vpREF3Y -= shiREF3Y;
+        d.vpREF1X -= shiREF1X; d.vpREF1Y -= shiREF1Y; 
 //        vpEta5[nbLines] ;
+        
         //rotate
-        tempREF2X=vpREF2X[nbLines]; tempREF2Y=vpREF2Y[nbLines]; tempREF3X=vpREF3X[nbLines]; tempREF3Y=vpREF3Y[nbLines]; 
-        tempUVA3X=vpUVA3X[nbLines]; tempUVA3Y=vpUVA3Y[nbLines]; tempREF1X=vpREF1X[nbLines]; tempREF1Y=vpREF1Y[nbLines]; 
-        vpREF3X[nbLines]=tempREF3X*cos(aREF3REF2)-tempREF3Y*sin(aREF3REF2);
-        vpREF3Y[nbLines]=tempREF3X*sin(aREF3REF2)+tempREF3Y*cos(aREF3REF2);
-        vpUVA3X[nbLines]=tempUVA3X*cos(aUVA3REF2)-tempUVA3Y*sin(aUVA3REF2);
-        vpUVA3Y[nbLines]=tempUVA3X*sin(aUVA3REF2)+tempUVA3Y*cos(aUVA3REF2);
-        vpREF1X[nbLines]=tempREF1X*cos(aREF1REF2)-tempREF1Y*sin(aREF1REF2);
-        vpREF1Y[nbLines]=tempREF1X*sin(aREF1REF2)+tempREF1Y*cos(aREF1REF2);
+	tempREF1X=d.vpREF1X; tempREF1Y=d.vpREF1Y;
+        tempREF2X=d.vpREF2X; tempREF2Y=d.vpREF2Y;  
+        tempREF3X=d.vpREF3X; tempREF3Y=d.vpREF3Y; 
+
+        d.vpREF3X=tempREF3X*cos(aREF3REF2)-tempREF3Y*sin(aREF3REF2);
+        d.vpREF3Y=tempREF3X*sin(aREF3REF2)+tempREF3Y*cos(aREF3REF2);
+        d.vpREF1X=tempREF1X*cos(aREF1REF2)-tempREF1Y*sin(aREF1REF2);
+        d.vpREF1Y=tempREF1X*sin(aREF1REF2)+tempREF1Y*cos(aREF1REF2);
     
         //vpEta5[nbLines] -= aEta5REF2;
 
         //change origin, move in X and Y
-        vpREF2X[nbLines] -= preshiREF2X; vpREF2Y[nbLines] -= preshiREF2Y;
-        vpREF3X[nbLines] -= preshiREF3X; vpREF3Y[nbLines] -= preshiREF3Y;
-        vpUVA3X[nbLines] -= preshiUVA3X; vpUVA3Y[nbLines] -= preshiUVA3Y;
-        vpREF1X[nbLines] -= preshiREF1X; vpREF1Y[nbLines] -= preshiREF1Y; 
+        d.vpREF2X -= preshiREF2X; d.vpREF2Y -= preshiREF2Y;
+        d.vpREF3X -= preshiREF3X; d.vpREF3Y -= preshiREF3Y;
+        d.vpREF1X -= preshiREF1X; d.vpREF1Y -= preshiREF1Y; 
 
         //transfer to (r,phi) position
         double rREF2 = sqrt(vpREF2X[nbLines]*vpREF2X[nbLines]+vpREF2Y[nbLines]*vpREF2Y[nbLines]);
