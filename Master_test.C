@@ -1,5 +1,8 @@
 /*
  * BUG: Not reading the first event
+ *
+ * Need to implement EfficiencyType variable
+ *
  */
 
 #include "TFile.h"
@@ -13,7 +16,20 @@
 #include <vector>
 #include <iostream>
 using namespace std;
-void Master_test(const char* inputfile ){//main programme
+void Master_test(const char* inputfile, string RunName , int EfficiencyType )//main programme
+{
+
+    /*
+     * EfficiencyType : If want to calculate efficiency of each GE11's independently
+     *			Using trigger from hardware only put it equal to 0
+     *
+     *			If want to trigger it using two of the reference tracker 
+     *			put it = 1
+     *
+     *			if want to trigger it only when it passes from all three reference
+     *			tracker then put it = 2
+     */
+
     TChain* t = new TChain("rd51tbgeo");
     t->Add(inputfile);
     //t->Add("CRC-Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22-141011_013955-0.root");
@@ -23,8 +39,10 @@ void Master_test(const char* inputfile ){//main programme
     Long64_t nentries = t->GetEntries();
     cout<< "Total "<<nentries<<endl;
 
-    std::ofstream file_out("Hit_Position_Info.txt");
-    std::ofstream file_out1("GE11s_Effeciency_Info.txt");
+    string outputtxtfile = RunName+".txt";
+    std::ofstream file_out(outputtxtfile);
+    std::ofstream file_out1;
+    file_out1.open("GE11s_Effeciency_Info.txt", std::ios_base::app);
     std::ofstream file_outTrk("GE11s_Effeciency_Info_WithTracker.txt");
     if (!file_out)
     {
@@ -917,7 +935,7 @@ int g1x = jentry ;
     }// End Event Loop
 
 
-file_out1 << "Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22"<<"\t"<<
+file_out1 << RunName <<"\t"<<
            setw(5) <<  (float)LC1_Hit_count*100./(float)nentries<<" "<<
            setw(5) <<  (float)LC2_Hit_count*100./(float)nentries<<" "<<
           setw(5)  <<  (float)LC3_Hit_count*100./(float)nentries<<"\n";

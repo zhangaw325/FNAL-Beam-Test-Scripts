@@ -13,5 +13,6 @@ sed -i 's/virtual void     Loop();//' ClassReadTree.cc
 sed -i 's/virtual Bool_t   Notify();//' ClassReadTree.cc
 sed -i 's/virtual void     Show(Long64_t entry = -1);//' ClassReadTree.cc
 sed -i 's/Notify();//' ClassReadTree.cc
+sed -i 's/const/static const/' ClassReadTree.cc
 
 rm ClassReadTree.h ClassReadTree.C
