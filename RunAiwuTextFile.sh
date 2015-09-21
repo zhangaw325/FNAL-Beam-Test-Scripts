@@ -2,9 +2,20 @@ IRunNo=$1
 FRunNo=$2
 RunCounter=$IRunNo
 #PathOfInputData=/afs/cern.ch/work/p/pbarria/public/TB_H2_OCT_2014/beamdata
-PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407
+#PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407
 #PathOfInputData=/tmp/beamdata
+PathOfInputData=/afs/cern.ch/user/r/rasharma/work/GEM/TBA/FNAL-Beam-Test-Scripts
 EfficiencyType=0
+
+if [[ $EfficiencyType == 0 ]]; then
+	OutputEffFileName="GE11s_Efficiency_Independent.txt"
+fi
+if [[ $EfficiencyType == 1 ]]; then
+	OutputEffFileName="GE11s_Efficiency_If_Hit_2_Trk.txt"
+fi
+if [[ $EfficiencyType == 2 ]]; then
+	OutputEffFileName="GE11s_Efficiency_Hit_all_3_Trk.txt"
+fi
 
 function make_dir
 {
@@ -31,7 +42,7 @@ make_dir ResidualFiles
 make_dir ShiftParameterFiles
 make_dir EfficiencyTxtFiles
 
-echo -e "RunName\t\t\t\t\t\t\t\t GE11_IV_GIF \t GE11_IV \t GE11_V" > GE11s_Effeciency_Info.txt
+echo -e "RunName\t\t\t\t\t\t\t\t GE11_IV_GIF \t GE11_IV \t GE11_V" > ${OutputEffFileName}
 while [ $RunCounter -le $FRunNo ]
 do
     if [[(($RunCounter -le 9))]]; then
@@ -66,5 +77,5 @@ do
     done
     ((++RunCounter))
 done
-cp GE11s_Effeciency_Info.txt GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt
+cp ${OutputEffFileName} GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt
 mv GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt EfficiencyTxtFiles/

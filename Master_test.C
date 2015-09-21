@@ -41,27 +41,29 @@ void Master_test(const char* inputfile, string RunName , int EfficiencyType )//m
 
     string outputtxtfile = "HitTxtFiles/"+RunName+".txt";
     std::ofstream file_out(outputtxtfile);
-    std::ofstream file_out1;
-    file_out1.open("GE11s_Effeciency_Info.txt", std::ios_base::app);
-    std::ofstream file_outTrk("GE11s_Effeciency_Info_WithTracker.txt");
+    std::ofstream file_outEff;
+    string outputEfficiencyFile;
+    if (EfficiencyType == 0 ) outputEfficiencyFile = "Independent";
+    if (EfficiencyType == 1 ) outputEfficiencyFile = "If_Hit_2_Trk";
+    if (EfficiencyType == 2 ) outputEfficiencyFile = "Hit_all_3_Trk";
+
+    outputEfficiencyFile = "GE11s_Efficiency_"+outputEfficiencyFile+".txt";
+
+    file_outEff.open(outputEfficiencyFile, std::ios_base::app);
     if (!file_out)
     {
 	std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
     }
-    if (!file_out1)
+    if (!file_outEff)
     {
 	std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
     }
-    if (!file_outTrk)
-    {
-	std::cout << "error: Could not open the file Hit_Position_Info.txt" << std::endl;
-    }
-    
+       
 
     //================================   initialize some of variables   ======================================================
     Long64_t nbytes = 0, nb = 0;
     bool verbose = 0;
-    bool TrkOnly = 1;
+    bool TrkOnly = 0;
 
     int count_ngeoch_occ = 0;
     int EventNb = 0;
@@ -239,21 +241,8 @@ if (NumCluster_g3x !=0 )
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_g3y<<endl;
 
-
-/* if (NumCluster_g1x !=0 && NumCluster_g1y !=0 )
-{
-           g1_Hit_count++;
-cout<<"NumCluster_g1x: "<<NumCluster_g1x<<"   "<<"NumCluster_g1y: "<<NumCluster_g1y<<endl;
-//cout<<"g1_hits "<<g1_Hit_count<<endl;
-}*/
-
-        // if (NumCluster_g3y != 1) 
-        //  continue;
-
   //=========   END:: Check Number of Clusters For g3ycl    ============================
       //=========   Check Number of Clusters For sCMSNS2LC1     ============================
-      //
-      //
       int NumCluster_LC1 = 0;
       for(int nbcl=0;nbcl<CRC.kMaxsCMSNS2LC1;nbcl++)
       {
@@ -263,15 +252,25 @@ cout<<"NumCluster_g1x: "<<NumCluster_g1x<<"   "<<"NumCluster_g1y: "<<NumCluster_
               break;
           NumCluster_LC1 += 1;
       }
-      if (NumCluster_LC1 !=0)
-        {
-            LC1_Hit_count++;
-        } 
+      if (EfficiencyType == 0)
+      	{
+	if (NumCluster_LC1 !=0)   LC1_Hit_count++;
+	}
+      if (EfficiencyType == 1)
+      {
+      	if (((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0)) || ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)) || ((NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)))
+	if (NumCluster_LC1 !=0) 
+		LC1_Hit_count++;
+      }
+      if (EfficiencyType == 2)
+      {
+      	if ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0))
+	if (NumCluster_LC1 !=0)
+		LC1_Hit_count++;
+      }
 
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_LC1<<endl;
-        // if (NumCluster_LC1 != 1) 
-        //  continue;
 
       //=========   END:: Check Number of Clusters For sCMSNS2LC1       ============================
 
@@ -286,15 +285,25 @@ cout<<"NumCluster_g1x: "<<NumCluster_g1x<<"   "<<"NumCluster_g1y: "<<NumCluster_
               break;
           NumCluster_LC2 += 1;
       }
-      if (NumCluster_LC2 !=0)
-        {
-            LC2_Hit_count++;
-        }
 
+      if (EfficiencyType == 0)
+      	{
+	if (NumCluster_LC2 !=0)   LC2_Hit_count++;
+	}
+      if (EfficiencyType == 1)
+      {
+      	if (((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0)) || ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)) || ((NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)))
+	if (NumCluster_LC2 !=0) 
+		LC2_Hit_count++;
+      }
+      if (EfficiencyType == 2)
+      {
+      	if ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0))
+	if (NumCluster_LC2 !=0)
+		LC2_Hit_count++;
+      }
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_LC2<<endl;
-        // if (NumCluster_LC2 != 1) 
-        //  continue;
 
       //=========   END:: Check Number of Clusters For sCMSNS2LC2       ============================
 
@@ -308,16 +317,25 @@ cout<<"NumCluster_g1x: "<<NumCluster_g1x<<"   "<<"NumCluster_g1y: "<<NumCluster_
               break;
           NumCluster_LC3 += 1;
       }
-      if (NumCluster_LC3 !=0)
+      if (EfficiencyType == 0)
+      	{
+	if (NumCluster_LC3 !=0)   LC3_Hit_count++;
+	}
+      if (EfficiencyType == 1)
       {
-          LC3_Hit_count++;
+      	if (((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0)) || ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)) || ((NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)))
+	if (NumCluster_LC3 !=0) 
+		LC3_Hit_count++;
+      }
+      if (EfficiencyType == 2)
+      {
+      	if ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0))
+	if (NumCluster_LC3 !=0)
+		LC3_Hit_count++;
       }
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_LC3<<endl;
-        // if (NumCluster_LC3 != 1) 
-        //  continue;
 
-      //
       //
       //=========   END:: Check Number of Clusters For sCMSNS2LC3       ============================   
 
@@ -935,7 +953,7 @@ int g1x = jentry ;
     }// End Event Loop
 
 
-file_out1 << RunName <<"\t"<<
+file_outEff << RunName <<"\t"<<
            setw(5) <<  (float)LC1_Hit_count*100./(float)nentries<<" "<<
            setw(5) <<  (float)LC2_Hit_count*100./(float)nentries<<" "<<
           setw(5)  <<  (float)LC3_Hit_count*100./(float)nentries<<"\n";
