@@ -79,7 +79,7 @@ void Master_test(const char* inputfile, string RunName , int EfficiencyType , in
     int LC1_Hit_count = 0 ;
     int LC2_Hit_count = 0 ;
     int LC3_Hit_count = 0 ;
-
+    int Trk_count = 0;
 
     //================================   Event Loop Starts   ======================================================
     for( int jentry = 0 ; jentry < t->GetEntries() ; jentry++)//	Event Loop Starts
@@ -259,14 +259,20 @@ if (NumCluster_g3x !=0 )
       if (EfficiencyType == 1)
       {
       	if (((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0)) || ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)) || ((NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)))
-	if (NumCluster_LC1 !=0) 
+	{
+		if (NumCluster_LC1 !=0) 
 		LC1_Hit_count++;
+		Trk_count++;
+        }
       }
       if (EfficiencyType == 2)
       {
       	if ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0))
-	if (NumCluster_LC1 !=0)
+	{
+		if (NumCluster_LC1 !=0)
 		LC1_Hit_count++;
+		Trk_count++;
+        }
       }
 
       if (verbose)
@@ -293,14 +299,20 @@ if (NumCluster_g3x !=0 )
       if (EfficiencyType == 1)
       {
       	if (((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0)) || ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)) || ((NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)))
-	if (NumCluster_LC2 !=0) 
+	{
+		if (NumCluster_LC2 !=0) 
 		LC2_Hit_count++;
+		Trk_count++;
+	}
       }
       if (EfficiencyType == 2)
       {
       	if ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0))
-	if (NumCluster_LC2 !=0)
+	{
+		if (NumCluster_LC2 !=0)
 		LC2_Hit_count++;
+		Trk_count++;
+	}
       }
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_LC2<<endl;
@@ -324,14 +336,20 @@ if (NumCluster_g3x !=0 )
       if (EfficiencyType == 1)
       {
       	if (((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0)) || ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)) || ((NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0)))
-	if (NumCluster_LC3 !=0) 
+	{	
+		if (NumCluster_LC3 !=0) 
 		LC3_Hit_count++;
+		Trk_count++;
+	}
       }
       if (EfficiencyType == 2)
       {
       	if ((NumCluster_g1x !=0 && NumCluster_g1y !=0) && (NumCluster_g2x !=0 && NumCluster_g2y !=0) && (NumCluster_g3x !=0 && NumCluster_g3y !=0))
-	if (NumCluster_LC3 !=0)
+	{	
+		if (NumCluster_LC3 !=0)
 		LC3_Hit_count++;
+		Trk_count++;
+	}
       }
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_LC3<<endl;
@@ -934,11 +952,24 @@ int g1x = jentry ;
 	
     }// End Event Loop
 
-
+if (EfficiencyType == 0)
 file_outEff << RunName <<"\t"<<
            setw(5) <<  (float)LC1_Hit_count*100./(float)nentries<<" "<<
            setw(5) <<  (float)LC2_Hit_count*100./(float)nentries<<" "<<
           setw(5)  <<  (float)LC3_Hit_count*100./(float)nentries<<"\n";
+
+if (EfficiencyType == 1)
+file_outEff << RunName <<"\t"<<
+           setw(5) <<  (float)LC1_Hit_count*100./(float)Trk_count<<" "<<
+           setw(5) <<  (float)LC2_Hit_count*100./(float)Trk_count<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count*100./(float)Trk_count<<"\n";
+
+if (EfficiencyType == 2)
+file_outEff << RunName <<"\t"<<
+           setw(5) <<  (float)LC1_Hit_count*100./(float)Trk_count<<" "<<
+           setw(5) <<  (float)LC2_Hit_count*100./(float)Trk_count<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count*100./(float)Trk_count<<"\n";
+
 cout<<"g1x_Hit=============> "<<g1x_Hit_count<<"\tnentries = "<<nentries<<endl;
 cout<<"efficiency_g1x "<<(float) g1x_Hit_count* 100./(float) nentries<<endl;
 
