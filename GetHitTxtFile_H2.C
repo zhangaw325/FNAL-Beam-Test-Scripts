@@ -963,38 +963,38 @@ int g1x = jentry ;
 if (EfficiencyType == 0)
 {
 file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<" "<<
-           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"\n";
+           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<"+/-0.0\t"<<
+           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<"+/-0.0\t"<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"+/-0.0\t\n";
 cout << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<" "<<
-           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"\n";
+           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<"+/-0.0\t"<<
+           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<"+/-0.0\t"<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"+/-0.0\t\n";
 cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
 }
 if (EfficiencyType == 1)
 {
 file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";	  
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";	  
 cout << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";	  
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";	  
 
 cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
 }
 if (EfficiencyType == 2)
 {
 file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";
 cout << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";
 cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
 }
 if (verbose)
