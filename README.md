@@ -24,3 +24,17 @@ step 3: alignment GEM detector to trackers
   use AlignGEM_rotate.C, and draw_fixXY_vs_rotationAngle.C
 
 then resolution can be calculated with AlignGEM_rotate.C by setting all X,Y offsets and angle, and do not doing iteration.  
+
+##Environment Setting for Lxplus
+This code is check for only root version 6.04. So, its recommended that one should run this on root 6.04.
+
+Lxplus setting for root 6.04:
+
+    For tcsh shell:
+    source /afs/cern.ch/sw/lcg/external/gcc/4.8/x86_64-slc6/setup.csh
+    source /afs/cern.ch/sw/lcg/app/releases/ROOT/6.04.02/x86_64-slc6-gcc48-opt/root/bin/thisroot.csh
+
+    For bash shell:
+    source /afs/cern.ch/sw/lcg/external/gcc/4.8/x86_64-slc6/setup.sh
+    source /afs/cern.ch/sw/lcg/app/releases/ROOT/6.04.02/x86_64-slc6-gcc48-opt/root/bin/thisroot.sh
+
