@@ -16,7 +16,7 @@
 #include <vector>
 #include <iostream>
 using namespace std;
-void Master_test(const char* inputfile, string RunName , int EfficiencyType , int TrkOnly )//main programme
+void GetHitTxtFile_H4(const char* inputfile, string RunName , int EfficiencyType , int TrkOnly )//main programme
 {
 
     /*
@@ -302,7 +302,7 @@ if (NumCluster_g3x !=0 )
 	{
 		if (NumCluster_LC2 !=0) 
 		LC2_Hit_count++;
-		Trk_count++;
+		//Trk_count++;
 	}
       }
       if (EfficiencyType == 2)
@@ -311,7 +311,7 @@ if (NumCluster_g3x !=0 )
 	{
 		if (NumCluster_LC2 !=0)
 		LC2_Hit_count++;
-		Trk_count++;
+		//Trk_count++;
 	}
       }
       if (verbose)
@@ -339,7 +339,7 @@ if (NumCluster_g3x !=0 )
 	{	
 		if (NumCluster_LC3 !=0) 
 		LC3_Hit_count++;
-		Trk_count++;
+		//Trk_count++;
 	}
       }
       if (EfficiencyType == 2)
@@ -348,7 +348,7 @@ if (NumCluster_g3x !=0 )
 	{	
 		if (NumCluster_LC3 !=0)
 		LC3_Hit_count++;
-		Trk_count++;
+		//Trk_count++;
 	}
       }
       if (verbose)
@@ -660,15 +660,18 @@ int g1x = jentry ;
               //cout<<"Channel Fired = "<<channelFired<<endl;
           }
           if (verbose)
-              std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposY[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
-          file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposY[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
+              std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposX[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
+          file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposX[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
           count_ngeoch_occ = 0;
           for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC1;nch++)
           {
               if (CRC.sCMSNS2LC1_ngeoch[nch]==0)
                   break;
+      if (verbose)
+      {
                   cout<<"sCMSNS2LC1_ngeoch[ "<<nch<<" ] = "<< CRC.sCMSNS2LC1_ngeoch[nch]<<endl;
                   cout<<"jentry = "<<jentry<<endl;
+      }
                   //cin.ignore();
               for (int chfird=0;chfird<CRC.sCMSNS2LC1_ngeoch[nch];chfird++)
               {
@@ -707,15 +710,18 @@ int g1x = jentry ;
 	      //cout<<"Channel Fired = "<<channelFired<<endl;
 	  }
 	  if (verbose)
-	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposY[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
-	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposY[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
+	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposX[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
+	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposX[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
 	  count_ngeoch_occ = 0;
 	  for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC2;nch++)
 	  {
 	      if (CRC.sCMSNS2LC2_ngeoch[nch]==0)
 		  break;
-         cout<<"sCMSNS2LC2_ngeoch[ "<<nch<<" ] = "<< CRC.sCMSNS2LC2_ngeoch[nch]<<endl;
-		  cout<<"jentry = "<<jentry<<endl;
+	      if (verbose)
+	      {
+	      	cout<<"sCMSNS2LC2_ngeoch[ "<<nch<<" ] = "<< CRC.sCMSNS2LC2_ngeoch[nch]<<endl;
+		cout<<"jentry = "<<jentry<<endl;
+	      }
 	      for (int chfird=0;chfird<CRC.sCMSNS2LC2_ngeoch[nch];chfird++)
 	      {
 		 // if((sCMSNS2LC2_geoch)[count_ngeoch_occ][chfird] == 0)
@@ -751,15 +757,18 @@ int g1x = jentry ;
 	      //cout<<"Channel Fired = "<<channelFired<<endl;
 	  }
 	  if (verbose)
-	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
-	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
+	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposX[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
+	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposX[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
 	  count_ngeoch_occ = 0;
 	  for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC3;nch++)
 	  {
 	      if (CRC.sCMSNS2LC3_ngeoch[nch]==0)
 		  break;
- cout<<"sCMSNS2LC3_ngeoch[ "<<nch<<" ] = "<< CRC.sCMSNS2LC3_ngeoch[nch]<<endl;
-		  cout<<"jentry = "<<jentry<<endl;
+	      if (verbose)
+	      {
+ 		cout<<"sCMSNS2LC3_ngeoch[ "<<nch<<" ] = "<< CRC.sCMSNS2LC3_ngeoch[nch]<<endl;
+		cout<<"jentry = "<<jentry<<endl;
+	      }
 	      for (int chfird=0;chfird<CRC.sCMSNS2LC3_ngeoch[nch];chfird++)
 	      {
 		  //if((sCMSNS2LC3_geoch)[count_ngeoch_occ][chfird] == 0)
@@ -953,51 +962,72 @@ int g1x = jentry ;
     }// End Event Loop
 
 if (EfficiencyType == 0)
+{
 file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count*100./(float)nentries<<" "<<
-           setw(5) <<  (float)LC2_Hit_count*100./(float)nentries<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count*100./(float)nentries<<"\n";
-
+           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<" "<<
+           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"\n";
+cout << RunName <<"\t"<<
+           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<" "<<
+           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"\n";
+cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
+}
 if (EfficiencyType == 1)
+{
 file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count*100./(float)Trk_count<<" "<<
-           setw(5) <<  (float)LC2_Hit_count*100./(float)Trk_count<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count*100./(float)Trk_count<<"\n";
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";	  
+cout << RunName <<"\t"<<
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";	  
 
+cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
+}
 if (EfficiencyType == 2)
+{
 file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count*100./(float)Trk_count<<" "<<
-           setw(5) <<  (float)LC2_Hit_count*100./(float)Trk_count<<" "<<
-          setw(5)  <<  (float)LC3_Hit_count*100./(float)Trk_count<<"\n";
-
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";
+cout << RunName <<"\t"<<
+           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<" "<<
+           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<" "<<
+          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"\n";
+cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
+}
+if (verbose)
+{
 cout<<"g1x_Hit=============> "<<g1x_Hit_count<<"\tnentries = "<<nentries<<endl;
-cout<<"efficiency_g1x "<<(float) g1x_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g1x "<<(float) g1x_Hit_count/(float) nentries<<endl;
 
 cout<<"g1y_Hits=============> "<<g1y_Hit_count<<endl;
-cout<<"efficiency_g1y "<<(float) g1y_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g1y "<<(float) g1y_Hit_count/(float) nentries<<endl;
 
 cout<<"g2x_Hits=============> "<<g2x_Hit_count<<endl;
-cout<<"efficiency_g2x "<<(float) g2x_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g2x "<<(float) g2x_Hit_count/(float) nentries<<endl;
 
 cout<<"g2y_Hits=============> "<<g2y_Hit_count<<endl;
-cout<<"efficiency_g2y "<<(float) g2y_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g2y "<<(float) g2y_Hit_count/(float) nentries<<endl;
 cout<<"g3x_Hits=============> "<<g3x_Hit_count<<endl;
-cout<<"efficiency_g3x "<<(float) g3x_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g3x "<<(float) g3x_Hit_count/(float) nentries<<endl;
 
 cout<<"g3y_Hits=============> "<<g3y_Hit_count<<endl;
-cout<<"efficiency_g3y "<<(float) g3y_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g3y "<<(float) g3y_Hit_count/(float) nentries<<endl;
 cout<<"g1_Hits=============> "<<g1_Hit_count<<endl;
-cout<<"efficiency_g1 "<<(float) g1_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g1 "<<(float) g1_Hit_count/(float) nentries<<endl;
 cout<<"g2_Hits=============> "<<g2_Hit_count<<endl;
-cout<<"efficiency_g2 "<<(float) g2_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g2 "<<(float) g2_Hit_count/(float) nentries<<endl;
 cout<<"g3_Hits=============> "<<g3_Hit_count<<endl;
-cout<<"efficiency_g3 "<<(float) g3_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_g3 "<<(float) g3_Hit_count/(float) nentries<<endl;
 cout<<"LC1_Hits=============> "<<LC1_Hit_count<<endl;
-cout<<"efficiency_LC1 "<<(float) LC1_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_LC1 "<<(float) LC1_Hit_count/(float) nentries<<endl;
 cout<<"LC2_Hits=============> "<<LC2_Hit_count<<endl;
-cout<<"efficiency_LC2 "<<(float) LC2_Hit_count* 100./(float) nentries<<endl;
+cout<<"efficiency_LC2 "<<(float) LC2_Hit_count/(float) nentries<<endl;
 cout<<"LC3_Hits=============> "<<LC3_Hit_count<<endl;
-cout<<"efficiency_LC3 "<<(float) LC3_Hit_count* 100./(float) nentries<<endl;
-
+cout<<"efficiency_LC3 "<<(float) LC3_Hit_count/(float) nentries<<endl;
+}
 
 }

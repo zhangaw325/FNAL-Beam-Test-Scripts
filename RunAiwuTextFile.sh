@@ -88,7 +88,6 @@ do
 	for rootfile in $dir/CRC*.root;do	# Start of rootfile for loop
 	    echo "Root file name : "$rootfile
 	    ./CreateHeader.sh $rootfile rd51tbgeo
-	    echo "Ramkrishna = "$RunCounter	    
 	    if [[ $RunCounter -le 1587 ]]; then
 	    	root -l -b -q GetHitTxtFile_H2.C\(\"${rootfile}\",\"${RunName}\",${EfficiencyType},${TrkOnly}\)
 	    else
