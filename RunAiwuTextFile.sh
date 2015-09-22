@@ -5,8 +5,11 @@ FRunNo=$2
 ILat=15
 FLat=30
 RunCounter=$IRunNo
-#PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407	# PATH FOR H2 TEST BEAM
-PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H4TestBeam			# PATH FOR H4 TEST BEAM
+if [[ $IRunNo -le 1587 ]]; then
+	PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407	# PATH FOR H2 TEST BEAM
+else
+	PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H4TestBeam			# PATH FOR H4 TEST BEAM
+fi	
 
     #/*
     # * EfficiencyType : If want to calculate efficiency of each GE11's independently

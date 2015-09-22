@@ -242,13 +242,13 @@ if (NumCluster_g3x !=0 )
           cout<<"Actual number of clusters = "<<NumCluster_g3y<<endl;
 
   //=========   END:: Check Number of Clusters For g3ycl    ============================
-      //=========   Check Number of Clusters For sCMSNS2LC1     ============================
+      //=========   Check Number of Clusters For GE11_IV_GIF     ============================
       int NumCluster_LC1 = 0;
-      for(int nbcl=0;nbcl<CRC.kMaxsCMSNS2LC1;nbcl++)
+      for(int nbcl=0;nbcl<CRC.kMaxGE11_IV_GIF;nbcl++)
       {
           if (verbose)
-              cout<<CRC.sCMSNS2LC1_geoposch[nbcl]<<endl;
-          if (CRC.sCMSNS2LC1_geoposch[nbcl]==0)
+              cout<<CRC.GE11_IV_GIF_geoposch[nbcl]<<endl;
+          if (CRC.GE11_IV_GIF_geoposch[nbcl]==0)
               break;
           NumCluster_LC1 += 1;
       }
@@ -278,16 +278,16 @@ if (NumCluster_g3x !=0 )
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_LC1<<endl;
 
-      //=========   END:: Check Number of Clusters For sCMSNS2LC1       ============================
+      //=========   END:: Check Number of Clusters For GE11_IV_GIF       ============================
 
-      //=========   Check Number of Clusters For sCMSNS2LC2     ============================
+      //=========   Check Number of Clusters For GE11_IV     ============================
 
       int NumCluster_LC2 = 0;
-      for(int nbcl=0;nbcl<CRC.kMaxsCMSNS2LC2;nbcl++)
+      for(int nbcl=0;nbcl<CRC.kMaxGE11_IV;nbcl++)
       {
           if (verbose)
-              cout<<CRC.sCMSNS2LC2_geoposch[nbcl]<<endl;
-          if (CRC.sCMSNS2LC2_geoposch[nbcl]==0)
+              cout<<CRC.GE11_IV_geoposch[nbcl]<<endl;
+          if (CRC.GE11_IV_geoposch[nbcl]==0)
               break;
           NumCluster_LC2 += 1;
       }
@@ -317,7 +317,7 @@ if (NumCluster_g3x !=0 )
       if (verbose)
           cout<<"Actual number of clusters = "<<NumCluster_LC2<<endl;
 
-      //=========   END:: Check Number of Clusters For sCMSNS2LC2       ============================
+      //=========   END:: Check Number of Clusters For GE11_IV       ============================
 
      //=========   Check Number of Clusters For sCMSNS2LC3     ============================
       int NumCluster_LC3 = 0;
@@ -642,46 +642,46 @@ int g1x = jentry ;
     }
    //================================   END::   Reference Tracker 1 (CRC.g3ycl)   ======================================================    
       
-   //================================   GE1/1  1 (sCMSNS2LC1)   ======================================================
+   //================================   GE1/1  1 (GE11_IV_GIF)   ======================================================
       channelFired = 0;         //==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
     if (Trigger)
       {
           if (verbose)
-              cout<<"sCMSNS2LC1\t";
-          file_out<<"sCMSNS2LC1\t";
+              cout<<"GE11_IV_GIF\t";
+          file_out<<"GE11_IV_GIF\t";
           channelFired = 0;
-          for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC1;nch++)
+          for(Int_t nch=0;nch<CRC.kMaxGE11_IV_GIF;nch++)
           {
-                  //cout<<"sCMSNS2LC1_ngeoch[ "<<nch<<" ] = "<< sCMSNS2LC1_ngeoch[nch]<<endl;
-              if (CRC.sCMSNS2LC1_ngeoch[nch]==0)
+                  //cout<<"GE11_IV_GIF_ngeoch[ "<<nch<<" ] = "<< GE11_IV_GIF_ngeoch[nch]<<endl;
+              if (CRC.GE11_IV_GIF_ngeoch[nch]==0)
                   break;
-              channelFired +=CRC.sCMSNS2LC1_ngeoch[nch];
+              channelFired +=CRC.GE11_IV_GIF_ngeoch[nch];
               //cout<<"Channel Fired = "<<channelFired<<endl;
           }
           if (verbose)
-              std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposX[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
-          file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposX[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
+              std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.GE11_IV_GIF_geoposX[0]<<"\t"<<CRC.GE11_IV_GIF_geoposch[0]<<"\t";
+          file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.GE11_IV_GIF_geoposX[0]<<"\t"<<CRC.GE11_IV_GIF_geoposch[0]<<"\t";
           count_ngeoch_occ = 0;
-          for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC1;nch++)
+          for(Int_t nch=0;nch<CRC.kMaxGE11_IV_GIF;nch++)
           {
-              if (CRC.sCMSNS2LC1_ngeoch[nch]==0)
+              if (CRC.GE11_IV_GIF_ngeoch[nch]==0)
                   break;
       if (verbose)
       {
-                  cout<<"sCMSNS2LC1_ngeoch[ "<<nch<<" ] = "<< CRC.sCMSNS2LC1_ngeoch[nch]<<endl;
+                  cout<<"GE11_IV_GIF_ngeoch[ "<<nch<<" ] = "<< CRC.GE11_IV_GIF_ngeoch[nch]<<endl;
                   cout<<"jentry = "<<jentry<<endl;
       }
                   //cin.ignore();
-              for (int chfird=0;chfird<CRC.sCMSNS2LC1_ngeoch[nch];chfird++)
+              for (int chfird=0;chfird<CRC.GE11_IV_GIF_ngeoch[nch];chfird++)
               {
-                  //file_out<<"\n"<<sCMSNS2LC1_ngeoch[nch]<<"\t"<<"(sCMSNS2LC1_geoch)[ "<< count_ngeoch_occ << " ][ "<<chfird <<" ] = " << (sCMSNS2LC1_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t\n";
-                  //if((sCMSNS2LC1_geoch)[count_ngeoch_occ][chfird] == 0)
+                  //file_out<<"\n"<<GE11_IV_GIF_ngeoch[nch]<<"\t"<<"(GE11_IV_GIF_geoch)[ "<< count_ngeoch_occ << " ][ "<<chfird <<" ] = " << (GE11_IV_GIF_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t\n";
+                  //if((GE11_IV_GIF_geoch)[count_ngeoch_occ][chfird] == 0)
                   //    break;
                   if (verbose)
-                      std::cout<<(CRC.sCMSNS2LC1_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
-                  //std::cout<<(sCMSNS2LC1_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
-                  file_out<<(CRC.sCMSNS2LC1_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
+                      std::cout<<(CRC.GE11_IV_GIF_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
+                  //std::cout<<(GE11_IV_GIF_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
+                  file_out<<(CRC.GE11_IV_GIF_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
               }
               count_ngeoch_occ += 1;
           }
@@ -690,46 +690,46 @@ int g1x = jentry ;
           // std::cout<<std::endl;
           file_out<<std::endl;
       }
-   //================================   END::   GE1/1  1 (sCMSNS2LC1)   ======================================================  
+   //================================   END::   GE1/1  1 (GE11_IV_GIF)   ======================================================  
 
       
-   //================================	GE1/1  1 (sCMSNS2LC2)   ======================================================
+   //================================	GE1/1  1 (GE11_IV)   ======================================================
       channelFired = 0;		//==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
       count_ngeoch_occ = 0;
     if (Trigger)
       {
           if (verbose)
-              cout<<"sCMSNS2LC2\t";
-          file_out<<"sCMSNS2LC2\t";
+              cout<<"GE11_IV\t";
+          file_out<<"GE11_IV\t";
 	  channelFired = 0;
-	  for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC2;nch++)
+	  for(Int_t nch=0;nch<CRC.kMaxGE11_IV;nch++)
 	  {
-	      if (CRC.sCMSNS2LC2_ngeoch[nch]==0)
+	      if (CRC.GE11_IV_ngeoch[nch]==0)
 		  break;
-	      channelFired +=CRC.sCMSNS2LC2_ngeoch[nch];
+	      channelFired +=CRC.GE11_IV_ngeoch[nch];
 	      //cout<<"Channel Fired = "<<channelFired<<endl;
 	  }
 	  if (verbose)
-	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposX[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
-	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposX[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
+	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.GE11_IV_geoposX[0]<<"\t"<<CRC.GE11_IV_geoposch[0]<<"\t";
+	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.GE11_IV_geoposX[0]<<"\t"<<CRC.GE11_IV_geoposch[0]<<"\t";
 	  count_ngeoch_occ = 0;
-	  for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC2;nch++)
+	  for(Int_t nch=0;nch<CRC.kMaxGE11_IV;nch++)
 	  {
-	      if (CRC.sCMSNS2LC2_ngeoch[nch]==0)
+	      if (CRC.GE11_IV_ngeoch[nch]==0)
 		  break;
 	      if (verbose)
 	      {
-	      	cout<<"sCMSNS2LC2_ngeoch[ "<<nch<<" ] = "<< CRC.sCMSNS2LC2_ngeoch[nch]<<endl;
+	      	cout<<"GE11_IV_ngeoch[ "<<nch<<" ] = "<< CRC.GE11_IV_ngeoch[nch]<<endl;
 		cout<<"jentry = "<<jentry<<endl;
 	      }
-	      for (int chfird=0;chfird<CRC.sCMSNS2LC2_ngeoch[nch];chfird++)
+	      for (int chfird=0;chfird<CRC.GE11_IV_ngeoch[nch];chfird++)
 	      {
-		 // if((sCMSNS2LC2_geoch)[count_ngeoch_occ][chfird] == 0)
+		 // if((GE11_IV_geoch)[count_ngeoch_occ][chfird] == 0)
 		    //  break;
 		  if (verbose)
-		      std::cout<<(CRC.sCMSNS2LC2_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
-		  //std::cout<<(sCMSNS2LC2_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
-		  file_out<<(CRC.sCMSNS2LC2_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
+		      std::cout<<(CRC.GE11_IV_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
+		  //std::cout<<(GE11_IV_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
+		  file_out<<(CRC.GE11_IV_geoch)[count_ngeoch_occ][chfird]<<"\t"<<1<<"\t";
 	      }
 	      count_ngeoch_occ += 1;
 	  }
@@ -738,7 +738,7 @@ int g1x = jentry ;
 	  // std::cout<<std::endl;
 	  file_out<<std::endl;
       }
-   //================================	END::	GE1/1  1 (sCMSNS2LC2)   ======================================================  
+   //================================	END::	GE1/1  1 (GE11_IV)   ======================================================  
       
    //================================	GE1/1  1 (sCMSNS2LC3)   ======================================================
       channelFired = 0;		//==== ERROR:: ERROR:: ERROR::  I have to forcefully put channelFired = 0 at two places. If not then it behaves strangly.
@@ -802,8 +802,8 @@ int g1x = jentry ;
       std::fill_n(CRC.g2ycl_ngeoch,sizeof CRC.g2ycl_ngeoch/sizeof(CRC.g2ycl_ngeoch[0]),0);
       std::fill_n(CRC.g3xcl_ngeoch,sizeof CRC.g3xcl_ngeoch/sizeof(CRC.g3xcl_ngeoch[0]),0);
       std::fill_n(CRC.g3ycl_ngeoch,sizeof CRC.g3ycl_ngeoch/sizeof(CRC.g3ycl_ngeoch[0]),0);
-      std::fill_n(CRC.sCMSNS2LC1_ngeoch,sizeof CRC.sCMSNS2LC1_ngeoch/sizeof(CRC.sCMSNS2LC1_ngeoch[0]),0);
-      std::fill_n(CRC.sCMSNS2LC2_ngeoch,sizeof CRC.sCMSNS2LC2_ngeoch/sizeof(CRC.sCMSNS2LC2_ngeoch[0]),0);
+      std::fill_n(CRC.GE11_IV_GIF_ngeoch,sizeof CRC.GE11_IV_GIF_ngeoch/sizeof(CRC.GE11_IV_GIF_ngeoch[0]),0);
+      std::fill_n(CRC.GE11_IV_ngeoch,sizeof CRC.GE11_IV_ngeoch/sizeof(CRC.GE11_IV_ngeoch[0]),0);
       std::fill_n(CRC.sCMSNS2LC3_ngeoch,sizeof CRC.sCMSNS2LC3_ngeoch/sizeof(CRC.sCMSNS2LC3_ngeoch[0]),0);
       std::fill_n(CRC.g1xcl_geoposch,sizeof  CRC.g1xcl_geoposch/sizeof(CRC.g1xcl_geoposch[0]),0);
       std::fill_n(CRC.g1ycl_geoposch,sizeof  CRC.g1ycl_geoposch/sizeof(CRC.g1ycl_geoposch[0]),0);
@@ -811,8 +811,8 @@ int g1x = jentry ;
       std::fill_n(CRC.g2ycl_geoposch,sizeof  CRC.g2ycl_geoposch/sizeof(CRC.g2ycl_geoposch[0]),0);
       std::fill_n(CRC.g3xcl_geoposch,sizeof  CRC.g3xcl_geoposch/sizeof(CRC.g3xcl_geoposch[0]),0);
       std::fill_n(CRC.g3ycl_geoposch,sizeof  CRC.g3ycl_geoposch/sizeof(CRC.g3ycl_geoposch[0]),0);
-      std::fill_n(CRC.sCMSNS2LC1_geoposch,sizeof CRC.sCMSNS2LC1_geoposch/sizeof(CRC.sCMSNS2LC1_geoposch[0]),0);
-      std::fill_n(CRC.sCMSNS2LC2_geoposch,sizeof CRC.sCMSNS2LC2_geoposch/sizeof(CRC.sCMSNS2LC2_geoposch[0]),0);
+      std::fill_n(CRC.GE11_IV_GIF_geoposch,sizeof CRC.GE11_IV_GIF_geoposch/sizeof(CRC.GE11_IV_GIF_geoposch[0]),0);
+      std::fill_n(CRC.GE11_IV_geoposch,sizeof CRC.GE11_IV_geoposch/sizeof(CRC.GE11_IV_geoposch[0]),0);
       std::fill_n(CRC.sCMSNS2LC3_geoposch,sizeof CRC.sCMSNS2LC3_geoposch/sizeof(CRC.sCMSNS2LC3_geoposch[0]),0);
       std::fill_n(CRC.g1xcl_geoposX,sizeof  CRC.g1xcl_geoposX/sizeof(CRC.g1xcl_geoposX[0]),0);
       std::fill_n(CRC.g2xcl_geoposX,sizeof  CRC.g2xcl_geoposX/sizeof(CRC.g2xcl_geoposX[0]),0);
@@ -820,8 +820,8 @@ int g1x = jentry ;
       std::fill_n(CRC.g1ycl_geoposY,sizeof  CRC.g1ycl_geoposY/sizeof(CRC.g1ycl_geoposY[0]),0);
       std::fill_n(CRC.g2ycl_geoposY,sizeof  CRC.g2ycl_geoposY/sizeof(CRC.g2ycl_geoposY[0]),0);
       std::fill_n(CRC.g3ycl_geoposY,sizeof  CRC.g3ycl_geoposY/sizeof(CRC.g3ycl_geoposY[0]),0);
-      std::fill_n(CRC.sCMSNS2LC1_geoposY,sizeof CRC.sCMSNS2LC1_geoposY/sizeof(CRC.sCMSNS2LC1_geoposY[0]),0);
-      std::fill_n(CRC.sCMSNS2LC2_geoposY,sizeof CRC.sCMSNS2LC2_geoposY/sizeof(CRC.sCMSNS2LC2_geoposY[0]),0);
+      std::fill_n(CRC.GE11_IV_GIF_geoposY,sizeof CRC.GE11_IV_GIF_geoposY/sizeof(CRC.GE11_IV_GIF_geoposY[0]),0);
+      std::fill_n(CRC.GE11_IV_geoposY,sizeof CRC.GE11_IV_geoposY/sizeof(CRC.GE11_IV_geoposY[0]),0);
       std::fill_n(CRC.sCMSNS2LC3_geoposY,sizeof CRC.sCMSNS2LC3_geoposY/sizeof(CRC.sCMSNS2LC3_geoposY[0]),0);
     //
     //Trying to use some shortcut method to delete the memory but did not succeed so apply simple method
@@ -913,34 +913,34 @@ int g1x = jentry ;
     //================================
     //================================
     count_ngeoch_occ = 0;
-    for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC1;nch++)
+    for(Int_t nch=0;nch<CRC.kMaxGE11_IV_GIF;nch++)
     {
-	if (CRC.sCMSNS2LC1_ngeoch[nch]==0)
+	if (CRC.GE11_IV_GIF_ngeoch[nch]==0)
 	break;
-    for (int chfird=0;chfird<CRC.sCMSNS2LC1_ngeoch[nch];chfird++)
+    for (int chfird=0;chfird<CRC.GE11_IV_GIF_ngeoch[nch];chfird++)
     {
-	if((CRC.sCMSNS2LC1_geoch)[count_ngeoch_occ][chfird] == 0)
+	if((CRC.GE11_IV_GIF_geoch)[count_ngeoch_occ][chfird] == 0)
 	    break;
-	CRC.sCMSNS2LC1_geoch[count_ngeoch_occ][chfird]= 0;
+	CRC.GE11_IV_GIF_geoch[count_ngeoch_occ][chfird]= 0;
     }
     count_ngeoch_occ += 1;
     }
     count_ngeoch_occ = 0;
-    for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC2;nch++)
+    for(Int_t nch=0;nch<CRC.kMaxGE11_IV;nch++)
     {
-	if (CRC.sCMSNS2LC2_ngeoch[nch]==0)
+	if (CRC.GE11_IV_ngeoch[nch]==0)
 	break;
-    for (int chfird=0;chfird<CRC.sCMSNS2LC2_ngeoch[nch];chfird++)
+    for (int chfird=0;chfird<CRC.GE11_IV_ngeoch[nch];chfird++)
     {
-	if((CRC.sCMSNS2LC2_geoch)[count_ngeoch_occ][chfird] == 0)
+	if((CRC.GE11_IV_geoch)[count_ngeoch_occ][chfird] == 0)
 	    break;
-	CRC.sCMSNS2LC2_geoch[count_ngeoch_occ][chfird]= 0;
+	CRC.GE11_IV_geoch[count_ngeoch_occ][chfird]= 0;
     }
     count_ngeoch_occ += 1;
     }    
     //================================
     count_ngeoch_occ = 0;
-    for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC1;nch++)
+    for(Int_t nch=0;nch<CRC.kMaxGE11_IV_GIF;nch++)
     {
 	if (CRC.sCMSNS2LC3_ngeoch[nch]==0)
 	break;

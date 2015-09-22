@@ -14,6 +14,9 @@
 #include "TGraphErrors.h"
 #include <vector>
 #include <iostream>
+#include <fstream>
+#include <iomanip>
+
 using namespace std;
 void GetHitTxtFile_H2(const char* inputfile, string RunName , int EfficiencyType , int TrkOnly )//main programme
 {
@@ -960,41 +963,44 @@ int g1x = jentry ;
 	
     }// End Event Loop
 
+//cout.precision(2);
+//file_outEff.precision(2);
+
 if (EfficiencyType == 0)
 {
-file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<"+/-0.0\t"<<
-           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<"+/-0.0\t"<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"+/-0.0\t\n";
-cout << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)nentries<<"+/-0.0\t"<<
-           setw(5) <<  (float)LC2_Hit_count/(float)nentries<<"+/-0.0\t"<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)nentries<<"+/-0.0\t\n";
+file_outEff << RunName <<"\t"<< fixed<<std::setprecision(3)<<
+             (float)LC1_Hit_count/(float)nentries<<"+/-0.000\t"<<
+             (float)LC2_Hit_count/(float)nentries<<"+/-0.000\t"<<
+            (float)LC3_Hit_count/(float)nentries<<"+/-0.000\t\n";
+cout << RunName <<"\t"<< fixed<<std::setprecision(3) <<
+             (float)LC1_Hit_count/(float)nentries<<"+/-0.000\t"<<
+             (float)LC2_Hit_count/(float)nentries<<"+/-0.000\t"<<
+            (float)LC3_Hit_count/(float)nentries<<"+/-0.000\t\n";
 cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
 }
 if (EfficiencyType == 1)
 {
-file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";	  
-cout << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";	  
+file_outEff << RunName <<"\t"<< fixed<<std::setprecision(3) <<
+             (float)LC1_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+             (float)LC2_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+            (float)LC3_Hit_count/(float)Trk_count<<"+/-0.000\t\n";	  
+cout << RunName <<"\t"<< fixed<<std::setprecision(3) <<
+             (float)LC1_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+             (float)LC2_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+            (float)LC3_Hit_count/(float)Trk_count<<"+/-0.000\t\n";	  
 
 cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
 }
 if (EfficiencyType == 2)
 {
-file_outEff << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";
-cout << RunName <<"\t"<<
-           setw(5) <<  (float)LC1_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-           setw(5) <<  (float)LC2_Hit_count/(float)Trk_count<<"+/-0.0\t"<<
-          setw(5)  <<  (float)LC3_Hit_count/(float)Trk_count<<"+/-0.0\t\n";
+file_outEff << RunName <<"\t"<< fixed<<std::setprecision(3) <<
+             (float)LC1_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+             (float)LC2_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+            (float)LC3_Hit_count/(float)Trk_count<<"+/-0.000\t\n";
+cout << RunName <<"\t"<< fixed<<std::setprecision(3) <<
+             (float)LC1_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+             (float)LC2_Hit_count/(float)Trk_count<<"+/-0.000\t"<<
+            (float)LC3_Hit_count/(float)Trk_count<<"+/-0.000\t\n";
 cout<<"LC1 count = "<<LC1_Hit_count<<"\t"<<"Trk Count = "<<Trk_count<<endl;	  
 }
 if (verbose)
