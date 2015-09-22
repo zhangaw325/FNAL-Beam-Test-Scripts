@@ -8,21 +8,28 @@
 #include <TH2.h>
 #include <TFile.h>
 
-void tracking(string thestring,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos ){
+void tracking(string InputFileName ,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos ){
 
 bool verbose = 0;
 cout<<"Program Start"<<endl;
+  string thestring = {"Position"};
   //string thestring = "Hit_Position_Info";
-  string txtfilename = thestring + std::string(".txt");
+  //string txtfilename = thestring + std::string(".txt");
+  string txtfilename = InputFileName ;
+
+  string DirResidual = "residual_txtFile/";
+  string DirShiftPar = "shiftParameters/";
+  string DirRootFile = "Residual_Rot_Trk_RootFile/";
+
   string shiftHead = "RotationBack_shiftParameters_";
   string rotateHead = "RotationBack_angles_";
   string residualHead = "RotationBack_residuals_";
   string ResidualRHead="RotationBack_Residual_";
   string chi2Head = "ResolutionChi2Angle_";
-  string foutname = shiftHead+thestring+"_exclusive.txt";
-  string fout1name = residualHead+thestring+"_exclusive.txt";
-  string foutchi2name = chi2Head + thestring + "_exclusive.txt";
-  string foutRotationName = rotateHead + thestring + "_exclusive.txt";
+  string foutname = DirShiftPar+shiftHead+thestring+"_exclusive.txt";
+  string fout1name = DirResidual+residualHead+thestring+"_exclusive.txt";
+  string foutchi2name = DirResidual+chi2Head + thestring + "_exclusive.txt";
+  string foutRotationName = DirResidual+rotateHead + thestring + "_exclusive.txt";
   fstream fin(txtfilename.c_str(),ios::in);
   if(!fin){cout<<"file not read"<<endl; return;}
   else cout<<"processing "<<txtfilename<<endl;
@@ -102,7 +109,7 @@ cout<<"Program Start"<<endl;
   Int_t iterNb=0;
   while(1){
     char rootfile[50]; sprintf(rootfile,"_iter%i_exclusive.root",iterNb);
-    string outputrootname=ResidualRHead+thestring+rootfile;
+    string outputrootname=DirRootFile+ResidualRHead+thestring+rootfile;
     //if (verbose)
   	cout<<"outputroot file name :  "<< outputrootname <<endl;
     TFile* f = new TFile(outputrootname.c_str(),"recreate");
@@ -393,7 +400,7 @@ int AlignTrackers_shift_rotate(string name, double shiREF1X, double shiREF1Y, do
 	
 //  string name={"Position"}; 
  cout<<"Name of input file = "<<name<<endl;
-  name={"Position"}; 
+//  name={"Position"}; 
 cout<<"Start of program"<<endl;
 for(int i=0;i<1;i++) tracking(name, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, Trk1Pos, Trk2Pos, Trk3Pos);  
 return 0;

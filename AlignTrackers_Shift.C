@@ -28,8 +28,13 @@ void  AlignTrackers_Shift( string txtfilename, int RunNumber, double shi_g1xcl, 
     string residualHead	= "residuals_";
     string ResidualRHead= "Residual_";
 
-    string foutname	= shiftHead+thestring+"_alignTrackers.txt";	// Shift parameter will go in this text file
-    string fout1name	= residualHead+thestring+"_alignTrackers.txt";	// Residual will go into this
+    string DirName = "Residual_XY_Trk_RootFile/";
+    string DirNameShiftPar = "shiftParameters/";
+    string DirNameResidual = "residual_txtFile/";
+
+    char runname[50]; sprintf(runname,"_alignTrackers_R%i.txt",RunNumber);
+    string foutname	= DirNameShiftPar+shiftHead+thestring+runname;	// Shift parameter will go in this text file
+    string fout1name	= DirNameResidual+residualHead+thestring+runname;	// Residual will go into this
 
     fstream fin(txtfilename.c_str(),ios::in);
     if(!fin)	{cout<<"file not read"<<endl;}
@@ -80,8 +85,8 @@ void  AlignTrackers_Shift( string txtfilename, int RunNumber, double shi_g1xcl, 
     while(1){
 	if (verbose)
 	    cout<<"Some problem 2"<<endl;
-	char rootfile[50]; sprintf(rootfile,"_iter_%i.root",iterNb);
-	string outputrootname=ResidualRHead+thestring+rootfile;
+	char rootfile[50]; sprintf(rootfile,"_iter_%i_R%i.root",iterNb,RunNumber);
+	string outputrootname=DirName+ResidualRHead+thestring+rootfile;
 	TFile* f = new TFile(outputrootname.c_str(),"recreate");  
 	iterNb++;
 	cout <<"++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;

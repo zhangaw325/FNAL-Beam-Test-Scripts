@@ -380,8 +380,8 @@ if (NumCluster_g3x !=0 )
               cout<<"EventNb "<<EventNb<<endl;
               //cout<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
               //cout<<"EventNb "<<jentry<<endl;
-//          file_out<<"EventNb "<<EventNb<<endl;
-file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
+          file_out<<"EventNb "<<EventNb<<endl;
+//file_out<<"EventNb "<<EventNb<<"\tActual EvtNumber = "<< jentry <<endl;
       
 }
 

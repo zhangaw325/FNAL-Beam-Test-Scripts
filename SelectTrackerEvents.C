@@ -12,7 +12,7 @@
 //#include "CMS_lumi.C"
 
 
-void SelectTrackerEvents(char * InputTextFile, const int RunNumber, string LargeGEM)
+void SelectTrackerEvents(const char * InputTextFile, const int RunNumber, string LargeGEM)
 {
 /*	setTDRStyle();
 
