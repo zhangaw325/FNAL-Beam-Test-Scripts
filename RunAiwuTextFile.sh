@@ -17,7 +17,7 @@ PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2T
     # *			if want to trigger it only when it passes from all three reference
     # *			tracker then put it = 2
     # */
-EfficiencyType=1
+EfficiencyType=2
 
     #/*
     # * TrkOnly	    : If you want output text file in which there are hit iff there is 
@@ -30,12 +30,15 @@ TrkOnly=1
 
 if [[ $EfficiencyType == 0 ]]; then
 	OutputEffFileName="GE11s_Efficiency_Independent.txt"
+	info="Independent"
 fi
 if [[ $EfficiencyType == 1 ]]; then
 	OutputEffFileName="GE11s_Efficiency_If_Hit_2_Trk.txt"
+	info="HitOnly2Trk"
 fi
 if [[ $EfficiencyType == 2 ]]; then
 	OutputEffFileName="GE11s_Efficiency_Hit_all_3_Trk.txt"
+	info="HitAll3Trk"
 fi
 
 function make_dir
@@ -97,5 +100,5 @@ do
     done	# END of dir for loop
     ((++RunCounter))	# increment counter for while loop
 done			# while loop ends
-cp ${OutputEffFileName} GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt
-mv GE11s_Effeciency_Info_R${IRunNo}_R$FRunNo.txt EfficiencyTxtFiles/
+cp ${OutputEffFileName} GE11s_Effeciency_${info}_R${IRunNo}_R$FRunNo.txt
+mv GE11s_Effeciency_${info}_R${IRunNo}_R$FRunNo.txt EfficiencyTxtFiles/

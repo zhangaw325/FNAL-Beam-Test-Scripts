@@ -1,8 +1,7 @@
 /*
  * BUG: Not reading the first event
  *
- * Need to implement EfficiencyType variable
- *
+ * Cleaning of code
  */
 
 #include "TFile.h"
