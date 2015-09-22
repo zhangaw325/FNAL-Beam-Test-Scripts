@@ -1,9 +1,11 @@
+source /afs/cern.ch/sw/lcg/external/gcc/4.8/x86_64-slc6/setup.sh
+source /afs/cern.ch/sw/lcg/app/releases/ROOT/6.04.02/x86_64-slc6-gcc48-opt/root/bin/thisroot.sh
 IRunNo=$1
 FRunNo=$2
 RunCounter=$IRunNo
 #PathOfInputData=/afs/cern.ch/work/p/pbarria/public/TB_H2_OCT_2014/beamdata
-#PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407
-PathOfInputData=/home/ramkrishna/TEMP/FNAL_BT
+PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H2TestBeam/R306_R407
+#PathOfInputData=/home/ramkrishna/TEMP/FNAL_BT
 #PathOfInputData=/afs/cern.ch/user/r/rasharma/work/GEM/TBA/FNAL-Beam-Test-Scripts
     #/*
     # * EfficiencyType : If want to calculate efficiency of each GE11's independently
@@ -15,7 +17,7 @@ PathOfInputData=/home/ramkrishna/TEMP/FNAL_BT
     # *			if want to trigger it only when it passes from all three reference
     # *			tracker then put it = 2
     # */
-EfficiencyType=0
+EfficiencyType=1
 
     #/*
     # * TrkOnly	    : If you want output text file in which there are hit iff there is 
@@ -86,7 +88,12 @@ do
 	for rootfile in $dir/CRC*.root;do	# Start of rootfile for loop
 	    echo "Root file name : "$rootfile
 	    ./CreateHeader.sh $rootfile rd51tbgeo
-	    root -l -b -q Master_test.C\(\"${rootfile}\",\"${RunName}\",${EfficiencyType},${TrkOnly}\)
+	    echo "Ramkrishna = "$RunCounter	    
+	    if [[ $RunCounter -le 1587 ]]; then
+	    	root -l -b -q GetHitTxtFile_H2.C\(\"${rootfile}\",\"${RunName}\",${EfficiencyType},${TrkOnly}\)
+	    else
+	    	root -l -b -q GetHitTxtFile_H4.C\(\"${rootfile}\",\"${RunName}\",${EfficiencyType},${TrkOnly}\)
+	    fi
 	done	# END of rootfile for loop
     done	# END of dir for loop
     ((++RunCounter))	# increment counter for while loop
