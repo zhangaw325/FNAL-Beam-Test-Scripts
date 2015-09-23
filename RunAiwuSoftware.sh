@@ -6,7 +6,7 @@ ILat=15
 FLat=30
 RunCounter=$IRunNo
 PathOfInputData=HitTxtFiles
-Detector=LC1
+Detector=$3  # options: No, LC1 and LC2 and LC3
 
 function make_dir
 {

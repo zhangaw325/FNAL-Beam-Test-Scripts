@@ -8,7 +8,7 @@
 #include <TH2.h>
 #include <TFile.h>
 
-void tracking(string InputFileName ,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos, double aREF2REF1, double aREF3REF1 ){
+void tracking(string InputFileName , int RunNumber, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos, double aREF2REF1, double aREF3REF1 ){
 
     cout<<"aREF3REF1 = "<<aREF3REF1<<"\taREF2REF1 = "<<aREF2REF1<<endl;
 
@@ -28,10 +28,10 @@ cout<<"Program Start"<<endl;
   string residualHead = "RotationBack_residuals_";
   string ResidualRHead="RotationBack_Residual_";
   string chi2Head = "ResolutionChi2Angle_";
-  string foutname = DirShiftPar+shiftHead+thestring+"_exclusive.txt";
-  string fout1name = DirResidual+residualHead+thestring+"_exclusive.txt";
-  string foutchi2name = DirResidual+chi2Head + thestring + "_exclusive.txt";
-  string foutRotationName = DirResidual+rotateHead + thestring + "_exclusive.txt";
+  string foutname = DirShiftPar+shiftHead+thestring+"_exclusive_"+std::to_string(RunNumber)+".txt";
+  string fout1name = DirResidual+residualHead+thestring+"_exclusive_"+std::to_string(RunNumber)+".txt";
+  string foutchi2name = DirResidual+chi2Head + thestring + "_exclusive_"+std::to_string(RunNumber)+".txt";
+  string foutRotationName = DirResidual+rotateHead + thestring + "_exclusive_"+std::to_string(RunNumber)+".txt";
   fstream fin(txtfilename.c_str(),ios::in);
   if(!fin){cout<<"file not read"<<endl; return;}
   else cout<<"processing "<<txtfilename<<endl;
@@ -110,7 +110,7 @@ cout<<"Program Start"<<endl;
 
   Int_t iterNb=0;
   while(1){
-    char rootfile[50]; sprintf(rootfile,"_iter%i_exclusive.root",iterNb);
+    char rootfile[50]; sprintf(rootfile,"_iter%i_exclusive_R%i.root",iterNb,RunNumber);
     string outputrootname=DirRootFile+ResidualRHead+thestring+rootfile;
     //if (verbose)
   	cout<<"outputroot file name :  "<< outputrootname <<endl;
@@ -398,13 +398,13 @@ cout<<"test"<<  endl;
   double shiREF2X =62.36, shiREF2Y =55.83;
   double shiREF3X =62.72, shiREF3Y =56.06;
   */
-int AlignTrackers_shift_rotate(string name, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos, double aREF2REF1, double aREF3REF1  ){
+int AlignTrackers_shift_rotate(string name, int RunNumber, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos, double aREF2REF1, double aREF3REF1  ){
 	
 //  string name={"Position"}; 
  cout<<"Name of input file = "<<name<<endl;
 //  name={"Position"}; 
 cout<<"Start of program"<<endl;
-for(int i=0;i<1;i++) tracking(name, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, Trk1Pos, Trk2Pos, Trk3Pos, aREF2REF1, aREF3REF1 );  
+for(int i=0;i<1;i++) tracking(name, RunNumber, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, Trk1Pos, Trk2Pos, Trk3Pos, aREF2REF1, aREF3REF1 );  
 return 0;
 }
 

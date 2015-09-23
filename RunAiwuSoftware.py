@@ -74,7 +74,7 @@ print '\n\n============ START:: Running AlignTrackers_Shift.C...    ============
 print 'This code will align trackers only\n\n'
 
 print('root -l -b -q AlignTrackers_Shift.C\(\\"TrackerOnly_Position_RunNumber'+args.RunNumber+'.txt\\",'+args.RunNumber+','+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+'\)')
-#os.system('root -l -b -q AlignTrackers_Shift.C\(\\"TrackerOnly_Position_RunNumber'+args.RunNumber+'.txt\\",'+args.RunNumber+','+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+'\)')
+os.system('root -l -b -q AlignTrackers_Shift.C\(\\"TrackerOnly_Position_RunNumber'+args.RunNumber+'.txt\\",'+args.RunNumber+','+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+'\)')
 
 
 print '\n\nAlignTrackers_Shift.C...  DONE'
@@ -83,11 +83,11 @@ print '\n\nAlignTrackers_Shift.C...  DONE'
 
 #=====================  START:: Running AlignTrackers_shift_rotate.C	=================================
 
-print('root -l -b -q AlignTrackers_shift_rotate.C\(\\"TrackerOnly_Position_RunNumber'+args.RunNumber+'.txt\\",'+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(Mean_angle_g1g2)+','+str(Mean_angle_g1g3)+'\)')
-#os.system('root -l -b -q AlignTrackers_shift_rotate.C\(\\"TrackerOnly_Position_RunNumber'+args.RunNumber+'.txt\\",'+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(Mean_angle_g1g2)+','+str(Mean_angle_g1g3)+'\)')
+print('root -l -b -q AlignTrackers_shift_rotate.C\(\\"TrackerOnly_Position_RunNumber'+args.RunNumber+'.txt\\",'+args.RunNumber+','+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(Mean_angle_g1g2)+','+str(Mean_angle_g1g3)+'\)')
+os.system('root -l -b -q AlignTrackers_shift_rotate.C\(\\"TrackerOnly_Position_RunNumber'+args.RunNumber+'.txt\\",'+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(Mean_angle_g1g2)+','+str(Mean_angle_g1g3)+'\)')
 
 
 #=====================  END:: Running AlignTrackers_shift_rotate.C	=================================
 
-print('root -l -b -q AlignGEM_XYoffsets.C\(\\"TrackerAndLC1_Position_RunNumber'+args.RunNumber+'.txt\\",'+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(LC1.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(H2_GE11_IV_GIF_Pos)+'\)')
-os.system('root -l -b -q AlignGEM_XYoffsets.C\(\\"TrackerAndLC1_Position_RunNumber'+args.RunNumber+'.txt\\",'+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(LC1.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(H2_GE11_IV_GIF_Pos)+'\)')
+#print('root -l -b -q AlignGEM_XYoffsets.C\(\\"TrackerAndLC1_Position_RunNumber'+args.RunNumber+'.txt\\",'+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(LC1.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(H2_GE11_IV_GIF_Pos)+'\)')
+#os.system('root -l -b -q AlignGEM_XYoffsets.C\(\\"TrackerAndLC1_Position_RunNumber'+args.RunNumber+'.txt\\",'+str(g1x.GetMean())+','+str(g1y.GetMean())+','+str(g2x.GetMean()) + ','+str(g2y.GetMean()) +','+str(g3x.GetMean()) +','+str(g3y.GetMean())+','+str(LC1.GetMean())+','+str(H2_Trk1_Pos)+','+str(H2_Trk2_Pos)+','+str(H2_Trk3_Pos)+','+str(H2_GE11_IV_GIF_Pos)+'\)')
