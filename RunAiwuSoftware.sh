@@ -6,8 +6,7 @@ ILat=15
 FLat=30
 RunCounter=$IRunNo
 PathOfInputData=HitTxtFiles
-Detector=No
-
+Detector=LC1
 
 function make_dir
 {
@@ -24,10 +23,12 @@ function make_dir
 	fi
 }	# end of make_dir
 
+echo "create dir starts:"
 make_dir=Residual_XY_Trk_RootFile
 make_dir=shiftParameters
 make_dir=residual_txtFile
 make_dir=Residual_Rot_Trk_RootFile
+echo "create dir ends:"
 
 while [ $RunCounter -le $FRunNo ]
 do

@@ -8,7 +8,9 @@
 #include <TH2.h>
 #include <TFile.h>
 
-void tracking(string InputFileName ,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos ){
+void tracking(string InputFileName ,double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos, double aREF2REF1, double aREF3REF1 ){
+
+    cout<<"aREF3REF1 = "<<aREF3REF1<<"\taREF2REF1 = "<<aREF2REF1<<endl;
 
 bool verbose = 0;
 cout<<"Program Start"<<endl;
@@ -74,10 +76,10 @@ cout<<"Program Start"<<endl;
   /* double shiREF1X=61.91, shiREF1Y=55.68;
   double shiREF2X=62.36, shiREF2Y=55.83;
   double shiREF3X=62.72, shiREF3Y=56.06;
-  */
-  // double shiUVA3X=-8.389, shiUVA3Y=15.779;
   double aREF2REF1=0.00;
   double aREF3REF1=0.00;
+  */
+  // double shiUVA3X=-8.389, shiUVA3Y=15.779;
 
   if (verbose)
   	cout<<"ERROR 1 "<<endl;
@@ -396,13 +398,13 @@ cout<<"test"<<  endl;
   double shiREF2X =62.36, shiREF2Y =55.83;
   double shiREF3X =62.72, shiREF3Y =56.06;
   */
-int AlignTrackers_shift_rotate(string name, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos ){
+int AlignTrackers_shift_rotate(string name, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double Trk1Pos, double Trk2Pos, double Trk3Pos, double aREF2REF1, double aREF3REF1  ){
 	
 //  string name={"Position"}; 
  cout<<"Name of input file = "<<name<<endl;
 //  name={"Position"}; 
 cout<<"Start of program"<<endl;
-for(int i=0;i<1;i++) tracking(name, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, Trk1Pos, Trk2Pos, Trk3Pos);  
+for(int i=0;i<1;i++) tracking(name, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, Trk1Pos, Trk2Pos, Trk3Pos, aREF2REF1, aREF3REF1 );  
 return 0;
 }
 

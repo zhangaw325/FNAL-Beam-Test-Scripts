@@ -297,8 +297,8 @@ int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, 
  return 0;
 } // entire script
 
-int AlignGEM_XYoffsets(string InputTextFile, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y , double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos){
-	
+void AlignGEM_XYoffsets(string InputTextFile, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y , double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos)
+{
 //  string name[1]={
 //  	"Position_Cluster_run017_HVScan_4150V_32GeV_20131017_1254pm_all"
 //  };
@@ -308,7 +308,7 @@ int AlignGEM_XYoffsets(string InputTextFile, double shiREF1X, double shiREF1Y, d
      tracking(InputTextFile, iterNbX, iterNbY, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, shiEta5, Trk1Pos, Trk2Pos, Trk3Pos, GEMPos );
      //tracking(name[0],iterNbX, iterNbY);
     }
-  return 0;
+//  return 0;
 }
 
 double CalculateCosTheta1(double x, double y, double x1,double y1){
