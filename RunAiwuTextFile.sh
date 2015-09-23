@@ -22,6 +22,7 @@ fi
     # *			if want to trigger it only when it passes from all three reference
     # *			tracker then put it = 2
     # */
+
 EfficiencyType=2
 
     #/*
@@ -87,8 +88,6 @@ do
         fi
     fi
     for dir in $PathOfInputData/Run$file*; do	    # Start of dir for loop
-    	#perl -spe 's/CRC-Run0411_Muon_10k_MSPL2_HVScan_710pt1_710pt1_710pt0_T20_T20_T20_Lat22-141011_013955-0.root/$a/' < 
-	#echo ${PathOfInputData}$(basename $f)/CRC-$(basename $f)-0.root
 	echo "===============================================:"
 	echo "Directory name : "$dir
 	echo "Base name : "$(basename $dir)

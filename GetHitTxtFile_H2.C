@@ -82,6 +82,14 @@ void GetHitTxtFile_H2(const char* inputfile, string RunName , int EfficiencyType
     int LC2_Hit_count = 0 ;
     int LC3_Hit_count = 0 ;
     int Trk_count = 0;
+	
+	string rootfile = RunName+"_ClusterInfo.root";
+	TFile* f = new TFile(rootfile.c_str(),"recreate");
+
+	TH1F* h_ClusterSize_LC1 = new TH1F("h_ClusterSize_LC1","",10,0,10); h_ClusterSize_LC1->SetXTitle("Cluster Size"); h_ClusterSize_LC1->SetYTitle("Frequency");h_ClusterSize_LC1->SetLabelSize(0.045,"XY");h_ClusterSize_LC1->SetTitleSize(0.045,"XY");
+	TH1F* h_ClusterSize_LC2 = new TH1F("h_ClusterSize_LC2","",10,0,10); h_ClusterSize_LC2->SetXTitle("Cluster Size"); h_ClusterSize_LC2->SetYTitle("Frequency");h_ClusterSize_LC2->SetLabelSize(0.045,"XY");h_ClusterSize_LC2->SetTitleSize(0.045,"XY");
+	TH1F* h_ClusterSize_LC3 = new TH1F("h_ClusterSize_LC3","",10,0,10); h_ClusterSize_LC3->SetXTitle("Cluster Size"); h_ClusterSize_LC3->SetYTitle("Frequency");h_ClusterSize_LC3->SetLabelSize(0.045,"XY");h_ClusterSize_LC3->SetTitleSize(0.045,"XY");
+
 
     //================================   Event Loop Starts   ======================================================
     for( int jentry = 0 ; jentry < t->GetEntries() ; jentry++)//	Event Loop Starts
@@ -664,6 +672,8 @@ int g1x = jentry ;
           if (verbose)
               std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposY[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
           file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC1_geoposY[0]<<"\t"<<CRC.sCMSNS2LC1_geoposch[0]<<"\t";
+	  if (NumCluster_LC1>=1)
+	  	  h_ClusterSize_LC1->Fill(channelFired);
           count_ngeoch_occ = 0;
           for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC1;nch++)
           {
@@ -714,6 +724,8 @@ int g1x = jentry ;
 	  if (verbose)
 	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposY[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
 	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC2_geoposY[0]<<"\t"<<CRC.sCMSNS2LC2_geoposch[0]<<"\t";
+	  if (NumCluster_LC2>=1)
+	  	  h_ClusterSize_LC2->Fill(channelFired);
 	  count_ngeoch_occ = 0;
 	  for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC2;nch++)
 	  {
@@ -761,6 +773,8 @@ int g1x = jentry ;
 	  if (verbose)
 	      std::cout<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
 	  file_out<<channelFired<<"\t"<<channelFired<<"\t"<<CRC.sCMSNS2LC3_geoposY[1]<<"\t"<<CRC.sCMSNS2LC3_geoposch[0]<<"\t";
+	  if (NumCluster_LC3>=1)
+	  	  h_ClusterSize_LC3->Fill(channelFired);
 	  count_ngeoch_occ = 0;
 	  for(Int_t nch=0;nch<CRC.kMaxsCMSNS2LC3;nch++)
 	  {
@@ -963,6 +977,8 @@ int g1x = jentry ;
 	
     }// End Event Loop
 
+f->Write();
+f->Close();
 //cout.precision(2);
 //file_outEff.precision(2);
 
