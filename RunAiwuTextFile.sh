@@ -10,7 +10,7 @@ if [[ $IRunNo -le 1587 ]]; then
 else
 	PathOfInputData=/afs/cern.ch/user/r/rasharma/work/public/GEMTestBeam/Ntuples/H4TestBeam			# PATH FOR H4 TEST BEAM
 fi	
-PathOfInputData=/home/ramkrishna/TEMP/FNAL_BT
+#PathOfInputData=/home/ramkrishna/TEMP/FNAL_BT
 
     #/*
     # * EfficiencyType : If want to calculate efficiency of each GE11's independently
