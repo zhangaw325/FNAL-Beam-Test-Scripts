@@ -9,7 +9,7 @@
 #include "doubleGausFit_withHistParameter.C"
 
 //vector<double> DefaultVector; // just used to free memory from vectors.
-int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos ){
+int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y, double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos , double aREF2REF1, double aREF3REF1 ){
   double PI=TMath::Pi();
   string txtfilename = thestring ;
   //string txtfilename = thestring + ".txt";
@@ -31,12 +31,15 @@ int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, 
     double shiREF2X=12.26791212, shiREF2Y=2.02708225;
     double shiREF3X=7.4824985, shiREF3Y=-2.35562;
     double shiEta5=0.0;//0.01509;
-    */
     double preshiREF1X=-2265, preshiREF1Y=-32;
     double preshiREF2X=-2265, preshiREF2Y=-32;  //2127.4275
     double preshiREF3X=-2265, preshiREF3Y=-32;
-    double aREF2REF1=0.0056995;//start angle: 0.01197;
-    double aREF3REF1=-0.044254312;//-0.0171;//start angle: 0.008273;
+    */
+    double preshiREF1X=-2590.0, preshiREF1Y=-455.;
+    double preshiREF2X=-2590.0, preshiREF2Y=-455.;  //2127.4275
+    double preshiREF3X=-2590.0, preshiREF3Y=-455.;
+//    double aREF2REF1=0.0056995;//start angle: 0.01197;
+//    double aREF3REF1=-0.044254312;//-0.0171;//start angle: 0.008273;
     double aEta5REF1=0.0;//0.008098;
     double tempREF2X, tempREF2Y, tempREF3X, tempREF3Y, tempREF1X, tempREF1Y, tempEta5;
     double meanREF2X=0.0, meanREF2Y=0.0, meanREF3X=0.0, meanREF3Y=0.0, meanREF1X=0.0, meanREF1Y=0.0, meanEta5=0.0;
@@ -66,9 +69,9 @@ int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, 
     TH1F* xTrackChi2=0;
     TH1F* yTrackChi2=0;
     
-    preshiREF1X = -1810-iterNbX;// - iterNbX*2;
+    preshiREF1X = -2580.-iterNbX;// - iterNbX*2;
     preshiREF2X = preshiREF1X; preshiREF3X=preshiREF1X;
-    preshiREF1Y = -40.0 + iterNbY*0.2;
+    preshiREF1Y = -445. + iterNbY*0.2;
     preshiREF2Y = preshiREF1Y;  preshiREF3Y = preshiREF1Y;
     
     char cp1x[20]; sprintf(cp1x,"%.2f",preshiREF1X);
@@ -111,10 +114,15 @@ int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, 
         d.vpREF3X -= shiREF3X; d.vpREF3Y -= shiREF3Y;
         
         //rotate
-        d.vpREF2X = d.vpREF2X*cos(aREF2REF1) - d.vpREF2Y*sin(aREF2REF1);
-        d.vpREF2Y = d.vpREF2X*sin(aREF2REF1) + d.vpREF2Y*cos(aREF2REF1);
-        d.vpREF3X = d.vpREF3X*cos(aREF3REF1) - d.vpREF3Y*sin(aREF3REF1);
-        d.vpREF3Y = d.vpREF3X*sin(aREF3REF1) + d.vpREF3Y*cos(aREF3REF1);
+	tempREF1X = d.vpREF1X;	tempREF1Y = d.vpREF1Y;
+	tempREF2X = d.vpREF2X;	tempREF2Y = d.vpREF2Y;
+	tempREF3X = d.vpREF3X;	tempREF3Y = d.vpREF3Y;
+
+        d.vpREF2X = tempREF2X*cos(aREF2REF1) - tempREF2Y*sin(aREF2REF1);
+        d.vpREF2Y = tempREF2X*sin(aREF2REF1) + tempREF2Y*cos(aREF2REF1);
+        d.vpREF3X = tempREF3X*cos(aREF3REF1) - tempREF3Y*sin(aREF3REF1);
+        d.vpREF3Y = tempREF3X*sin(aREF3REF1) + tempREF3Y*cos(aREF3REF1);
+
         d.vpEta5 -= aEta5REF1;
         
         //change origin, move in X and Y
@@ -297,15 +305,17 @@ int tracking(string thestring, double iterNbX, double iterNbY, double shiREF1X, 
  return 0;
 } // entire script
 
-void AlignGEM_XYoffsets(string InputTextFile, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y , double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos)
+void AlignGEM_XYoffsets(string InputTextFile, double shiREF1X, double shiREF1Y, double shiREF2X, double shiREF2Y, double shiREF3X, double shiREF3Y , double shiEta5, double Trk1Pos, double Trk2Pos, double Trk3Pos, double GEMPos, double aREF2REF1, double aREF3REF1)
 {
 //  string name[1]={
 //  	"Position_Cluster_run017_HVScan_4150V_32GeV_20131017_1254pm_all"
 //  };
-  for(int iterNbX=0;iterNbX<=50;iterNbX++)
-    for(int iterNbY=0;iterNbY<101;iterNbY++)
+  for(int iterNbX=0;iterNbX<=5;iterNbX++)
+    for(int iterNbY=0;iterNbY<10;iterNbY++)
+  //for(int iterNbX=0;iterNbX<=50;iterNbX++)
+    //for(int iterNbY=0;iterNbY<101;iterNbY++)
     {
-     tracking(InputTextFile, iterNbX, iterNbY, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, shiEta5, Trk1Pos, Trk2Pos, Trk3Pos, GEMPos );
+     tracking(InputTextFile, iterNbX, iterNbY, shiREF1X, shiREF1Y, shiREF2X, shiREF2Y, shiREF3X, shiREF3Y, shiEta5, Trk1Pos, Trk2Pos, Trk3Pos, GEMPos , aREF2REF1, aREF3REF1);
      //tracking(name[0],iterNbX, iterNbY);
     }
 //  return 0;
